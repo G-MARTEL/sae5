@@ -1,0 +1,8 @@
+-télécharger le zip le décompresser 
+-aller sur docker
+-se déplacer jusqu'a l'emplacement du fichier des ziper a l'aide de la commande "cd cheminAbsolu"
+-sur le cmd saisir " docker compose --build -d"
+-attendre le telechargement 
+-saisir "docker exec -ti sae-mysql-1 bash"
+-puis "mysql -uroot -pnetworkers"
+-puis "use website-database;"
