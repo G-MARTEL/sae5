@@ -1,0 +1,28 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  word-spacing: 2px;
+  margin: 0;
+  padding: 0;
+  line-height: 140%;
+  position: relative;
+  overflow-x: hidden;
+  color: black;
+  font-size: 16px;
+}
+body.no-scroll {
+  overflow: hidden;
+}
+body.no-scroll main {
+  opacity: 0.8;
+}
+body.logged-in.admin-bar header {
+  top: 32px;
+}
+.container {
+  background-color: blue;
+}
+
+/*# sourceMappingURL=styles.css.map */

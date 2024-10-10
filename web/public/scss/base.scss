@@ -1,0 +1,59 @@
+
+html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    word-spacing: 2px;
+    margin: 0;
+    padding: 0;
+    line-height: 140%;
+    position: relative;
+    overflow-x: hidden;
+    color: black;
+    font-size: 16px;
+    &.no-scroll {
+      overflow: hidden;
+      main {
+        opacity: .8;
+      }
+    }
+    &.logged-in.admin-bar {
+      header {
+        top:32px;
+      }
+    }
+    main {
+     // margin-top: 126px;
+    }
+  }
+
+
+  .container {
+    background-color: blue;
+  }
+
+
+
+// responsive
+@media only screen and (max-width:1700px) {
+  }
+  
+  @media only screen and (max-width:1600px) {
+  }
+  
+  @media only screen and (max-width:1440px) {
+  }
+  
+  @media only screen and (max-width:1230px) {
+  }
+  
+  @media only screen and (max-width:1024px) {
+  }
+  
+  @media only screen and (max-width:781px) {
+  }
+  
+  @media only screen and (max-width:580px) {
+  }
+  

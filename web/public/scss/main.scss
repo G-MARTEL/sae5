@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+@import "./variables"; // variables communes à tout le site
+@import "./base"; // base (structure) des pages
+@import "./elements"; // éléments des pages, réutilisables
+@import "./navbar"; // barre de navigation
+@import "./footer"; // footer des pages
+
+
+
