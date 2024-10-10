@@ -1,3 +1,55 @@
+// SCSS pour la Navbar
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f9fafb;  // Arrière-plan blanc léger
+
+    .logo {
+        img {
+            width: 50px;  //  taille du logo a ajuster 
+        }
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            margin-left: 20px;
+
+            a {
+                text-decoration: none;
+                font-size: 24px;
+                color: #2c7d7b;  // Couleur verte des liens a modifier ??
+                font-weight: bold;
+
+                &:hover {
+                    color: #da4837;  // Couleur de survol en rouge a voir ?
+                }
+            }
+        }
+    }
+
+    .nav-btn {
+        button {
+            background-color: #2c7d7b;  // Couleur du bouton de connexion (vert)
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;  // Arrondi
+            font-size: 16px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #23605f;  // Couleur de survol plus sombre
+            }
+        }
+    }
+}
 
 // responsive
 @media only screen and (max-width:1700px) {

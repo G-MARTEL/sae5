@@ -4,13 +4,12 @@ html {
   }
 
   body {
-    word-spacing: 2px;
     margin: 0;
     padding: 0;
     line-height: 140%;
     position: relative;
     overflow-x: hidden;
-    color: black;
+    color: red;
     font-size: 16px;
     &.no-scroll {
       overflow: hidden;
@@ -20,7 +19,6 @@ html {
     }
     &.logged-in.admin-bar {
       header {
-        top:32px;
       }
     }
     main {

@@ -1,3 +1,58 @@
+// SCSS pour le Footer
+.footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f9fafb; // Arrière-plan gris clair
+    padding: 20px 50px;
+    border-top: 1px solid #e1e1e1; // Bordure de séparation du footer
+
+    .footer-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        h4 {
+            color: #2c7d7b; // Couleur verte des titres
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 5px;
+
+                a {
+                    text-decoration: none;
+                    color: black;
+
+                    &:hover {
+                        color: #2c7d7b; // Survol en vert
+                    }
+                }
+            }
+        }
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px; // Espacement entre les icônes
+
+        li {
+            display: inline-block;
+
+            a {
+                img {
+                    width: 30px; // Taille des icônes
+                    height: 30px;
+                }
+            }
+        }
+    }
+}
+
 
 // responsive
 @media only screen and (max-width:1700px) {
