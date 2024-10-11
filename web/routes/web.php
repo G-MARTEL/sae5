@@ -21,6 +21,11 @@ Route::get('simulateur', function () {
 })->name('simulateur');
 
 
+Route::get('devis', function () {
+    return view('devis');
+})->name('devis');
+
+
 use App\Http\Controllers\Autentification;
 
 Route::get('/connexion', [Autentification::class, 'showLoginForm']);
