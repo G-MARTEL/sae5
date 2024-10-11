@@ -19,7 +19,7 @@
             <li><a href="#">Faire un devis</a></li>
         </ul>
         <div class="nav-btn">
-        <a href="Connexion"><button>Connexion </button></a>
+        <a href="connexion"><button>Connexion </button></a>
         </div>
     </nav>
         
