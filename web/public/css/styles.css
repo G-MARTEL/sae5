@@ -145,7 +145,7 @@ body.no-scroll main {
   border: 2px solid #2c7d7b;
   border-radius: 15px;
   padding: 30px;
-  background-color: rgb(229.1124260355, 245.8875739645, 245.4733727811);
+  background-color: rgb(57.2781065089, 162.7218934911, 160.1183431953);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 #accueil-3.container .container-inner h2 {
@@ -157,6 +157,66 @@ body.no-scroll main {
   font-size: 1.2em;
   color: #333;
   line-height: 1.5;
+}
+
+#accueil-4.container {
+  background-color: #f9fafb;
+}
+#accueil-4.container .container-inner h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+#accueil-4.container .container-inner .container-carousel {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+}
+#accueil-4.container .container-inner .container-carousel .carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+#accueil-4.container .container-inner .container-carousel .carousel-item {
+  flex: 0 0 100%; /* Chaque item occupe 100% de la largeur */
+  text-align: center;
+}
+#accueil-4.container .container-inner .container-carousel button.prev, #accueil-4.container .container-inner .container-carousel button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+#accueil-4.container .container-inner .container-carousel button.prev:hover, #accueil-4.container .container-inner .container-carousel button.next:hover {
+  color: #000;
+}
+#accueil-4.container .container-inner .container-carousel button.prev {
+  left: -40px;
+}
+#accueil-4.container .container-inner .container-carousel button.next {
+  right: -40px;
+}
+#accueil-4.container .container-inner .container-carousel .carousel-indicators {
+  text-align: center;
+  margin-top: 15px;
+}
+#accueil-4.container .container-inner .container-carousel .carousel-indicators .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+}
+#accueil-4.container .container-inner .container-carousel .carousel-indicators .dot.active {
+  background-color: #333;
 }
 
 .navbar {

@@ -20,7 +20,7 @@
 
 <div class="container" id="accueil-2">
     <div class="container-inner">
-        <h2>Notre cabinet en 3 points</h2>
+        <h2>Notre cabinet en trois points</h2>
         <div class="container-columns">
             <div class="column">
                 <h3>Expertise</h3>
@@ -46,6 +46,32 @@
             nous nous engageons à vous fournir des solutions adaptées à vos besoins spécifiques.
         </p>
     </div>
+</div>
+
+<div class="container" id="accueil-4">
+    <div class="container-inner">
+        <h2>Ils nous ont fait confiance !</h2>
+    <div class="container-carousel">
+        <button class="prev">prev</button>
+            <div class="carousel">
+                <div class="carousel-item">
+                    <p>"Une équipe très professionnelle qui m'a aidé à clarifier ma comptabilité. Très réactifs et à l'écoute !" - Jean Dupont</p>
+                </div>
+                <div class="carousel-item">
+                    <p>"Leur service est impeccable et transparent. Je recommande ce cabinet à tous mes collègues entrepreneurs." - Marie Durand</p>
+                </div>
+                <div class="carousel-item">
+                    <p>"Grâce à leurs conseils, j'ai optimisé ma fiscalité et réduit mes coûts de manière significative." - Paul Martin</p>
+                </div>
+            </div>
+        <button class="next">next</button>
+        <div class="carousel-indicators">
+            <span class="dot" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+        </div>
+    </div>
+
 </div>
 
 @endsection
