@@ -13,6 +13,6 @@ class Autentification extends Controller
 
     public function login(Request $request)
     {
-        return view('/');
+        return redirect()->route('home');
     }
 }

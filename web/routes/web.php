@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return view('accueil');
-});
+})->name('home');
 
 use App\Http\Controllers\Autentification;
 
