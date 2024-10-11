@@ -9,8 +9,11 @@ Route::get('/', function () {
 
 Route::get('Qui-Somme-Nous', function () {
     return view('prensentation');
-});
+})->name('presentation');
 
+Route::get('prestation', function () {
+    return view('prestation');
+})->name('prestation');
 
 use App\Http\Controllers\Autentification;
 
