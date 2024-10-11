@@ -9,16 +9,12 @@ html {
     line-height: 140%;
     position: relative;
     overflow-x: hidden;
-    color: red;
+    color: black;
     font-size: 16px;
     &.no-scroll {
       overflow: hidden;
       main {
         opacity: .8;
-      }
-    }
-    &.logged-in.admin-bar {
-      header {
       }
     }
     main {
@@ -28,8 +24,66 @@ html {
 
 
   .container {
-    background-color: blue;
-  } 
+    width: 100%;
+    &>.container-inner {
+      margin: 0 auto;
+      padding: 80px 60px;
+      box-sizing: border-box;
+
+      .container, .container-inner {
+        width: 100%;
+        padding:0px;
+      }
+      .container-collums {
+      }
+    }
+
+  }
+
+  .groupe {
+    width: 100%;
+    &>.groupe_ds_groupe {
+      margin: 0 auto;
+      padding: 80px 60px;
+      box-sizing: border-box;
+      //Groupe dans un groupe
+      .groupe, .groupe_ds_groupe{
+        width: 100%;
+        padding:0px;
+        max-width: none;
+      }
+      p:not(:last-child) {
+        padding-bottom: 10px;
+      }
+      .groupe_colonnes
+      //colonnes
+      * + .groupe_colonnes {
+        margin-top: 40px;
+      }
+      .groupe_colonnes {
+        gap: 2em;
+        .groupe_colonne {
+          &:not(:first-child) {
+            margin: 0 !important
+          }
+          figure:not(:last-of-type) {
+            margin-bottom: 2.5em;
+          }
+        }
+        .groupe_colonne {
+          figure {
+            img {
+              height: 500px;
+              object-fit: cover;
+            }
+          }
+        }
+        & + * {
+          margin-top: 40px;
+        }
+      }
+    }
+  }
 
 
 

@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <p> Hello there ! </p>
-    </div>
+
 </body>
 </html>
