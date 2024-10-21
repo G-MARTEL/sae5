@@ -13,13 +13,13 @@
             <img src="logo.png" alt="Logo"> <!-- Insère ici ton logo -->
         </div>
         <ul class="nav-links">
-            <li><a href="#">Qui Somme Nous ?</a></li>
-            <li><a href="#">Prestation </a></li>
-            <li><a href="#">Simulateurs </a></li>
-            <li><a href="#">Faire un devis</a></li>
+            <li><a href="Qui-Somme-Nous">Qui Somme Nous ?</a></li>
+            <li><a href="prestation">Prestation </a></li>
+            <li><a href="simulateur">Simulateurs </a></li>
+            <li><a href="devis">Faire un devis</a></li>
         </ul>
         <div class="nav-btn">
-            <button>Connexion</button>
+        <a href="connexion"><button>Connexion </button></a>
         </div>
     </nav>
         

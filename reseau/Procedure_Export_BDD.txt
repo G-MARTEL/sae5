@@ -1,6 +1,0 @@
-Procédure d'exportation de BDD depuis Docker:
--quand conteneur allumé, entrer dedans grâce à : docker exec -ti sae-mysql-1 bash
--exporter la totalité de la BDD avec: mysqldump -h localhost -u root -p website-database > bdd.sql;
-(le mdp est networkers)
--pour récupérer le fichier sur la machine hôte, on sort du conteneur avec "exit", puis on exécute: docker cp 88d:/bdd.sql bdd.sql (88d correspond au début de l'ID de votre conteneur)
-et voila
