@@ -1,0 +1,12 @@
+Procédure d'importation de BDD depuis Docker:
+-pour récupérer le fichier sur le conteneur, on exécute: docker cp bdd.sql [ID CONTENEUR]:/bdd.sql
+-quand conteneur allumé, entrer dedans grâce à : docker exec -ti db bash
+-importer la base avec : mysql laravel < bdd.sql;
+et voila 
+
+Procédure d'exportation de BDD depuis Docker:
+-quand conteneur allumé, entrer dedans grâce à : docker exec -ti db bash
+-exporter la totalité de la BDD avec: mysqldump -h localhost -u root -p laravel > bdd.sql;
+(le mdp est password)
+-pour récupérer le fichier sur la machine hôte, on sort du conteneur avec "exit", puis on exécute: docker cp [ID CONTENEUR]:/bdd.sql bdd.sql
+et voila
