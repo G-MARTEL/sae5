@@ -160,53 +160,34 @@ body.no-scroll main {
 }
 
 #accueil-4.container {
-  background-color: #f9fafb;
-}
-#accueil-4.container .container-inner h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-#accueil-4.container .container-inner .container-carousel {
-  position: relative;
-  width: 80%;
-  margin: 0 auto;
-}
-#accueil-4.container .container-inner .container-carousel .carousel {
   display: flex;
-  transition: transform 0.5s ease;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+}
+#accueil-4.container button {
+  margin: 10px;
+}
+#accueil-4.container .carousel {
   background-color: #f0f0f0;
   padding: 20px;
-  border-radius: 10px;
+  width: 100%;
   overflow: hidden;
 }
-#accueil-4.container .container-inner .container-carousel .carousel-item {
-  flex: 0 0 100%; /* Chaque item occupe 100% de la largeur */
+#accueil-4.container .carousel .carousel-item {
+  display: none;
   text-align: center;
 }
-#accueil-4.container .container-inner .container-carousel button.prev, #accueil-4.container .container-inner .container-carousel button.next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #333;
+#accueil-4.container .carousel .carousel-item.active {
+  display: block;
 }
-#accueil-4.container .container-inner .container-carousel button.prev:hover, #accueil-4.container .container-inner .container-carousel button.next:hover {
-  color: #000;
+#accueil-4.container .carousel-indicators {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
-#accueil-4.container .container-inner .container-carousel button.prev {
-  left: -40px;
-}
-#accueil-4.container .container-inner .container-carousel button.next {
-  right: -40px;
-}
-#accueil-4.container .container-inner .container-carousel .carousel-indicators {
-  text-align: center;
-  margin-top: 15px;
-}
-#accueil-4.container .container-inner .container-carousel .carousel-indicators .dot {
+#accueil-4.container .carousel-indicators .dot {
   display: inline-block;
   width: 10px;
   height: 10px;
@@ -215,86 +196,8 @@ body.no-scroll main {
   border-radius: 50%;
   cursor: pointer;
 }
-#accueil-4.container .container-inner .container-carousel .carousel-indicators .dot.active {
+#accueil-4.container .carousel-indicators .dot.active {
   background-color: #333;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-}
-
-.contact-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 100vh;
-  padding: 0 20px;
-}
-
-.contact-info {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  width: 30%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.contact-info p {
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.contact-form {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  width: 40%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-  background-color: #218838;
 }
 
 .navbar {
