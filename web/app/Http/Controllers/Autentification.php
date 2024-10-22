@@ -13,38 +13,49 @@ class Autentification extends Controller
         return view('FormConnexion'); // Assure-toi que la vue existe
     }
 
-
     public function login(Request $request)
     {
-    try {
+
+        try {
         // Récupérer le nom de la base de données
-        $connection = DB::connection('mysql'); // Préciser le nom de la connexion (par exemple 'mysql')
-        $databaseName = $connection->getDatabaseName();
-        
-        // Vérifier si la connexion est bien établie
-        if (!$databaseName) {
-            throw new \Exception("Impossible de récupérer le nom de la base de données.");
-        }
+        $databaseName = $pdo->getAttribute(PDO::ATTR_DATABASE);
 
         // Récupérer les tables de la base de données
-        $query = 'SHOW TABLES'; // Utiliser SHOW TABLES pour MySQL
-        $tables = DB::select($query); // Utilisation de DB::select pour exécuter la requête
+        $query = 'SELECT name FROM sqlite_master WHERE type="table"';
+        $stmt = $pdo->query($query);
+        $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-        // Extraire les noms des tables
-        $tableNames = array_map(function ($table) {
-            return (array_values((array)$table))[0]; // Assurez-vous d'accéder à la propriété correctement
-        }, $tables);
+        // Vérifier si la table spécifiée existe
+        $tableExists = in_array($tableToCheck, $tables);
 
-        // Afficher le nom de la base de données et les tables
-        echo $databaseName . '<br />';
-        print_r($tableNames);
-    } catch (\Exception $e) {
-        return response()->json([
+        return [
+            'database' => $databaseName,
+            'tables' => $tables,
+            'tableExists' => $tableExists,
+        ];
+    } catch (PDOException $e) {
+        return [
             'error' => 'Erreur lors de la connexion à la base de données: ' . $e->getMessage(),
-        ], 500); // Retourner une réponse d'erreur avec un code 500
+        ];
+    }
+        $mdp =$request -> password;
+        $email = $request -> email;
+        $account = DB::table('accounts')->where('email', $request->email)->first();
+        if ($account)
+        {
+            $employees = DB::table('employees')->where('FK_account_id',$account.id)->first();
+            if ($employees){
+                $admin=DB::table('function')->where('FK_function_id',$employees.FK_function_id)->first();
+                if ($admin->name == 'Admin'){
+                    echo 'Admin';
+                }
+                else{
+                    echo 'employees';
+                }
+            }
+            else{echo 'utilisateur';}
+        }
+        return view('FormConnexion');
+        
     }
 }
-
-    }
-    
-
