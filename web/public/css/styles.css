@@ -17,6 +17,11 @@ body.no-scroll {
 body.no-scroll main {
   opacity: 0.8;
 }
+body h2 {
+  margin-top: 0px;
+  font-size: 2.2em;
+}
+
 .container {
   width: 100%;
 }
@@ -29,6 +34,10 @@ body.no-scroll main {
   width: 100%;
   padding: 0px;
 }
+.container.first {
+  padding-top: 75px;
+}
+
 .groupe {
   width: 100%;
 }
