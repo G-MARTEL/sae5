@@ -1,0 +1,13 @@
+Pré-requis:
+-Php installé(copier coller le php.ini disponible sur le github dans le dossier PHP)
+-Composer installé
+
+Procédure : 
+-"git clone https://github.com/G-MARTEL/sae5/tree/main" dans le repertoire de notre choix
+-On se positionne dans le dossier sae5/web/ est on execute : "docker compose up --build -d"
+-Nous pouvons ensuite executer "composer update" dans notre repertoire web
+-on duplique le fichier .env.example en le renommant .env
+- on execute les commandes suivantes :
+  -docker exec -ti app php artisan key:generate
+  -docker exec -ti app php artisan migrate
+ et voila
