@@ -20,6 +20,10 @@ html {
     main {
      // margin-top: 126px;
     }
+    h2{
+      margin-top: 0px;
+      font-size: 2.2em;
+    }
   }
  
 
@@ -38,6 +42,9 @@ html {
       }
     }
 
+    &.first {
+      padding-top: 75px;
+    }
   }
 
   .groupe {
