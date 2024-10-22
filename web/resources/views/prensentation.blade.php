@@ -9,7 +9,10 @@
 @section('content')
 
 
-<H1>Page qui somme nous </H1>
+<div class="container"><H1>Une presentation S'import</H1></div>
+
+<div class="container"></div>
+<div class="container">coucou</div>
 
 
 @endsection
