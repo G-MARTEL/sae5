@@ -19,7 +19,7 @@
             <li><a href="devis">Faire un devis</a></li>
         </ul>
         <div class="nav-btn">
-        <a href="connexion"><button>Connexion </button></a>
+        <a href="{{ route('user.login') }}"><button>Connexion </button></a>
         </div>
     </nav>
         
