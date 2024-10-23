@@ -33,9 +33,20 @@ class Autentification extends Controller
                     echo 'employees';
                 }
             }
-            else{echo 'utilisateur';}
+            $response = [
+                'success' => true,
+                'message' => 'Connexion réussie !'
+            ];
+            json_encode($response);
         }
-        return view('FormConnexion');
+        else{
+            $response = [
+                'success' => FALSE,
+                'message' => 'verifier vos identifiant !'
+            ];
+            return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput(); //
+        }
+       
         
     }
 }
