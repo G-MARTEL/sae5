@@ -26,16 +26,19 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::post('/connexion', [Autentification::class, 'loginUser']);
 
     Route::prefix('clients')->name('clients.')->group(function() {
+        Route::get('/acceuil',function(){return view('acceuilCliens');})->name('acceuil');
 
     });
     Route::prefix('employees')->name('employees.')->group(function() {
-
+        Route::get('/acceuil',function(){return view('acceuilEmployees');})->name('acceuil');
     });
 });
+
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/connexion', [Autentification::class, 'showLoginFormAdmin'])->name('login');
     Route::post('/connexion', [Autentification::class, 'loginAdmin']);
+    Route::get('/acceuil',function(){return view('acceuilAdmin');})->name('acceuil');
 
 });

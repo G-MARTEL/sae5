@@ -34,19 +34,36 @@ class Autentification extends Controller
             $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
             if ($employees)
             {
-                $admin=DB::table('functions')->where('function_id',$employees->FK_function_id)->first();
-                if ($admin){
-                    echo "employees";
-                }
-            
-            else{
-                echo "Clients";
-            }}
+                return redirect('user/employees/acceuil');
+            }
+            return redirect('user/clients/acceuil');
         }
         else{
             return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput(); //
         }
        
         
+    }
+    public function loginAdmin(Request $request)
+    {
+        $mdp =$request -> password;
+        $email = $request -> email;
+        $account = DB::table('accounts')->where('email', $request->email)->first();
+        $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
+        if ($employees && $mdp === $account->password) // a modifier avec if ($account && Hash::check($mdp, $account->password)) il s'agit d'un hachage laravel
+        {
+        $admin=DB::table('functions')->where('function_id',$employees->FK_function_id)->first();
+            if ($admin){
+                return redirect('admin/acceuil');
+            }
+            else{
+                return redirect()->back()->with('error', "Seci n'est pas un compte admin!")->withInput(); 
+            }
+        }
+        else
+        {
+            return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput(); //
+        }
+     
     }
 }
