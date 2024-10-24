@@ -11,13 +11,13 @@ Route::get('/', function () {
 
 Route::get('BDD',[BDDController::class, 'CreateBDD']);
 
-Route::get('Qui-Somme-Nous', function () {
-    return view('prensentation');
+Route::get('qui-sommes-nous', function () {
+    return view('presentation');
 })->name('presentation');
 
-Route::get('prestation', function () {
-    return view('prestation');
-})->name('prestation');
+Route::get('prestations', function () {
+    return view('prestations');
+})->name('prestations');
 
 
 Route::get('simulateur', function () {

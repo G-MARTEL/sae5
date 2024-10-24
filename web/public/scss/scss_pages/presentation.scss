@@ -1,0 +1,131 @@
+@use 'sass:color';
+@import "../scss_base/variables.scss";
+
+
+.container#presentation-1 {
+    text-align: center !important;;
+    h2 {
+        padding-top: 40px !important;
+    }
+    .container-inner {   
+        max-width: 800px; 
+        margin: 0 auto;
+        margin-bottom: 80px; 
+        border: 2px solid $vert;
+        border-radius: 15px; 
+        padding: 30px; 
+        background-color: $vert-clair;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    }  
+}
+
+.container#presentation-2 {
+    background-color: $vert-clair;
+    .container-inner {
+        text-align: center;
+        h3{
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .colonnes{
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+            .colonne{
+                flex: 1;
+                p{
+                    color: grey;
+                }
+                figure{
+                   img {
+                    height: 60px;
+                    padding: 10px;
+                    border-radius: 50%;
+                   }
+                }
+                &:first-child{
+                    figure img {
+                        background-color: #cbb1e2;
+                    }
+                   
+                }
+                &:nth-child(2){
+                    figure img{
+                        background-color: #7ce8dc;
+                    }
+                }
+                &:nth-child(3){
+                    figure img{
+                        background-color: #f6d177;
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+.container#presentation-3 {
+    .container-inner{
+        text-align: center;
+        &:first-child{
+            padding-bottom: 30px !important;
+        }
+        &:nth-child(2){
+            text-align: left;
+            padding-top: 0px !important;
+            p{
+                padding: 0px 60px 0px 60px;
+            }
+        }
+        h3{
+            font-size: 1.5em;
+        }
+        .colonnes{
+            display: flex;
+            flex-direction: row;
+           // grid-template-columns: repeat(3, 1fr); /* Trois colonnes de largeur égale */
+            gap: 30px;
+            .colonne{
+                background-color: $gris;
+                border-radius: 30px;
+                flex: 1;
+                box-shadow: $ombre;
+                figure{
+                    img {
+                        height: 150px;
+                        border-radius: 50%;
+                    }
+                }
+                p {
+                    text-align: left;
+                    margin: 30px;
+                }
+            }
+        }
+    }
+
+}
+
+.container#presentation-4 {
+    background-color: color.adjust($vert, $lightness: 50%);
+    .container-inner{
+        text-align: center;
+        h1{
+            color: white;
+            position: relative;
+            font-size: 3.5em;
+            &::before{
+                position: absolute;
+                content: '';
+                top: 0;
+                left: 0;
+                width: 100px;
+                height: 100px;
+                background-image: url("{{ URL::asset('assets/presentation/employe1.jpg') }}");
+                background-size: cover; /* Pour que l'image remplisse bien le cadre */
+                background-repeat: no-repeat; /* Pour éviter les répétitions */
+            }
+        }
+    }
+}
