@@ -21,9 +21,21 @@ Route::get('devis', function () {return view('devis');})->name('devis');
 
 
 
-
 Route::prefix('user')->name('user.')->group(function () {
-    Route::get('/connexion', [Autentification::class, 'showLoginForm'])->name('login');
-    Route::post('/connexion', [Autentification::class, 'login']);
+    Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
+    Route::post('/connexion', [Autentification::class, 'loginUser']);
+
+    Route::prefix('clients')->name('clients.')->group(function() {
+
+    });
+    Route::prefix('employees')->name('employees.')->group(function() {
+
+    });
 });
 
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/connexion', [Autentification::class, 'showLoginFormAdmin'])->name('login');
+    Route::post('/connexion', [Autentification::class, 'loginAdmin']);
+
+});

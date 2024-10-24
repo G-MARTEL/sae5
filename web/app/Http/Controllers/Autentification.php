@@ -9,12 +9,20 @@ use Illuminate\Http\Request;
 
 class Autentification extends Controller
 {
-    public function showLoginForm()
+    public function showLoginFormUser()
     {
         return view('FormConnexion'); // Assure-toi que la vue existe
     }
 
-    public function login(Request $request)
+
+
+
+    public function showLoginFormAdmin()
+    {
+        return view('FormConnexion'); // Assure-toi que la vue existe
+    }
+
+    public function loginUser(Request $request)
     {
 
         
@@ -24,26 +32,18 @@ class Autentification extends Controller
         if ($account && $mdp === $account->password) // a modifier avec if ($account && Hash::check($mdp, $account->password)) il s'agit d'un hachage laravel
         {
             $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
-            if ($employees){
+            if ($employees)
+            {
                 $admin=DB::table('functions')->where('function_id',$employees->FK_function_id)->first();
                 if ($admin){
-                    echo 'Admin';
+                    echo "employees";
                 }
-                else{
-                    echo 'employees';
-                }
-            }
-            $response = [
-                'success' => true,
-                'message' => 'Connexion réussie !'
-            ];
-            json_encode($response);
+            
+            else{
+                echo "Clients";
+            }}
         }
         else{
-            $response = [
-                'success' => FALSE,
-                'message' => 'verifier vos identifiant !'
-            ];
             return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput(); //
         }
        

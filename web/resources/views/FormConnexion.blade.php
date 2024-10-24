@@ -1,6 +1,6 @@
 <div class="container">
     <h1>Connexion</h1>
-    <form action="/connexion" method="POST">
+    <form action="{{ request()->is('admin/*') ? route('admin.login') : route('user.login') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="email">Email</label>
@@ -13,6 +13,7 @@
         <button type="submit">Se connecter</button>
     </form>
 </div>
+
 @if(session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
