@@ -106,6 +106,10 @@ body h2 {
 #accueil-1.container figure:nth-child(2) button:hover {
   background-color: rgb(30.7218934911, 87.2781065089, 85.8816568047);
 }
+#accueil-1.container figure:nth-child(2) button:hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
 
 #accueil-2.container {
   text-align: center;
@@ -130,6 +134,10 @@ body h2 {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   flex: 1;
   text-align: center;
+}
+#accueil-2.container .container-inner .container-columns .column:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 #accueil-2.container .container-inner .container-columns .column h3 {
   color: #2c7d7b;
@@ -268,6 +276,8 @@ body h2 {
 }
 #accueil-5.container .container-inner button:hover {
   background-color: rgb(30.7218934911, 87.2781065089, 85.8816568047);
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 #contact.container {

@@ -16,6 +16,10 @@
         padding: 30px; 
         background-color: $vert-clair;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        &:hover {
+            transform: scale(1.05); 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
+        }
     }  
 }
 
@@ -41,6 +45,10 @@
                     height: 60px;
                     padding: 10px;
                     border-radius: 50%;
+                    &:hover {
+                        transform: scale(1.05); 
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
+                    }
                    }
                 }
                 &:first-child{
@@ -91,6 +99,10 @@
                 border-radius: 30px;
                 flex: 1;
                 box-shadow: $ombre;
+                &:hover {
+                    transform: scale(1.05); 
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
+                }
                 figure{
                     img {
                         height: 150px;
@@ -118,14 +130,26 @@
             &::before{
                 position: absolute;
                 content: '';
-                top: 0;
-                left: 0;
-                width: 100px;
-                height: 100px;
-                background-image: url("{{ URL::asset('assets/presentation/employe1.jpg') }}");
-                background-size: cover; /* Pour que l'image remplisse bien le cadre */
-                background-repeat: no-repeat; /* Pour éviter les répétitions */
+                top: -40px;
+                left: 155px;
+                width: 55px;
+                height: 55px;
+                background-image: url('../assets/presentation/quote1.svg');
+                background-size: contain; 
+                background-repeat: no-repeat; 
             }
+            &::after {
+                content: '';
+                position: absolute;
+                top: 15px;
+                right: 155px;
+                width: 50px;
+                height: 50px;
+                background-image: url('../assets/presentation/quote2.svg');
+                background-size: contain; 
+                background-repeat: no-repeat; 
+
+              }
         }
     }
 }
