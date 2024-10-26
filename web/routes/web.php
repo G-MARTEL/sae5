@@ -1,13 +1,16 @@
 <?php
-
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\BDDController;
 use App\Http\Controllers\Autentification;
 
+
 Route::get('/', function () {
-    return view('accueil');
-})->name('home');
+    return view('accueil'); 
+});
+
+Route::get('acceuil', function () {return view('accueil');});
 
 Route::get('Qui-Somme-Nous', function () {return view('prensentation');})->name('presentation');
 
@@ -21,17 +24,18 @@ Route::get('devis', function () {return view('devis');})->name('devis');
 
 
 
-Route::prefix('user')->name('user.')->group(function () {
-    Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
-    Route::post('/connexion', [Autentification::class, 'loginUser']);
 
-    Route::prefix('clients')->name('clients.')->group(function() {
-        Route::get('/acceuil',function(){return view('acceuilCliens');})->name('acceuil');
+Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
+Route::post('/connexion', [Autentification::class, 'login']);
 
-    });
-    Route::prefix('employees')->name('employees.')->group(function() {
-        Route::get('/acceuil',function(){return view('acceuilEmployees');})->name('acceuil');
-    });
+Route::prefix('clients')->name('clients.')->group(function() {
+    Route::get('/accueil',function(){return view('acceuilCliens');})->name('accueil');
+    Session::put('redirecte', 'true');
+
+});
+Route::prefix('employees')->name('employees.')->group(function() {
+    Route::get('/accueil',function(){return view('acceuilEmployees');})->name('accueil');
+    Session::put('redirecte', 'true');
 });
 
 

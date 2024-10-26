@@ -1,6 +1,6 @@
 <div class="container">
     <h1>Connexion</h1>
-    <form action="{{ request()->is('admin/*') ? route('admin.login') : route('user.login') }}" method="POST">
+    <form action="connexion" method="POST">
         @csrf
         <div class="form-group">
             <label for="email">Email</label>
