@@ -28,7 +28,7 @@ Route::get('devis', function () {return view('devis');})->name('devis');
 Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
 Route::post('/connexion', [Autentification::class, 'login']);
 
-Route::prefix('clients')->name('clients.')->group(function() {
+Route::prefix('client')->name('client.')->group(function() {
     Route::get('/accueil',function(){return view('acceuilCliens');})->name('accueil');
 
 });

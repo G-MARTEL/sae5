@@ -38,7 +38,7 @@ class Autentification extends Controller
                 Session::put('id', $employees->FK_account_id);
                 return redirect('/employees/accueil');
             }
-            $clien = DB::table('client')->where('FK_account_id',$account ->account_id)->first();
+            $clien = DB::table('clients')->where('FK_account_id',$account ->account_id)->first();
             Session::put('role', 'client');
             Session::put('id', $clien->FK_account_id);
             return redirect('/client/accueil');
@@ -62,7 +62,6 @@ class Autentification extends Controller
                 session(['role' => 'admin',
                         'id' => $employees->FK_account_id
                     ]);
-                dd(session);
                 return redirect('admin/acceuil');
             }
             else{
