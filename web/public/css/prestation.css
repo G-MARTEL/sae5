@@ -1,0 +1,74 @@
+#prestation-1.container {
+  background-color: rgb(229.1124260355, 245.8875739645, 245.4733727811);
+  text-align: center;
+  padding-top: 60px;
+}
+#prestation-1.container .container-inner h2 {
+  margin-bottom: 0px;
+}
+
+#prestation-2.container .container-inner .colonnes {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+#prestation-2.container .container-inner .colonnes .colonne {
+  flex: 1;
+  padding: 20px;
+}
+#prestation-2.container .container-inner .colonnes .texte-colonne {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+#prestation-2.container .container-inner .colonnes .texte-colonne h3 {
+  margin-bottom: 10px;
+}
+#prestation-2.container .container-inner .colonnes .texte-colonne p {
+  padding-top: 2em;
+}
+#prestation-2.container .container-inner .colonnes .images-colonne {
+  display: flex;
+  flex-direction: column;
+}
+#prestation-2.container .container-inner .colonnes .images-colonne h3 {
+  margin-bottom: 10px;
+}
+#prestation-2.container .container-inner .colonnes .images-colonne .colonnes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#prestation-2.container .container-inner .colonnes .images-colonne .colonnes .colonne {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#prestation-2.container .container-inner .colonnes .images-colonne .colonnes .colonne figure {
+  margin: 0;
+}
+#prestation-2.container .container-inner .colonnes .images-colonne .colonnes .colonne figure img {
+  width: auto;
+  height: 150px;
+  border-radius: 50%;
+}
+
+@media only screen and (max-width: 1024px) {
+  .container#prestation-2 .container-inner .colonnes {
+    flex-direction: column;
+  }
+  .container#prestation-2 .container-inner .colonnes .texte-colonne h3,
+  .container#prestation-2 .container-inner .colonnes .images-colonne h3 {
+    text-align: center;
+  }
+  .container#prestation-2 .container-inner .colonnes .images-colonne .colonnes {
+    flex-direction: column;
+  }
+  .container#prestation-2 .container-inner .colonnes .images-colonne .colonnes .colonne {
+    margin-bottom: 20px;
+  }
+}
+
+/*# sourceMappingURL=prestation.css.map */

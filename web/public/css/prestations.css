@@ -1,0 +1,47 @@
+.container#prestations1 {
+  background-color: rgb(229.1124260355, 245.8875739645, 245.4733727811);
+  text-align: center;
+  padding-top: 75px;
+}
+.container#prestations1 h1 {
+  padding-bottom: 30px;
+}
+
+.container#prestations2 .container-inner {
+  padding: 30px 60px;
+}
+.container#prestations2 .container-inner .colonnes {
+  display: flex;
+  flex-direction: row;
+}
+.container#prestations2 .container-inner .colonnes .colonne:first-child {
+  flex: 2;
+}
+.container#prestations2 .container-inner .colonnes .colonne:nth-child(2) {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container#prestations2 .container-inner .colonnes .colonne:nth-child(2) img {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+}
+.container#prestations2 .container-inner .colonnes .colonne:nth-child(3) {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container#prestations2 .container-inner .colonnes .colonne:nth-child(3) a {
+  background-color: #2c7d7b;
+  border-radius: 15px;
+  color: white;
+  text-decoration: none;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/*# sourceMappingURL=prestations.css.map */
