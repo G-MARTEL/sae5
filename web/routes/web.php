@@ -12,10 +12,13 @@ Route::get('/', function () {
 
 Route::get('acceuil', function () {return view('accueil');});
 
-Route::get('Qui-Somme-Nous', function () {return view('prensentation');})->name('presentation');
+Route::get('qui-sommes-nous', function () {
+    return view('presentation');
+})->name('presentation');
 
-Route::get('prestation', function () {return view('prestation');})->name('prestation');
-
+Route::get('prestations', function () {
+    return view('prestations');
+})->name('prestations');
 
 Route::get('simulateur', function () {return view('simulateur');})->name('simulateur');
 

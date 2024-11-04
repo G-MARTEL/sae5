@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 22 oct. 2024 à 12:34
+-- Généré le : ven. 25 oct. 2024 à 12:58
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -220,6 +220,21 @@ CREATE TABLE `reviews` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `services`
+--
+
+CREATE TABLE `services` (
+  `service_id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `advantage` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `inconvenient` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `site_informations`
 --
 
@@ -238,6 +253,18 @@ CREATE TABLE `site_informations` (
 
 INSERT INTO `site_informations` (`site_information_id`, `company_name`, `logo`, `linkedin_link`, `facebook_link`, `instagram_link`) VALUES
 (1, 'Avycompta', 'logo.png', 'linkedin.com/avycompta', 'facebook.com/avycompta', 'instagram.com/avycompta');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `team_services`
+--
+
+CREATE TABLE `team_services` (
+  `team_service_id` int(11) NOT NULL,
+  `FK_service_id` int(11) NOT NULL,
+  `FK_employee_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Index pour les tables déchargées
@@ -328,10 +355,24 @@ ALTER TABLE `reviews`
   ADD KEY `FK_account_reviews` (`FK_account_id`);
 
 --
+-- Index pour la table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`service_id`);
+
+--
 -- Index pour la table `site_informations`
 --
 ALTER TABLE `site_informations`
   ADD PRIMARY KEY (`site_information_id`);
+
+--
+-- Index pour la table `team_services`
+--
+ALTER TABLE `team_services`
+  ADD PRIMARY KEY (`team_service_id`),
+  ADD KEY `FK_team_services_employee` (`FK_employee_id`),
+  ADD KEY `FK_team_service_service` (`FK_service_id`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -347,7 +388,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT pour la table `actions_type`
 --
 ALTER TABLE `actions_type`
-  MODIFY `action_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `action_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `clients`
@@ -404,10 +445,22 @@ ALTER TABLE `reviews`
   MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `services`
+--
+ALTER TABLE `services`
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `site_informations`
 --
 ALTER TABLE `site_informations`
   MODIFY `site_information_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `team_services`
+--
+ALTER TABLE `team_services`
+  MODIFY `team_service_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
@@ -465,6 +518,13 @@ ALTER TABLE `log_reviews`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `FK_account_reviews` FOREIGN KEY (`FK_account_id`) REFERENCES `accounts` (`account_id`);
+
+--
+-- Contraintes pour la table `team_services`
+--
+ALTER TABLE `team_services`
+  ADD CONSTRAINT `FK_team_service_service` FOREIGN KEY (`FK_service_id`) REFERENCES `services` (`service_id`),
+  ADD CONSTRAINT `FK_team_services_employee` FOREIGN KEY (`FK_employee_id`) REFERENCES `employees` (`employee_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

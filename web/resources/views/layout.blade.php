@@ -13,8 +13,8 @@
             <img src="logo.png" alt="Logo"> <!-- Insère ici ton logo -->
         </div>
         <ul class="nav-links">
-            <li><a href="Qui-Somme-Nous">Qui Somme Nous ?</a></li>
-            <li><a href="prestation">Prestation </a></li>
+            <li><a href="qui-sommes-nous">Qui sommes-nous ?</a></li>
+            <li><a href="prestations">Prestations </a></li>
             <li><a href="simulateur">Simulateurs </a></li>
             <li><a href="devis">Faire un devis</a></li>
         </ul>
