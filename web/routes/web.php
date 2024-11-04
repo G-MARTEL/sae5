@@ -7,7 +7,7 @@ use App\Http\Controllers\Autentification;
 
 
 Route::get('/', function () {
-    return view('accueil'); 
+    return view('accueil');
 });
 
 Route::get('acceuil', function () {return view('accueil');});
@@ -30,13 +30,10 @@ Route::post('/connexion', [Autentification::class, 'login']);
 
 Route::prefix('clients')->name('clients.')->group(function() {
     Route::get('/accueil',function(){return view('acceuilCliens');})->name('accueil');
-    Session::put('redirecte', 'true');
 
 });
 Route::prefix('employees')->name('employees.')->group(function() {
-    Route::get('/accueil',function(){return view('acceuilEmployees');})->name('accueil');
-    Session::put('redirecte', 'true');
-});
+    Route::get('/accueil',function(){return view('acceuilEmployees');})->name('accueil');});
 
 
 
