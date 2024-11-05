@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('styles')
+<link rel="stylesheet" href="./css/prestation.css"/>
 @endsection
 
 
@@ -9,13 +10,13 @@
 @section('content')
 
 
-<!-- <div class="container" id="prestations-1">
+<div class="container" id="prestation-1">
     <div class="container-inner">
-        <h2>Nos prestations</h2>
+        <h2>titre prestation a gérer en php</h2>
     </div>
 </div>
 
-<div class="container" id="prestations-2">
+<div class="container" id="prestation-2">
     <div class="container-inner">
         <div class="colonnes">
             <div class="colonne texte-colonne">
@@ -47,7 +48,35 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
+
+<div class="container" id="prestation-3">
+    <div class="container-inner">
+        <div class="colonnes">
+            <div class="colonne">
+                <h3>Avantages</h3>
+                    <ul>
+                        <!-- ajouter foreach-->
+                         <li>exemple 1</li>
+                         <li>exemple 2</li>
+                         <li>exemple 3</li>
+                    </ul>
+            </div>
+            <div class="colonne">
+                <h3>Situations</h3>
+                <ul>
+                    <!-- ajouter foreach-->
+                    <li>exemple 1</li>
+                    <li>exemple 2</li>
+                    <li>exemple 3</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <a href="devis">
+            Prendre rendez vous
+        </a>
+</div>
 
 
 

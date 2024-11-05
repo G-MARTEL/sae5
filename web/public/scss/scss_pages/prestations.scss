@@ -2,7 +2,7 @@
 @import "../scss_base/variables.scss";
 
 
-.container#prestations1{
+.container#prestations-1{
     background-color: $vert-clair;
     text-align: center;
     padding-top: 75px;
@@ -13,7 +13,8 @@
 
 
 
-.container#prestations2 {
+.container#prestations-2 {
+    background-color: $gris;
     .container-inner {
         padding: 30px 60px;
         .colonnes {

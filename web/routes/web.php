@@ -19,6 +19,9 @@ Route::get('prestations', function () {
     return view('prestations');
 })->name('prestations');
 
+Route::get('prestation', function () {
+    return view('prestation');
+})->name('prestation');
 
 Route::get('simulateur', function () {
     return view('simulateur');

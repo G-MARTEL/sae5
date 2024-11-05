@@ -17,12 +17,12 @@ if (strlen($texte) > 150) {
 }
 ?>
 
-<div class="container" id="prestations1">
+<div class="container" id="prestations-1">
     <h1>Nos prestations</h1>
 </div>
 
 <!-- ajouter un foreach -->
-<div class="container" id="prestations2">
+<div class="container" id="prestations-2">
     <div class="container-inner">
         <div class="colonnes">
             <div class="colonne">
