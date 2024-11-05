@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : ven. 25 oct. 2024 à 12:58
+-- Généré le : mar. 05 nov. 2024 à 08:55
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -229,7 +229,7 @@ CREATE TABLE `services` (
   `description` text COLLATE utf8_unicode_ci,
   `picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `advantage` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `inconvenient` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `situations` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
