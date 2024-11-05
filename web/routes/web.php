@@ -39,6 +39,8 @@ Route::get('devis', function () {return view('devis');})->name('devis');
 Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
 Route::post('/connexion', [Autentification::class, 'login']);
 
+Route::get('/creationCompte',function(){ return view('creationCompte');})->name('CreationCompte');
+
 Route::prefix('client')->name('client.')->group(function() {
     Route::get('/accueil', function () {
         if (session('role') !== 'client') {
