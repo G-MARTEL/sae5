@@ -1,5 +1,6 @@
 <h2>Création de compte</h2>
-    <form action="CreationClient" method="post">
+    <form action="creationCompte" method="post">
+        @csrf
         <label for="first_name">Prénom :</label>
         <input type="text" id="first_name" name="first_name" required>
         <br>
