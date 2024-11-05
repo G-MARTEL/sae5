@@ -27,7 +27,7 @@ Route::get('prestation', function () {
 
 Route::get('simulateur', function () {
   return view('simulateur');
-})->name('simulateur');
+})->name('simulateur') ;
 
 
 
