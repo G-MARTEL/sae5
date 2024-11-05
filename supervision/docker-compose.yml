@@ -1,0 +1,75 @@
+services:
+  
+  #PHP
+  supervision:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: supervision/php
+    container_name: supervision
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: supervision
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - supervision-network
+
+  #Nginx
+  webserver-supervision:
+    image: nginx:alpine
+    container_name: webserver-supervision
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "9090:80"
+      - "444:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/:/etc/nginx/conf.d/
+    networks:
+      - supervision-network
+
+  #MySQL
+  db-supervision:
+    image: mysql:5.7.22
+    container_name: db-supervision
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - supervision-network
+  #phpmyadmin
+  phpmyadmin-supervision:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-supervision
+    restart: unless-stopped
+    environment:
+        PMA_HOST: db-supervision
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+        - 8181:80
+    networks:
+        - supervision-network
+
+#Networks
+networks:
+  supervision-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
