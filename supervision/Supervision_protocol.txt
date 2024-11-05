@@ -1,0 +1,93 @@
+SUPERVISION
+========================
+
+Créer la Base De Donnée
+
+	CREATE TABLE IF NOT EXISTS supervision (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ping VARCHAR(5),
+    hostname VARCHAR(50),
+    ram_usage VARCHAR(20),
+    cpu_usage VARCHAR(50),
+    storage_remaining VARCHAR(20)
+);
+
+--------------------------------------------------------------------------------------------------
+Créer le script shell "supervision.sh" (modifier le db_path pour le faire correspondre à la base):
+
+#!/bin/bash
+
+# Chemin vers la base de données SQLite
+DB_PATH="/home/kali/Desktop/supervisionfolder/supervision.db"
+
+# Adresse IP et nom d'utilisateur SSH
+ip_address="192.168.239.135"
+user="kali"
+
+# Vérifier le PING (succès renvoie "true", échec renvoie "false")
+ping_status=$(ping -c 1 -W 2 "$ip_address" > /dev/null 2>&1 && echo "true" || echo "false")
+
+# Récupérer les informations système de la machine distante
+hostname=$(ssh -i /home/kali/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "hostname" 2>/dev/null)
+ram=$(ssh -i /home/kali/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "top -bn1 | grep 'MiB Mem' | awk '{print \$6}'" 2>/dev/null)
+cpu=$(ssh -i /home/kali/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "top -bn1 | grep '%Cpu(s)' | awk '{print 100 - \$8}'" 2>/dev/null)
+storage_remaining=$(ssh -i /home/kali/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "df -h --output=avail / | tail -n 1" 2>/dev/null)
+max_storage=$(ssh -i /home/kali/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "df -h --output=size / | tail -n 1" 2>/dev/null)
+
+#Informations de connection à la base de donnée
+DB_CONNECTION=mysql
+DB_HOST=db  
+DB_PORT=3306
+DB_DATABASE=supervision
+DB_USERNAME=root    
+DB_PASSWORD=password
+
+#Connexion a la BDD et insertion pour l'insertion dans la table ressources
+mysql -u "$DB_USERNAME" -p"$DB_PASSWORD" -h "$DB_HOST" -P "$DB_PORT" "$DB_DATABASE" <<EOF
+
+INSERT INTO ressources (ping, storage, ram, cpu)
+VALUES ('$ping_status', '$storage_remaining', '$ram', '$cpu');
+
+INSERT INTO machines(name, max_storage)
+VALUES ('$hostname','$max_storage')
+EOF
+
+# Vérification de l'insertion dans la base de données
+if [ $? -eq 0 ]; then
+    echo "Données de supervision enregistrées avec succès."
+else
+    echo "Erreur : Échec de l'insertion dans la base de données."
+fi
+
+--------------------------------------------------------------------------------------------------
+
+rendre le script exécutable :
+	chmod +x supervision.sh
+
+--------------------------------------------------------------------------------------------------
+
+Editer le Cron :
+	crontab -e
+	insérer la ligne suivante (se fait toute les 5 min) :
+		*/5 * * * * /chemin/vers/supervision.sh
+
+--------------------------------------------------------------------------------------------------
+
+(Ne pas oublier d'activer le ssh sur les machines)
+
+--------------------------------------------------------------------------------------------------
+
+Créer les clefs rsa :
+	ssh-keygen -t rsa -b 2048
+	
+--------------------------------------------------------------------------------------------------
+
+Copier la clé publique sur la machine distante (permet l'authentification sans mdp)
+	ssh-copy-id -i ~/.ssh/id_rsa.pub user_Supervision@host_Machine_Distante
+
+--------------------------------------------------------------------------------------------------
+
+
+
+
