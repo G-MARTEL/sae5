@@ -20,7 +20,15 @@ Route::get('prestations', function () {
     return view('prestations');
 })->name('prestations');
 
-Route::get('simulateur', function () {return view('simulateur');})->name('simulateur');
+
+Route::get('prestation', function () {
+    return view('prestation');
+})->name('prestation');
+
+Route::get('simulateur', function () {
+  return view('simulateur');
+})->name('simulateur');
+
 
 
 Route::get('devis', function () {return view('devis');})->name('devis');

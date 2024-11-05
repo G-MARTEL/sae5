@@ -11,7 +11,7 @@
   border: 2px solid #2c7d7b;
   border-radius: 15px;
   padding: 30px;
-  background-color: rgb(229.1124260355, 245.8875739645, 245.4733727811);
+  background-color: #d4ebeb;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 .container#presentation-1 .container-inner:hover {
@@ -20,7 +20,7 @@
 }
 
 .container#presentation-2 {
-  background-color: rgb(229.1124260355, 245.8875739645, 245.4733727811);
+  background-color: #d4ebeb;
 }
 .container#presentation-2 .container-inner {
   text-align: center;

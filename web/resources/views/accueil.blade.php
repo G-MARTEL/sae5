@@ -14,7 +14,9 @@
     <img src="https://img.freepik.com/photos-premium/technologie-big-data-pour-concept-finance-entreprise_31965-3011.jpg?w=996" alt="Image de fond">
   </figure>
   <figure>
-    <button>Prendre rendez vous</button>
+    <a href="devis">
+        <button>Prendre rendez vous</button>
+    </a>
   </figure>
 </div>
 
@@ -69,7 +71,9 @@
 <div class="container" id="accueil-5">
     <div class="container-inner">
         <h2>Et pourquoi pas vous ?</h2>
-        <button>Prendre rendez vous</button>
+        <a href="devis">
+            <button>Prendre rendez vous</button>
+        </a>
     </div> 
 </div>
 

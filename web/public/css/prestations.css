@@ -1,0 +1,50 @@
+.container#prestations-1 {
+  background-color: #d4ebeb;
+  text-align: center;
+  padding-top: 75px;
+}
+.container#prestations-1 h1 {
+  padding-bottom: 30px;
+}
+
+.container#prestations-2 {
+  background-color: rgb(239.82, 242.35, 244.88);
+}
+.container#prestations-2 .container-inner {
+  padding: 30px 60px;
+}
+.container#prestations-2 .container-inner .colonnes {
+  display: flex;
+  flex-direction: row;
+}
+.container#prestations-2 .container-inner .colonnes .colonne:first-child {
+  flex: 2;
+}
+.container#prestations-2 .container-inner .colonnes .colonne:nth-child(2) {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container#prestations-2 .container-inner .colonnes .colonne:nth-child(2) img {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+}
+.container#prestations-2 .container-inner .colonnes .colonne:nth-child(3) {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container#prestations-2 .container-inner .colonnes .colonne:nth-child(3) a {
+  background-color: #2c7d7b;
+  border-radius: 15px;
+  color: white;
+  text-decoration: none;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/*# sourceMappingURL=prestations.css.map */
