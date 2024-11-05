@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 05 nov. 2024 à 12:31
+-- Généré le : mar. 05 nov. 2024 à 13:26
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -290,7 +290,9 @@ CREATE TABLE `team_services` (
 -- Index pour la table `accounts`
 --
 ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`account_id`);
+  ADD PRIMARY KEY (`account_id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `email_2` (`email`);
 
 --
 -- Index pour la table `actions_type`
