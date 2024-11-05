@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 05 nov. 2024 à 09:39
+-- Généré le : mar. 05 nov. 2024 à 13:01
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -41,6 +41,7 @@ CREATE TABLE `machines` (
 
 CREATE TABLE `ressources` (
   `ressource_id` int(11) NOT NULL,
+  `FK_machine_id` int(11) NOT NULL,
   `ping` tinyint(1) NOT NULL,
   `storage` int(11) NOT NULL,
   `ram` int(11) NOT NULL,
@@ -78,7 +79,8 @@ ALTER TABLE `machines`
 -- Index pour la table `ressources`
 --
 ALTER TABLE `ressources`
-  ADD PRIMARY KEY (`ressource_id`);
+  ADD PRIMARY KEY (`ressource_id`),
+  ADD KEY `FK_ressources_machines` (`FK_machine_id`);
 
 --
 -- Index pour la table `ressources_hist`
@@ -113,6 +115,12 @@ ALTER TABLE `ressources_hist`
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `ressources`
+--
+ALTER TABLE `ressources`
+  ADD CONSTRAINT `FK_ressources_machines` FOREIGN KEY (`FK_machine_id`) REFERENCES `machines` (`machine_id`);
 
 --
 -- Contraintes pour la table `ressources_hist`
