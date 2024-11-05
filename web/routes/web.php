@@ -40,12 +40,16 @@ Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('l
 Route::post('/connexion', [Autentification::class, 'login']);
 
 Route::prefix('client')->name('client.')->group(function() {
+
     Route::get('/accueil', function () {
         if (session('role') !== 'client') {
             return redirect('/'); // Redirige si le rôle n'est pas 'client'
         }
         return view('acceuilCliens');
+        
     })->name('accueil');
+
+
 });
 Route::prefix('employees')->name('employees.')->group(function() {
     Route::get('/accueil', function () {
