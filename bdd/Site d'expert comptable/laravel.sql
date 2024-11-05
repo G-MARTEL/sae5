@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 05 nov. 2024 à 10:42
+-- Généré le : mar. 05 nov. 2024 à 12:31
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -75,7 +75,7 @@ INSERT INTO `actions_type` (`action_type_id`, `action_name`) VALUES
 
 CREATE TABLE `clients` (
   `client_id` int(11) NOT NULL,
-  `FK_employee_id` int(11) NOT NULL,
+  `FK_employee_id` int(11) DEFAULT NULL,
   `FK_account_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -143,15 +143,15 @@ INSERT INTO `functions` (`function_id`, `function_name`) VALUES
 CREATE TABLE `log_accounts` (
   `log_account_id` int(11) NOT NULL,
   `FK_account_id` int(11) NOT NULL,
-  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `postal_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `code_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `picture` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `postal_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `code_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `picture` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -164,9 +164,9 @@ CREATE TABLE `log_accounts` (
 
 CREATE TABLE `log_clients` (
   `log_client_id` int(11) NOT NULL,
-  `FK_client_id` int(11) NOT NULL,
-  `FK_account_id` int(11) NOT NULL,
-  `FK_employee_id` int(11) NOT NULL,
+  `FK_client_id` int(11) DEFAULT NULL,
+  `FK_account_id` int(11) DEFAULT NULL,
+  `FK_employee_id` int(11) DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -179,9 +179,9 @@ CREATE TABLE `log_clients` (
 
 CREATE TABLE `log_employees` (
   `log_employee_id` int(11) NOT NULL,
-  `FK_employee_id` int(11) NOT NULL,
-  `FK_account_id` int(11) NOT NULL,
-  `FK_function_id` int(11) NOT NULL,
+  `FK_employee_id` int(11) DEFAULT NULL,
+  `FK_account_id` int(11) DEFAULT NULL,
+  `FK_function_id` int(11) DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -195,9 +195,9 @@ CREATE TABLE `log_employees` (
 CREATE TABLE `log_reviews` (
   `log_review_id` int(11) NOT NULL,
   `FK_review_id` int(11) NOT NULL,
-  `FK_account_id` int(11) NOT NULL,
-  `review` text COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
+  `FK_account_id` int(11) DEFAULT NULL,
+  `review` text COLLATE utf8_unicode_ci,
+  `status` int(11) DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
