@@ -1,0 +1,51 @@
+.container#client-1 {
+  padding-top: 74px;
+}
+.container#client-1 .container-inner .colonnes {
+  display: flex;
+  flex-direction: row;
+  gap: 150px;
+}
+.container#client-1 .container-inner .colonnes .colonne {
+  background-color: rgb(239.82, 242.35, 244.88);
+  border-radius: 20px;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.container#client-1 .container-inner .colonnes .colonne .container-inner {
+  padding: 40px;
+}
+.container#client-1 .container-inner .colonnes .colonne:first-child {
+  flex: 2;
+}
+.container#client-1 .container-inner .colonnes .colonne:nth-child(2) {
+  flex: 1;
+  text-align: center;
+}
+.container#client-1 .container-inner .colonnes .colonne:nth-child(2) img {
+  width: 125px;
+  border-radius: 50%;
+}
+.container#client-1 .container-inner .colonnes .colonne:nth-child(2) ul {
+  padding: 0;
+}
+.container#client-1 .container-inner .colonnes .colonne ul li {
+  list-style-type: none;
+}
+.container#client-1 .container-inner .colonnes .colonne button {
+  background-color: #2c7d7b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.container#client-1 .container-inner .colonnes .colonne button:hover {
+  background-color: rgb(30.7218934911, 87.2781065089, 85.8816568047);
+}
+.container#client-1 .container-inner .colonnes .colonne button:hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/*# sourceMappingURL=espace_client.css.map */

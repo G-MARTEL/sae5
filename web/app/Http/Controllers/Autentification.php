@@ -16,13 +16,11 @@ class Autentification extends Controller
     }
 
 
-
-
     public function showLoginFormAdmin()
     {
         return view('FormConnexion'); // Assure-toi que la vue existe
     }
-
+  
     public function login(Request $request)
     {
         $mdp =$request -> password;
@@ -37,18 +35,35 @@ class Autentification extends Controller
                 Session::put('role', 'employee');
                 Session::put('id', $employees->FK_account_id);
                 return redirect('/employees/accueil');
-            }
-            $clien = DB::table('clients')->where('FK_account_id',$account ->account_id)->first();
-            Session::put('role', 'client');
-            Session::put('id', $clien->FK_account_id);
-            return redirect('/client/accueil');
-        }
-        else{
-            return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput(); //
-        }
-       
-        
+
+          $client = DB::table('clients')->where('FK_account_id', $account->account_id)->first();
+          if ($client) {
+              // Récupération de l'employé associé au client
+              $associatedEmployee = DB::table('employees')
+                  ->join('accounts', 'employees.FK_account_id', '=', 'accounts.account_id')
+                  ->where('employee_id', $client->FK_employee_id)
+                  ->select('accounts.first_name', 'accounts.last_name', 'accounts.email', 'accounts.picture')
+                  ->first();
+
+              // Stockage des informations dans la session
+              Session::put('role', 'client');
+              Session::put('id', $client->FK_account_id);
+              Session::put('clientData', [
+                  'account' => $account,
+                  'employee' => $associatedEmployee // Stockage des données de l'employé ici
+              ]);
+
+              return redirect()->route('client.accueil');
+          }
+      } else {
+          return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput();
     }
+}
+
+
+
+
+
     public function loginAdmin(Request $request)
     {
         $mdp =$request -> password;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 05 nov. 2024 à 08:55
+-- Généré le : mar. 05 nov. 2024 à 12:31
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -35,6 +35,7 @@ CREATE TABLE `accounts` (
   `postal_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `code_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `picture` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -44,8 +45,8 @@ CREATE TABLE `accounts` (
 -- Déchargement des données de la table `accounts`
 --
 
-INSERT INTO `accounts` (`account_id`, `first_name`, `last_name`, `phone`, `postal_address`, `code_address`, `city`, `email`, `password`, `creation_date`) VALUES
-(1, 'Admin', 'Admin', '06 00 00 00 00', 'Admin', 'Admin', 'Admin', 'admin@gmail.com', 'password', '2024-10-22 12:30:09');
+INSERT INTO `accounts` (`account_id`, `first_name`, `last_name`, `phone`, `postal_address`, `code_address`, `city`, `picture`, `email`, `password`, `creation_date`) VALUES
+(1, 'Admin', 'Admin', '06 00 00 00 00', 'Admin', 'Admin', 'Admin', '', 'admin@gmail.com', 'password', '2024-10-22 12:30:09');
 
 -- --------------------------------------------------------
 
@@ -74,8 +75,22 @@ INSERT INTO `actions_type` (`action_type_id`, `action_name`) VALUES
 
 CREATE TABLE `clients` (
   `client_id` int(11) NOT NULL,
-  `FK_employee_id` int(11) NOT NULL,
+  `FK_employee_id` int(11) DEFAULT NULL,
   `FK_account_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `contracts`
+--
+
+CREATE TABLE `contracts` (
+  `contract_id` int(11) NOT NULL,
+  `numero_contract` int(11) NOT NULL,
+  `FK_service_id` int(11) NOT NULL,
+  `FK_client_id` int(11) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -128,14 +143,15 @@ INSERT INTO `functions` (`function_id`, `function_name`) VALUES
 CREATE TABLE `log_accounts` (
   `log_account_id` int(11) NOT NULL,
   `FK_account_id` int(11) NOT NULL,
-  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `postal_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `code_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `postal_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `code_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `picture` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -148,9 +164,9 @@ CREATE TABLE `log_accounts` (
 
 CREATE TABLE `log_clients` (
   `log_client_id` int(11) NOT NULL,
-  `FK_client_id` int(11) NOT NULL,
-  `FK_account_id` int(11) NOT NULL,
-  `FK_employee_id` int(11) NOT NULL,
+  `FK_client_id` int(11) DEFAULT NULL,
+  `FK_account_id` int(11) DEFAULT NULL,
+  `FK_employee_id` int(11) DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -163,9 +179,9 @@ CREATE TABLE `log_clients` (
 
 CREATE TABLE `log_employees` (
   `log_employee_id` int(11) NOT NULL,
-  `FK_employee_id` int(11) NOT NULL,
-  `FK_account_id` int(11) NOT NULL,
-  `FK_function_id` int(11) NOT NULL,
+  `FK_employee_id` int(11) DEFAULT NULL,
+  `FK_account_id` int(11) DEFAULT NULL,
+  `FK_function_id` int(11) DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -179,9 +195,9 @@ CREATE TABLE `log_employees` (
 CREATE TABLE `log_reviews` (
   `log_review_id` int(11) NOT NULL,
   `FK_review_id` int(11) NOT NULL,
-  `FK_account_id` int(11) NOT NULL,
-  `review` text COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
+  `FK_account_id` int(11) DEFAULT NULL,
+  `review` text COLLATE utf8_unicode_ci,
+  `status` int(11) DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -291,6 +307,14 @@ ALTER TABLE `clients`
   ADD KEY `FK_employee_client` (`FK_employee_id`);
 
 --
+-- Index pour la table `contracts`
+--
+ALTER TABLE `contracts`
+  ADD PRIMARY KEY (`contract_id`),
+  ADD KEY `FK_contracts_client` (`FK_client_id`),
+  ADD KEY `FK_contracts_service` (`FK_service_id`);
+
+--
 -- Index pour la table `employees`
 --
 ALTER TABLE `employees`
@@ -397,6 +421,12 @@ ALTER TABLE `clients`
   MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `contracts`
+--
+ALTER TABLE `contracts`
+  MODIFY `contract_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `employees`
 --
 ALTER TABLE `employees`
@@ -472,6 +502,13 @@ ALTER TABLE `team_services`
 ALTER TABLE `clients`
   ADD CONSTRAINT `FK_account_client` FOREIGN KEY (`FK_account_id`) REFERENCES `accounts` (`account_id`),
   ADD CONSTRAINT `FK_employee_client` FOREIGN KEY (`FK_employee_id`) REFERENCES `employees` (`employee_id`);
+
+--
+-- Contraintes pour la table `contracts`
+--
+ALTER TABLE `contracts`
+  ADD CONSTRAINT `FK_contracts_client` FOREIGN KEY (`FK_client_id`) REFERENCES `clients` (`client_id`),
+  ADD CONSTRAINT `FK_contracts_service` FOREIGN KEY (`FK_service_id`) REFERENCES `services` (`service_id`);
 
 --
 -- Contraintes pour la table `employees`

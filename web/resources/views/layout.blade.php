@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./css/styles.css"/>
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}"/>
         @yield('styles')
     @yield('script')
      </head>
@@ -13,10 +13,10 @@
             <img src="logo.png" alt="Logo"> <!-- Insère ici ton logo -->
         </div>
         <ul class="nav-links">
-            <li><a href="qui-sommes-nous">Qui sommes-nous ?</a></li>
-            <li><a href="prestations">Prestations </a></li>
-            <li><a href="simulateur">Simulateurs </a></li>
-            <li><a href="devis">Faire un devis</a></li>
+            <li><a href="{{ route('presentation') }}">Qui sommes-nous ?</a></li>
+            <li><a href="{{ route('prestations') }}">Prestations </a></li>
+            <li><a href="{{ route('simulateur') }}">Simulateurs </a></li>
+            <li><a href="{{ route('devis') }}">Faire un devis</a></li>
         </ul>
         <div class="nav-btn">
         <a href="{{ route('login') }}"><button>Connexion </button></a>
