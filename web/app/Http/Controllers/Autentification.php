@@ -20,7 +20,8 @@ class Autentification extends Controller
     {
         return view('FormConnexion'); // Assure-toi que la vue existe
     }
-  
+
+    // Auth guard, simplifie la gestion des utilisateurs  
     public function login(Request $request)
     {
         $mdp =$request -> password;
@@ -59,11 +60,6 @@ class Autentification extends Controller
           return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput();
     }
 }
-
-
-
-
-
     public function loginAdmin(Request $request)
     {
         $mdp =$request -> password;
