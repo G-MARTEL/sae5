@@ -1,14 +1,13 @@
 @extends('layout')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('/css/espace_client.css') }}"/>
+<link rel="stylesheet" href="./css/espace_client.css"/>
 @endsection
 
 
 @section('scripts')
 @endsection
 @section('content')
-
 
 <div class="container" id="client-1">
     <div class="container-inner">
@@ -34,7 +33,7 @@
             @if (isset($clientData['employee']))
             <div class="colonne">
                     <h3>Mon conseiller</h3>
-                    <img src="{{ asset($clientData['employee']->picture) }}" alt="Photo de l'équipe">
+                    <img src="{{ asset('assets/presentation/employe2.jpg') }}" alt="Photo de l'équipe">
                     <ul>
                         <li>{{ $clientData['employee']->first_name }}</li>
                         <li>{{ $clientData['employee']->last_name }}</li>
@@ -46,8 +45,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 @endsection

@@ -12,6 +12,7 @@
         </div>
         <button type="submit">Se connecter</button>
     </form>
+    <a href="creationCompte">Creéé un Compte</a>
 </div>
 
 @if(session('error'))
