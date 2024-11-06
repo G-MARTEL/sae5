@@ -1,0 +1,56 @@
+@use 'sass:color';
+@import "../scss_base/variables.scss";
+
+
+.container#client-1 {
+    padding-top: 74px;
+    .container-inner{
+        .colonnes {
+            display: flex;
+            flex-direction: row;
+            gap: 150px;
+            .colonne{
+                background-color: $gris;
+                border-radius: 20px;
+                box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+                .container-inner{
+                    padding: 40px;
+                }
+                &:first-child{
+                    flex: 2;
+                }
+                &:nth-child(2){
+                    img{
+                        width: 125px;
+                        border-radius: 50%;
+                    }
+                    flex: 1;
+                    text-align: center;
+                    ul{
+                        padding: 0;
+                    }
+                }
+                ul{
+                    li{
+                        list-style-type: none;
+                    }
+                }
+                button {
+                    background-color: $vert; 
+                    color: $blanc; 
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 15px;
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+                    cursor: pointer;
+                    &:hover {
+                        background-color: color.adjust($vert, $lightness: -10%);&:hover {
+                        transform: scale(1.05); 
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
+                      }
+                    }
+                  }
+            }
+        }
+    }
+}
