@@ -9,29 +9,31 @@
 @endsection
 @section('content')
 
-<?php $texte = "Ceci est un exemple de texte très long qui pourrait contenir plus de 150 caractères, et que l'on veut afficher en version tronquée pour un aperçu rapide.";
+
+
+<div class="container" id="prestations-1">
+    <h1>Nos prestations</h1>
+</div>
+
+@foreach ($prestations as $prestation)
+
+<?php $texte = "{$prestation->description}" ;
 $texteLimite = substr($texte, 0, 150);
 
 if (strlen($texte) > 150) {
     $texteLimite .= '...';
 }
 ?>
-
-<div class="container" id="prestations-1">
-    <h1>Nos prestations</h1>
-</div>
-
-<!-- ajouter un foreach -->
 <div class="container" id="prestations-2">
     <div class="container-inner">
         <div class="colonnes">
             <div class="colonne">
-                <h3> titre</h3>
+                <h3> {{$prestation->title}}</h3>
                 <p><?php echo $texteLimite;
                     ?></p>
             </div>
             <div class="colonne">
-                <img src="{{ asset('assets/presentation/employe2.jpg') }}" alt="">
+                <img src="{{ asset($prestation->picture) }}" alt="">
             </div>
             <div class="colonne">
                 <a href="">Accéder à la prestation</a>
@@ -39,6 +41,6 @@ if (strlen($texte) > 150) {
         </div>
     </div>
 </div>
-
+@endforeach
 
 @endsection

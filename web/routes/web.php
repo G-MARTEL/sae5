@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\BDDController;
 use App\Http\Controllers\Autentification;
 use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\PrestationsController;
+
 
 
 Route::get('/', function () {
@@ -18,9 +20,9 @@ Route::get('qui-sommes-nous', function () {
     return view('presentation');
 })->name('presentation');
 
-Route::get('prestations', function () {
-    return view('prestations');
-})->name('prestations');
+// Route::get('prestations', function () {
+//     return view('prestations');
+// })->name('prestations');
 
 
 Route::get('prestation', function () {
@@ -38,7 +40,7 @@ Route::get('test', function () {
 
 Route::get('devis', function () {return view('devis');})->name('devis');
 
-
+Route::get('/prestations', [PrestationsController::class, 'showPrestations'])->name('prestations');
 
 
 Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
