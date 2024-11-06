@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\BDDController;
 use App\Http\Controllers\Autentification;
+use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
-
 
 
 Route::get('/', function () {
@@ -43,6 +43,9 @@ Route::get('devis', function () {return view('devis');})->name('devis');
 
 Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
 Route::post('/connexion', [Autentification::class, 'login']);
+
+Route::get('/creationCompte',[CreationCompte::class, 'showFormCreationAccount'])->name('CreationCompte');
+Route::post('/creationCompte',[CreationCompte::class, 'CreationAccount']);
 
 Route::prefix('client')->name('client.')->group(function() {
 
