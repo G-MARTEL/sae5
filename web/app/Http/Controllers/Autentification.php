@@ -35,7 +35,7 @@ class Autentification extends Controller
                 Session::put('role', 'employee');
                 Session::put('id', $employees->FK_account_id);
                 return redirect('/employees/accueil');
-
+            }
           $client = DB::table('clients')->where('FK_account_id', $account->account_id)->first();
           if ($client) {
               // Récupération de l'employé associé au client
