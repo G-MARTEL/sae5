@@ -35,7 +35,7 @@ class CreationCompte extends Controller
             DB::table('clients')->insert([
                 'FK_account_id'=>$idAccount,
             ]);
-            return redirect()->route('acceuil');
+            return redirect('acceuil');
         } else {
             dd('Cet email est déjà utilisé');
         }

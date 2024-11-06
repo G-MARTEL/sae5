@@ -28,7 +28,7 @@ class Autentification extends Controller
         $mdp =$request -> password;
         $email = $request -> email;
         $account = DB::table('accounts')->where('email', $request->email)->first();
-        if ($account && Hash::check($mdp, $account->password)) // a modifier avec if ($account && Hash::check($mdp, $account->password)) il s'agit d'un hachage laravel
+        if ($account && Hash::check($mdp, $account->password)) 
         {
             
             $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
