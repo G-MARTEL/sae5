@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    background-color: #2cafa2;
+    color: brown;
+    font-size: 3em;
+    margin: 20px 0;
+}
+
+.toolbar {
+    background-color: #2cafa2;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-bar {
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.status-btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 2px solid #333;
+    background-color: white;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.status-btn.active {
+    background-color: #ffdb58;
+    border-color: #ffdb58;
+    color: #333;
+}
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 1000px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #2cafa2;
+    color: #fff;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.status-error {
+    color: #ff4c4c;
+    font-weight: bold;
+}
+
+.status-warning {
+    color: #ffa500;
+    font-weight: bold;
+}
+

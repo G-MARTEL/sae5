@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 05 nov. 2024 à 13:26
+-- Généré le : mer. 06 nov. 2024 à 15:19
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -35,7 +35,7 @@ CREATE TABLE `accounts` (
   `postal_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `code_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `picture` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `picture` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
