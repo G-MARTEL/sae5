@@ -15,12 +15,6 @@ class Autentification extends Controller
         return view('FormConnexion'); // Assure-toi que la vue existe
     }
 
-
-    public function showLoginFormAdmin()
-    {
-        return view('FormConnexion'); // Assure-toi que la vue existe
-    }
-
     // Auth guard, simplifie la gestion des utilisateurs  
     public function login(Request $request)
     {
@@ -33,6 +27,16 @@ class Autentification extends Controller
             $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
             if ($employees)
             {
+                $admin=DB::table('functions')->where('function_id',$employees->FK_function_id)->first();
+                if ($admin){
+                    session(['role' => 'admin',
+                            'id' => $employees->FK_account_id
+                        ]);
+                    return redirect('admin/accueil');
+                }
+                else{
+                    return redirect()->back()->with('error', "Seci n'est pas un compte admin!")->withInput(); 
+                }
                 Session::put('role', 'employee');
                 Session::put('id', $employees->FK_account_id);
                 return redirect('/employees/accueil');
@@ -56,33 +60,10 @@ class Autentification extends Controller
 
               return redirect()->route('client.accueil');
           }
-      } else {
-          return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput();
-    }
-}
-    public function loginAdmin(Request $request)
-    {
-        $mdp =$request -> password;
-        $email = $request -> email;
-        $account = DB::table('accounts')->where('email', $request->email)->first();
-        $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
-        if ($employees && $mdp === $account->password) // a modifier avec if ($account && Hash::check($mdp, $account->password)) il s'agit d'un hachage laravel
-        {
-        $admin=DB::table('functions')->where('function_id',$employees->FK_function_id)->first();
-            if ($admin){
-                session(['role' => 'admin',
-                        'id' => $employees->FK_account_id
-                    ]);
-                return redirect('admin/acceuil');
-            }
-            else{
-                return redirect()->back()->with('error', "Seci n'est pas un compte admin!")->withInput(); 
-            }
         }
-        else
+        else 
         {
-            return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput(); //
+            return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput();
         }
-     
     }
 }

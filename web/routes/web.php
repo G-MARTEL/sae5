@@ -75,8 +75,6 @@ Route::prefix('employees')->name('employees.')->group(function() {
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/connexion', [Autentification::class, 'showLoginFormAdmin'])->name('login');
-    Route::post('/connexion', [Autentification::class, 'loginAdmin']);
     Route::get('/accueil', function () {
         if (session('role') !== 'admin') {
             return redirect('/'); // Redirige si le rôle n'est pas 'admin'
