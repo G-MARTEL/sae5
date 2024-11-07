@@ -16,11 +16,20 @@ class PrestationsController extends Controller
     public function show($id){
         $prestation = DB::table('services')->where('service_id', $id)->first();
 
+        $employes = DB::table('team_services')
+        ->join('employees', 'team_services.FK_employee_id', '=', 'employees.employee_id')
+        ->join('accounts', 'employees.FK_account_id', '=', 'accounts.account_id')
+        ->where('team_services.FK_service_id', $id)
+        ->select('accounts.first_name', 'accounts.last_name', 'accounts.picture')
+        ->get();
+    
+
         if (!$prestation) {
-            abort(404); // Redirige vers une page 404 si la prestation n'existe pas
+            abort(404); 
         }
 
-        return view('prestation', ['prestation' => $prestation]);
+        return view('prestation', ['prestation' => $prestation,
+                                    'employes' => $employes]);
     }
 
 }

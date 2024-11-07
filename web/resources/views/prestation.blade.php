@@ -35,21 +35,14 @@ $listeSituations = explode(',', $situations)
             <div class="colonne images-colonne">
                 <h3>Notre équipe</h3>
                 <div class="colonnes">
+                    @foreach ($employes as $employe)
                     <div class="colonne">
                         <figure>
-                            <img src="{{ asset('assets/presentation/employe1.jpg') }}" alt="Photo de l'équipe">
+                            <img src="{{ asset($employe->picture) }}" alt="Photo de {{ $employe->first_name }} {{ $employe->last_name }}">
+                            <figcaption>{{ $employe->first_name }} {{ $employe->last_name }}</figcaption>
                         </figure>
                     </div>
-                    <div class="colonne">
-                        <figure>
-                            <img src="{{ asset('assets/presentation/employe2.jpg') }}" alt="Photo de l'équipe">
-                        </figure>
-                    </div>
-                    <div class="colonne">
-                        <figure>
-                            <img src="{{ asset('assets/presentation/employe3.jpg') }}" alt="Photo de l'équipe">
-                        </figure>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -81,11 +74,10 @@ $listeSituations = explode(',', $situations)
             </div>
         </div>
     </div>
-    <a href="devis">
+    <a href="{{ route('devis') }}">
             Prendre rendez vous
         </a>
 </div>
-
 
 
 

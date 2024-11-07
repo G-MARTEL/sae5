@@ -31,7 +31,6 @@
   align-items: flex-start;
 }
 #prestation-2.container .container-inner .colonnes .colonne {
-  flex: 1;
   padding: 20px;
 }
 #prestation-2.container .container-inner .colonnes .texte-colonne {
@@ -61,8 +60,6 @@
 #prestation-2.container .container-inner .colonnes .images-colonne .colonnes .colonne {
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 #prestation-2.container .container-inner .colonnes .images-colonne .colonnes .colonne figure {
   margin: 0;

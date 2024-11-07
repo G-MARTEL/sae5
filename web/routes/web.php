@@ -38,6 +38,7 @@ Route::get('devis', function () {return view('devis');})->name('devis');
 
 Route::get('/prestations', [PrestationsController::class, 'showPrestations'])->name('prestations');
 Route::get('/prestation/{id}', [PrestationsController::class,'show'])->name('prestation.show');
+
 Route::get('/prestation', [PrestationsController::class, 'showPrestations'])->name('prestations');
 
 
