@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\BDDController;
 use App\Http\Controllers\Autentification;
 use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AdminController;
 
 
 Route::get('/', function () {
@@ -81,6 +82,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         }
         return view('acceuilAdmin');
     })->name('accueil');
-   
+    Route::get('/listeClients', [AdminController::class, 'showListeClients']); 
 
 });
