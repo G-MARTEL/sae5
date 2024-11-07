@@ -18,15 +18,14 @@ class AdminController extends Controller
         foreach ($clientAccounts as $account) {
             $donnes = DB::table('accounts')
                 ->where('account_id', $account->FK_account_id)
-                ->get();
+                ->first(); // Récupérer un seul compte
             
             // Ajouter les comptes du client dans le tableau $clients
-            $clients[] = (object)[
-                'clientAccounts' => $clientAccounts,
+            $clients[] = [
+                'clientAccounts' => $account,
                 'donnee' => $donnes
             ];
         }
-
         // Passer les clients à la vue
         return view('listeClients', ['clients' => $clients]);
     }
