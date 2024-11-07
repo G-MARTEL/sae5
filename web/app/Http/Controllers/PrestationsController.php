@@ -13,4 +13,14 @@ class PrestationsController extends Controller
 
     }
 
+    public function show($id){
+        $prestation = DB::table('services')->where('service_id', $id)->first();
+
+        if (!$prestation) {
+            abort(404); // Redirige vers une page 404 si la prestation n'existe pas
+        }
+
+        return view('prestation', ['prestation' => $prestation]);
+    }
+
 }

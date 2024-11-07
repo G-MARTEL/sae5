@@ -36,7 +36,7 @@ if (strlen($texte) > 150) {
                 <img src="{{ asset($prestation->picture) }}" alt="">
             </div>
             <div class="colonne">
-                <a href="">Accéder à la prestation</a>
+                <a href="{{ route('prestation.show', $prestation->service_id)}}">Accéder à la prestation</a>
             </div>
         </div>
     </div>

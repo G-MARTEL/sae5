@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('styles')
-<link rel="stylesheet" href="./css/prestation.css"/>
+<link rel="stylesheet" href="{{ asset('/css/prestation.css') }}"/>
 @endsection
 
 
@@ -10,9 +10,18 @@
 @section('content')
 
 
+<?php 
+$avantages = "{$prestation->advantage}" ;
+$listeAvantages = explode(',',$avantages);
+
+$situations = "{$prestation->situations}";
+$listeSituations = explode(',', $situations)
+
+?>
+
 <div class="container" id="prestation-1">
     <div class="container-inner">
-        <h2>titre prestation a gérer en php</h2>
+        <h2>{{$prestation->title}}</h2>
     </div>
 </div>
 
@@ -21,10 +30,7 @@
         <div class="colonnes">
             <div class="colonne texte-colonne">
                 <h3>Assurez-vous une offre de qualité</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
-                    doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et 
-                    quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur 
-                    aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                <p>{{$prestation->description}}</p>
             </div>
             <div class="colonne images-colonne">
                 <h3>Notre équipe</h3>
@@ -56,19 +62,21 @@
             <div class="colonne">
                 <h3>Avantages</h3>
                     <ul>
-                        <!-- ajouter foreach-->
-                         <li>exemple 1</li>
-                         <li>exemple 2</li>
-                         <li>exemple 3</li>
+                        @foreach ($listeAvantages as $avantage)
+                        <li> <?php 
+                        $avantage=ucfirst(trim($avantage));
+                        echo $avantage ?></li>
+                        @endforeach
                     </ul>
             </div>
             <div class="colonne">
                 <h3>Situations</h3>
                 <ul>
-                    <!-- ajouter foreach-->
-                    <li>exemple 1</li>
-                    <li>exemple 2</li>
-                    <li>exemple 3</li>
+                    @foreach ($listeSituations as $situation)
+                    <li><?php 
+                    $situation=ucfirst(trim($situation));
+                    echo $situation ?></li>
+                    @endforeach
                 </ul>
             </div>
         </div>
