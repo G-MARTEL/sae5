@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Hashing\BcryptHasher;
+use App\Models\Account;
+
 
 class CreationCompte extends Controller
 {
@@ -18,7 +20,7 @@ class CreationCompte extends Controller
         $account = DB::table('accounts')->where('email', $request->email)->first();
         $password = Hash::make($request->password);
         if (!$account) {
-            DB::table('accounts')->insert([
+            Account::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'phone' => $request->phone,
@@ -29,9 +31,11 @@ class CreationCompte extends Controller
                 'password' => $password, // Enregistre le mot de passe haché
                 'creation_date' => $request->creation_date,
             ]);
+
             $idAccount = DB::table('accounts')
                 ->orderBy('account_id', 'desc') // Remplacez `id` par la colonne qui convient dans votre table
                 ->first()->account_id;
+
             DB::table('clients')->insert([
                 'FK_account_id'=>$idAccount,
             ]);
