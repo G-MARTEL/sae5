@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+
+    protected $table = 'employees';
+
+    protected $fillable = ['employee_id','FK_function_id','FK_account_id'];
+
+    public $timestamps = false;
 }
