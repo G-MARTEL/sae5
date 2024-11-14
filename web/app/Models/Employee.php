@@ -13,5 +13,16 @@ class Employee extends Model
 
     protected $fillable = ['employee_id','FK_function_id','FK_account_id'];
 
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'FK_account_id');
+    }
+    
+    public function functions()
+    {
+        return $this->belongsTo(Functions::class, 'FK_function_id');
+    }
+
     public $timestamps = false;
 }

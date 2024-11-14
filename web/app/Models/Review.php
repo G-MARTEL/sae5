@@ -12,6 +12,10 @@ class Review extends Model
     protected $table = 'reviews';
 
     protected $fillable = ['review_id','FK_account_id','review','status','creation_date'];
-
+    
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'FK_account_id');
+    }
     public $timestamps = false;
 }

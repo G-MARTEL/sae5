@@ -15,5 +15,15 @@ class LogAccount extends Model
     'last_name','phone', 'postal_address',
     'code_address','city','picture','email'
     ,'password','edited_date','FK_action_type_id'];
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'FK_account_id');
+    }
+
+    public function ActionType()
+    {
+        return $this->belongsTo(Account::class, 'FK_action_type_id');
+    }
     public $timestamps = false;
 }

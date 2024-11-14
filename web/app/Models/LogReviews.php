@@ -11,7 +11,8 @@ class LogReviews extends Model
 
     protected $table = 'log_reviews';
 
-    protected $fillable = ['log_review_id','FK_review_id','FK_account_id','review','status','edited_date','FK_action_type_id'];
+    protected $fillable = ['log_review_id','FK_review_id','FK_account_id',
+                            'review','status','edited_date','FK_action_type_id'];
 
     public $timestamps = false;
 }
