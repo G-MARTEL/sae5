@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Client;
+use App\Models\Account;
+use App\Models\Employee;
 
 class AdminController extends Controller
 {
@@ -12,8 +15,9 @@ class AdminController extends Controller
         if (session('role') !== 'admin') {
             return redirect('/'); // Redirige si le rôle n'est pas 'admin'
         }
-        $clientAccounts = DB::table('clients')->get(); // Récupérer tous les clients
+        $clientAccounts = Client::all(); // Récupérer tous les clients
         $clients = [];
+        $listeEmployees = Employee::pluck('employee_id');
         // Pour chaque client, récupérer les comptes associés
         foreach ($clientAccounts as $account) {
             $donnes = DB::table('accounts')
@@ -23,10 +27,11 @@ class AdminController extends Controller
             // Ajouter les comptes du client dans le tableau $clients
             $clients[] = [
                 'clientAccounts' => $account,
-                'donnee' => $donnes
+                'donneeClient' => $donnes
             ];
         }
+        
         // Passer les clients à la vue
-        return view('listeClients', ['clients' => $clients]);
+        return view('listeClients', ['clients' => $clients, 'listeEmployees' =>$listeEmployees]);
     }
 }
