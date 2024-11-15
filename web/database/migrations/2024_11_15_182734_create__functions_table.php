@@ -17,7 +17,16 @@ return new class extends Migration
         });
 
         DB::statement('ALTER TABLE functions ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
+
+        DB::table('functions')->insert([
+            ['function_id' => 1, 'function_name' => 'Admin'],
+            ['function_id' => 2, 'function_name' => 'Directeur'],
+            ['function_id' => 3, 'function_name' => 'Directeur adjoint'],
+            ['function_id' => 4, 'function_name' => 'Assistant'],
+            ['function_id' => 5, 'function_name' => 'Comptable'],
+        ]);
     }
+
 
     /**
      * Annuler la migration.

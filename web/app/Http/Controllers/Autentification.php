@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB; // Importer DB pour utiliser le Query Builder
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Models\Functions;
 
 
 use Illuminate\Http\Request;
@@ -27,15 +28,12 @@ class Autentification extends Controller
             $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
             if ($employees)
             {
-                $admin=DB::table('functions')->where('function_id',$employees->FK_function_id)->first();
-                if ($admin){
+                $func=Functions::where('function_id',$employees->FK_function_id)->first();
+                if ($func->function_name=="Admin"){
                     session(['role' => 'admin',
                             'id' => $employees->FK_account_id
                         ]);
                     return redirect('admin/accueil');
-                }
-                else{
-                    return redirect()->back()->with('error', "Seci n'est pas un compte admin!")->withInput(); 
                 }
                 Session::put('role', 'employee');
                 Session::put('id', $employees->FK_account_id);

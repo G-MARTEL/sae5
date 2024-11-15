@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('client_id')->primary(); // Colonne clé primaire manuelle
-            $table->unsignedInteger('FK_employee_id'); // Clé étrangère optionnelle
+            $table->unsignedInteger('FK_employee_id')->nullable(); // Clé étrangère optionnelle
             $table->unsignedInteger('FK_account_id'); // Clé étrangère obligatoire
         });
 
