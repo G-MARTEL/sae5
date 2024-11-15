@@ -10,6 +10,7 @@ class Actions_type extends Model
     use HasFactory;
     
     protected $table = 'actions_type';
+    protected $primaryKey = 'action_type_id';
 
     protected $fillable = ['action_type_id','action_name'];
 

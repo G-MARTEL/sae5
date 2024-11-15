@@ -10,6 +10,7 @@ class LogClient extends Model
     use HasFactory;
 
     protected $table = 'log_clients';
+    protected $primaryKey = 'log_client_id';
 
     protected $fillable = ['log_client_id','FK_client_id','FK_account_id',
     'FK_employee_id','edited_date','FK_action_type_id'];

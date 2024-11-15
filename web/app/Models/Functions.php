@@ -10,6 +10,7 @@ class Functions extends Model
     use HasFactory;
 
     protected $table = 'functions';
+    protected $primaryKey = 'function_id';
 
     protected $fillable = ['function_id','function_name',];
 

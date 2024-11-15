@@ -10,7 +10,7 @@ class LogEmployee extends Model
     use HasFactory;
 
     protected $table = 'log_employees';
-
+    protected $primaryKey = 'log_employee_id';
     protected $fillable = ['log_employee_id','FK_employee_id','FK_function_id','FK_account_id','edited_date','FK_action_type_id'];
 
     public function account()

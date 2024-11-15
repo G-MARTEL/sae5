@@ -9,7 +9,8 @@ class TeamServices extends Model
 {
     use HasFactory;
 
-    protected $table = 'clients';
+    protected $table = 'team_services';
+    protected $primaryKey = 'team_service_id';
 
     protected $fillable = ['team_service_id','FK_service_id','FK_employee_id'];
 

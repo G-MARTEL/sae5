@@ -9,7 +9,8 @@ class SiteInformation extends Model
 {
     use HasFactory;
 
-    protected $table = 'clients';
+    protected $table = 'site_informations';
+    protected $primaryKey = 'site_information_id';
 
     protected $fillable = ['site_information_id','company_name','logo','linkedin_link','facebook_link','instagram_link'];
 
