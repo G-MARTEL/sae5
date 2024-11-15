@@ -82,6 +82,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         }
         return view('acceuilAdmin');
     })->name('accueil');
-    Route::get('/listeClients', [AdminController::class, 'showListeClients']); 
+    Route::get('/listeClients', [AdminController::class, 'showListeClients']);
+    Route::post('/modifClientAsso', [AdminController::class, 'modifClientAsso']);
 
 });

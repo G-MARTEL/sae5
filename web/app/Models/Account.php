@@ -10,6 +10,7 @@ class Account extends Model
     use HasFactory;
 
     protected $table = 'accounts';
+    protected $primaryKey = 'account_id';
 
     protected $fillable = ['account_id', 'first_name',
                          'last_name','phone', 'postal_address',

@@ -17,7 +17,7 @@ class AdminController extends Controller
         }
         $clientAccounts = Client::all(); // Récupérer tous les clients
         $clients = [];
-        $listeEmployees = Employee::pluck('employee_id');
+        $listeEmployees = Employee::all();
         // Pour chaque client, récupérer les comptes associés
         foreach ($clientAccounts as $account) {
             $donnes = DB::table('accounts')
@@ -33,5 +33,27 @@ class AdminController extends Controller
         
         // Passer les clients à la vue
         return view('listeClients', ['clients' => $clients, 'listeEmployees' =>$listeEmployees]);
+    }
+
+    public function modifClientAsso(Request $request)
+    {
+        // Récupérer les entrées du formulaire ou de la requête
+        $employee_id = $request->input('employee_id');
+        $clients_id = $request->input('client_id');
+
+        // Trouver le client en fonction du client_id
+        $client = Client::where('client_id', $clients_id)->first();
+        // Vérifier si le client existe
+        if (!$client) {
+            // Retourner une erreur si le client n'existe pas
+            return redirect()->back()->with('error', 'Client non trouvé');
+        }
+
+        // Modifier le FK_employee_id du client avec le nouvel employee_id
+        $client->FK_employee_id = $employee_id;
+        // Sauvegarder les changements dans la base de données
+        $client->save();
+
+        return redirect()->back();
     }
 }
