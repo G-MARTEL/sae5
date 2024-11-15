@@ -18,11 +18,9 @@ class AdminController extends Controller
         $clientAccounts = Client::all(); // Récupérer tous les clients
         $clients = [];
         $listeEmployees = Employee::all();
-        // Pour chaque client, récupérer les comptes associés
         foreach ($clientAccounts as $account) {
-            $donnes = DB::table('accounts')
-                ->where('account_id', $account->FK_account_id)
-                ->first(); // Récupérer un seul compte
+            $donnes = Account::where('account_id', $account->FK_account_id)
+                ->first(); 
             
             // Ajouter les comptes du client dans le tableau $clients
             $clients[] = [
