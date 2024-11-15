@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateLogAccountsTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -12,8 +12,8 @@ class CreateLogAccountsTable extends Migration
     public function up()
     {
         Schema::create('log_accounts', function (Blueprint $table) {
-            $table->integer('log_account_id')->primary();
-            $table->integer('FK_account_id');
+            $table->increments('log_account_id')->primary();
+            $table->unsignedInteger('FK_account_id');
             $table->string('first_name', 255)->collation('utf8_unicode_ci')->nullable();
             $table->string('last_name', 255)->collation('utf8_unicode_ci')->nullable();
             $table->string('phone', 255)->collation('utf8_unicode_ci')->nullable();
@@ -24,7 +24,7 @@ class CreateLogAccountsTable extends Migration
             $table->string('email', 255)->collation('utf8_unicode_ci')->nullable();
             $table->string('password', 255)->collation('utf8_unicode_ci')->nullable();
             $table->timestamp('edited_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->integer('FK_action_type_id');
+            $table->unsignedInteger('FK_action_type_id');
         });
 
         DB::statement('ALTER TABLE log_accounts ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
@@ -37,4 +37,4 @@ class CreateLogAccountsTable extends Migration
     {
         Schema::dropIfExists('log_accounts');
     }
-}
+};

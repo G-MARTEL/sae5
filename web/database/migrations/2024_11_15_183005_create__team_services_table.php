@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateTeamServicesTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -12,9 +12,9 @@ class CreateTeamServicesTable extends Migration
     public function up()
     {
         Schema::create('team_services', function (Blueprint $table) {
-            $table->integer('team_service_id')->primary();
-            $table->integer('FK_service_id');
-            $table->integer('FK_employee_id');
+            $table->increments('team_service_id')->primary();
+            $table->unsignedInteger('FK_service_id');
+            $table->unsignedInteger('FK_employee_id');
         });
 
         DB::statement('ALTER TABLE team_services ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
@@ -27,4 +27,4 @@ class CreateTeamServicesTable extends Migration
     {
         Schema::dropIfExists('team_services');
     }
-}
+};

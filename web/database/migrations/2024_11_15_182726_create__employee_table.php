@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateEmployeesTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -13,9 +13,9 @@ class CreateEmployeesTable extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->integer('employee_id')->primary();
-            $table->integer('FK_function_id');
-            $table->integer('FK_account_id');
+            $table->increments('employee_id')->primary();
+            $table->unsignedInteger('FK_function_id');
+            $table->unsignedInteger('FK_account_id');
         });
 
         DB::statement('ALTER TABLE employees ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
@@ -28,4 +28,4 @@ class CreateEmployeesTable extends Migration
     {
         Schema::dropIfExists('employees');
     }
-}
+};

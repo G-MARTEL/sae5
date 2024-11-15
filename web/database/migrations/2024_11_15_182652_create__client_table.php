@@ -12,9 +12,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->integer('client_id')->primary(); // Colonne clé primaire manuelle
-            $table->integer('FK_employee_id')->nullable(); // Clé étrangère optionnelle
-            $table->integer('FK_account_id'); // Clé étrangère obligatoire
+            $table->increments('client_id')->primary(); // Colonne clé primaire manuelle
+            $table->unsignedInteger('FK_employee_id'); // Clé étrangère optionnelle
+            $table->unsignedInteger('FK_account_id'); // Clé étrangère obligatoire
         });
 
         // Configurer l'engine et le charset
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('client');
+        Schema::dropIfExists('clients');
     }
 };

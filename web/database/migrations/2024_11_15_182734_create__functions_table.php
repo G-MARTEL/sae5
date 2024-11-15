@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateFunctionsTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -12,7 +12,7 @@ class CreateFunctionsTable extends Migration
     public function up()
     {
         Schema::create('functions', function (Blueprint $table) {
-            $table->integer('function_id')->primary();
+            $table->increments('function_id')->primary();
             $table->string('function_name', 255)->collation('utf8_unicode_ci');
         });
 
@@ -26,4 +26,4 @@ class CreateFunctionsTable extends Migration
     {
         Schema::dropIfExists('functions');
     }
-}
+};

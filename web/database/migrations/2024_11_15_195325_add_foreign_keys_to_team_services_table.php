@@ -3,7 +3,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeys extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddForeignKeys extends Migration
         // Table 'clients'
         Schema::table('clients', function (Blueprint $table) {
             $table->foreign('FK_account_id')->references('account_id')->on('accounts')->onDelete('cascade');
-            $table->foreign('FK_employee_id')->references('employee_id')->on('employees')->onDelete('set null');
+            $table->foreign('FK_employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
         });
 
         // Table 'contracts'
@@ -146,5 +146,5 @@ class AddForeignKeys extends Migration
             $table->dropForeign(['FK_employee_id']);
         });
     }
-}
+};
 

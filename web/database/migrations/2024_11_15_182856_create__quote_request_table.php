@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateQuotesRequestTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -12,7 +12,7 @@ class CreateQuotesRequestTable extends Migration
     public function up()
     {
         Schema::create('quotes_request', function (Blueprint $table) {
-            $table->integer('quote_request_id')->primary();
+            $table->increments('quote_request_id')->primary();
             $table->string('first_name', 255)->collation('utf8_unicode_ci');
             $table->string('last_name', 255)->collation('utf8_unicode_ci');
             $table->string('phone', 255)->collation('utf8_unicode_ci');
@@ -32,4 +32,4 @@ class CreateQuotesRequestTable extends Migration
     {
         Schema::dropIfExists('quotes_request');
     }
-}
+};

@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateReviewsTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -12,8 +12,8 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->integer('review_id')->primary();
-            $table->integer('FK_account_id');
+            $table->increments('review_id')->primary();
+            $table->unsignedInteger('FK_account_id');
             $table->text('review')->collation('utf8_unicode_ci');
             $table->integer('status');
             $table->timestamp('creation_date')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -29,4 +29,4 @@ class CreateReviewsTable extends Migration
     {
         Schema::dropIfExists('reviews');
     }
-}
+};

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('account', function (Blueprint $table) {
-            $table->integer('account_id')->primary();;
+        Schema::create('accounts', function (Blueprint $table) {
+            $table->increments('account_id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('phone');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->timestamp('creation_date')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
-        DB::statement('ALTER TABLE actions_type ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
+        DB::statement('ALTER TABLE accounts ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
     }
 
     /**
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('account');
+        Schema::dropIfExists('accounts');
     }
 };

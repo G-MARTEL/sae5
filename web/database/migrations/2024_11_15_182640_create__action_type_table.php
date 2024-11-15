@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('actions_type', function (Blueprint $table) {
-            $table->integer('action_type_id')->primary(); // Colonne clé primaire manuelle
+            $table->increments('action_type_id')->primary(); // Colonne clé primaire manuelle
             $table->string('action_name', 255)->collation('utf8_unicode_ci'); // Colonne avec collation spécifique
         });
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('action_type');
+        Schema::dropIfExists('actions_type');
     }
 };

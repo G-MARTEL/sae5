@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateContractsTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -12,10 +12,10 @@ class CreateContractsTable extends Migration
     public function up()
     {
         Schema::create('contracts', function (Blueprint $table) {
-            $table->integer('contract_id')->primary();
+            $table->increments('contract_id')->primary();
             $table->integer('numero_contract');
-            $table->integer('FK_service_id');
-            $table->integer('FK_client_id');
+            $table->unsignedInteger('FK_service_id');
+            $table->unsignedInteger('FK_client_id');
             $table->timestamp('creation_date')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
 
@@ -30,3 +30,4 @@ class CreateContractsTable extends Migration
         Schema::dropIfExists('contracts');
     }
 }
+;

@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateSiteInformationsTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -12,7 +12,7 @@ class CreateSiteInformationsTable extends Migration
     public function up()
     {
         Schema::create('site_informations', function (Blueprint $table) {
-            $table->integer('site_information_id')->primary();
+            $table->increments('site_information_id')->primary();
             $table->string('company_name', 255)->collation('utf8_unicode_ci');
             $table->string('logo', 255)->collation('utf8_unicode_ci');
             $table->string('linkedin_link', 255)->collation('utf8_unicode_ci');
@@ -40,4 +40,4 @@ class CreateSiteInformationsTable extends Migration
     {
         Schema::dropIfExists('site_informations');
     }
-}
+};

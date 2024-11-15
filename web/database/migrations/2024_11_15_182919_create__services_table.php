@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateServicesTable extends Migration
+return new class extends Migration
 {
     /**
      * Appliquer la migration.
@@ -12,7 +12,7 @@ class CreateServicesTable extends Migration
     public function up()
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->integer('service_id')->primary();
+            $table->increments('service_id')->primary();
             $table->string('title', 255)->collation('utf8_unicode_ci')->nullable();
             $table->text('description')->collation('utf8_unicode_ci')->nullable();
             $table->string('picture', 255)->collation('utf8_unicode_ci')->nullable();
@@ -30,4 +30,4 @@ class CreateServicesTable extends Migration
     {
         Schema::dropIfExists('services');
     }
-}
+};
