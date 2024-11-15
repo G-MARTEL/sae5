@@ -18,5 +18,10 @@ class Contract extends Model
         return $this->belongsTo(Client::class, 'FK_client_id');
     }
 
+    public function service()
+    {
+        return $this->belongsTo(Services::class, 'FK_service_id');
+    }
+
     public $timestamps = false;
 }
