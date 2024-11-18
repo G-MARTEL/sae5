@@ -40,6 +40,9 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
+.container#client-1 .container-inner .colonnes .colonne button:nth-child(2) {
+  margin-left: 15px;
+}
 .container#client-1 .container-inner .colonnes .colonne button:hover {
   background-color: rgb(30.7218934911, 87.2781065089, 85.8816568047);
 }
