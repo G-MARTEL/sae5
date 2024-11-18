@@ -26,7 +26,7 @@
                         <li><button>Prendre rdv</button></li>
                     </ul>
                     <ul>    
-                        <li><button>Gérer mes engagements</button></li>
+                        <li><button>Gérer mes engagements</button>          <button>Gérer mes informations</button> </li>
                     </ul>
                     
                 </div>
