@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supervision</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        th {
+            cursor: pointer;
+        }
+        th::after {
+            content: '\25B2\25BC';
+            font-size: 0.8em;
+            margin-left: 5px;
+            opacity: 0.5;
+        }
+        th.sort-asc::after {
+            content: '\25B2';
+            opacity: 1;
+        }
+        th.sort-desc::after {
+            content: '\25BC';
+            opacity: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,11 +39,11 @@
     <table>
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Ping</th>
-                <th>Stockage</th>
-                <th>RAM</th>
-                <th>CPU</th>
+                <th data-sort="machine_name">Nom</th>
+                <th data-sort="ping">Ping</th>
+                <th data-sort="storage">Stockage</th>
+                <th data-sort="ram">RAM</th>
+                <th data-sort="cpu">CPU</th>
             </tr>
         </thead>
         <tbody id="deviceTableBody">
@@ -35,6 +54,7 @@
     <script>
         let allDevices = []; // Stocker toutes les données des appareils
         let filteredDevices = []; // Stocker les appareils filtrés (basé sur la recherche et l'état)
+        let currentSort = { column: null, direction: 'asc' }; // Garder une trace du tri actuel
 
         // Fonction pour récupérer et afficher les données des appareils
         function fetchDevices() {
@@ -42,7 +62,7 @@
                 .then(response => response.json())
                 .then(data => {
                     allDevices = data; // Sauvegarder toutes les données
-                    filterDevices();  // Appliquer les filtres (recherche et état)
+                    filterAndSortDevices();  // Appliquer les filtres et le tri
                 })
                 .catch(error => console.error("Erreur lors de la récupération des données :", error));
         }
@@ -77,8 +97,8 @@
             });
         }
 
-        // Fonction pour filtrer les appareils par nom et par état
-        function filterDevices() {
+        // Fonction pour filtrer et trier les appareils
+        function filterAndSortDevices() {
             const query = document.getElementById("searchInput").value.toLowerCase();
             const activeStatus = document.querySelector(".status-btn.active").id;
             
@@ -86,67 +106,84 @@
             let filteredByName = allDevices.filter(device => device.machine_name.toLowerCase().includes(query));
 
             if (activeStatus === "globalBtn") {
-                // Si on est en état global, on affiche tous les appareils filtrés par nom
                 filteredDevices = filteredByName;
             } else if (activeStatus === "criticalBtn") {
-                // Si on est en état critique, on filtre uniquement les appareils ayant des erreurs ou des avertissements
                 filteredDevices = filteredByName.filter(device => {
                     const storagePercentage = (device.storage / device.max_storage) * 100;
-                    return !device.ping || // Ping en erreur
-                           storagePercentage >= 80 || // Stockage en warning ou erreur
-                           device.ram >= 90 || // RAM en warning ou erreur
-                           device.cpu >= 90; // CPU en warning ou erreur
-                });
-
-                // Appliquer les règles de tri en état critique
-                filteredDevices.sort((a, b) => {
-                    // Prioriser les machines avec un ping en "non"
-                    if (!a.ping && b.ping) return -1;
-                    if (a.ping && !b.ping) return 1;
-
-                    // Calculer le nombre d'erreurs et de warnings pour chaque appareil
-                    const aErrorCount = (!a.ping ? 1 : 0) + 
-                                        ((a.storage / a.max_storage) * 100 >= 95 ? 1 : 0) + 
-                                        (a.ram >= 100 ? 1 : 0) + 
-                                        (a.cpu >= 100 ? 1 : 0);
-                    const bErrorCount = (!b.ping ? 1 : 0) + 
-                                        ((b.storage / b.max_storage) * 100 >= 95 ? 1 : 0) + 
-                                        (b.ram >= 100 ? 1 : 0) + 
-                                        (b.cpu >= 100 ? 1 : 0);
-
-                    const aWarningCount = ((a.storage / a.max_storage) * 100 >= 80 && (a.storage / a.max_storage) * 100 < 95 ? 1 : 0) + 
-                                          (a.ram >= 90 && a.ram < 100 ? 1 : 0) + 
-                                          (a.cpu >= 90 && a.cpu < 100 ? 1 : 0);
-                    const bWarningCount = ((b.storage / b.max_storage) * 100 >= 80 && (b.storage / b.max_storage) * 100 < 95 ? 1 : 0) + 
-                                          (b.ram >= 90 && b.ram < 100 ? 1 : 0) + 
-                                          (b.cpu >= 90 && b.cpu < 100 ? 1 : 0);
-
-                    // Trier d'abord par nombre d'erreurs, puis par nombre de warnings
-                    if (aErrorCount !== bErrorCount) return bErrorCount - aErrorCount;
-                    if (aWarningCount !== bWarningCount) return bWarningCount - aWarningCount;
-
-                    return 0; // Si tout est égal, maintenir l'ordre
+                    return !device.ping || storagePercentage >= 80 || device.ram >= 90 || device.cpu >= 90;
                 });
             }
 
-            // Mettre à jour le tableau avec les appareils filtrés
+            // Appliquer le tri
+            if (currentSort.column) {
+                filteredDevices.sort((a, b) => {
+                    let valueA, valueB;
+                    switch (currentSort.column) {
+                        case 'machine_name':
+                            valueA = a.machine_name.toLowerCase();
+                            valueB = b.machine_name.toLowerCase();
+                            break;
+                        case 'ping':
+                            valueA = a.ping ? 1 : 0;
+                            valueB = b.ping ? 1 : 0;
+                            break;
+                        case 'storage':
+                            valueA = a.storage / a.max_storage;
+                            valueB = b.storage / b.max_storage;
+                            break;
+                        case 'ram':
+                            valueA = a.ram;
+                            valueB = b.ram;
+                            break;
+                        case 'cpu':
+                            valueA = a.cpu;
+                            valueB = b.cpu;
+                            break;
+                    }
+                    if (valueA < valueB) return currentSort.direction === 'asc' ? -1 : 1;
+                    if (valueA > valueB) return currentSort.direction === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            }
+
             updateTable(filteredDevices);
         }
 
         // Écouter les changements dans la zone de recherche
-        document.getElementById("searchInput").addEventListener("input", filterDevices);
+        document.getElementById("searchInput").addEventListener("input", filterAndSortDevices);
 
         // Gérer le clic sur les boutons pour l'état global et critique
         document.getElementById("globalBtn").addEventListener("click", () => {
             document.querySelector(".status-btn.active").classList.remove("active");
             document.getElementById("globalBtn").classList.add("active");
-            filterDevices();
+            filterAndSortDevices();
         });
 
         document.getElementById("criticalBtn").addEventListener("click", () => {
             document.querySelector(".status-btn.active").classList.remove("active");
             document.getElementById("criticalBtn").classList.add("active");
-            filterDevices();
+            filterAndSortDevices();
+        });
+
+        // Gérer le tri des colonnes
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                const column = th.dataset.sort;
+                if (currentSort.column === column) {
+                    currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSort.column = column;
+                    currentSort.direction = 'asc';
+                }
+                
+                // Mettre à jour les classes de tri sur les en-têtes
+                document.querySelectorAll('th').forEach(header => {
+                    header.classList.remove('sort-asc', 'sort-desc');
+                });
+                th.classList.add(`sort-${currentSort.direction}`);
+
+                filterAndSortDevices();
+            });
         });
 
         // Appeler la fonction fetchDevices toutes les 2 secondes pour actualiser les données
