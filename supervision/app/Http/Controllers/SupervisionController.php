@@ -12,11 +12,7 @@ class SupervisionController extends Controller
     {
         // Récupération des données de la table ressources
         $ressource = DB::table('ressources')->get();  // Récupérer toutes les ressources
-
         // Passage des données à la vue
         return view('supervision', ['devices' => $ressource]);
     }
 }
-
-
-

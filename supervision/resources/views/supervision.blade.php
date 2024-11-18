@@ -30,7 +30,7 @@
         <tbody>
             @foreach ($devices as $device)
                 <tr>
-                    <td class="titleTableau">{{ $device->name }}</td>
+                    <td class="titleTableau">{{ $device->FK_machine_id }}</td>
                     <td class="{{ $device->ping ? 'status-ok' : 'status-error' }}">{{ $device->ping ? 'oui' : 'non' }}</td>
                     <td class="{{ $device->storage >= 90 ? 'status-warning' : '' }}">{{ $device->storage }}/500Go</td>
                     <td class="{{ $device->ram >= 90 ? 'status-warning' : '' }}">{{ $device->ram }}%</td>
