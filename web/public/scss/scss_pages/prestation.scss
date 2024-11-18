@@ -33,7 +33,7 @@
             flex-direction: row;
             align-items: flex-start;
             .colonne {
-                flex: 1;
+                //flex: 1;
                 padding: 20px;
             }
             .texte-colonne {
@@ -61,8 +61,8 @@
                     .colonne {
                         flex: 1;
                         display: flex;
-                        justify-content: center;
-                        align-items: center;
+                        //justify-content: center;
+                        //align-items: center;
                         figure {
                             margin: 0;
                             img {
