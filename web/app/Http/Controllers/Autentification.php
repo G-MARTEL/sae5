@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB; // Importer DB pour utiliser le Query Builder
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Models\Functions;
 
 
 use Illuminate\Http\Request;
@@ -11,12 +12,6 @@ use Illuminate\Http\Request;
 class Autentification extends Controller
 {
     public function showLoginFormUser()
-    {
-        return view('FormConnexion'); // Assure-toi que la vue existe
-    }
-
-
-    public function showLoginFormAdmin()
     {
         return view('FormConnexion'); // Assure-toi que la vue existe
     }
@@ -33,6 +28,13 @@ class Autentification extends Controller
             $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
             if ($employees)
             {
+                $func=Functions::where('function_id',$employees->FK_function_id)->first();
+                if ($func->function_name=="Admin"){
+                    session(['role' => 'admin',
+                            'id' => $employees->FK_account_id
+                        ]);
+                    return redirect('admin/accueil');
+                }
                 Session::put('role', 'employee');
                 Session::put('id', $employees->FK_account_id);
                 return redirect('/employees/accueil');
@@ -56,33 +58,10 @@ class Autentification extends Controller
 
               return redirect()->route('client.accueil');
           }
-      } else {
-          return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput();
-    }
-}
-    public function loginAdmin(Request $request)
-    {
-        $mdp =$request -> password;
-        $email = $request -> email;
-        $account = DB::table('accounts')->where('email', $request->email)->first();
-        $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
-        if ($employees && $mdp === $account->password) // a modifier avec if ($account && Hash::check($mdp, $account->password)) il s'agit d'un hachage laravel
-        {
-        $admin=DB::table('functions')->where('function_id',$employees->FK_function_id)->first();
-            if ($admin){
-                session(['role' => 'admin',
-                        'id' => $employees->FK_account_id
-                    ]);
-                return redirect('admin/acceuil');
-            }
-            else{
-                return redirect()->back()->with('error', "Seci n'est pas un compte admin!")->withInput(); 
-            }
         }
-        else
+        else 
         {
-            return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput(); //
+            return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput();
         }
-     
     }
 }

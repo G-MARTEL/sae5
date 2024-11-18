@@ -6,7 +6,10 @@ use App\Http\Controllers\Auth\BDDController;
 use App\Http\Controllers\Autentification;
 use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\PrestationsController;
+
 
 
 
@@ -76,14 +79,13 @@ Route::prefix('employees')->name('employees.')->group(function() {
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/connexion', [Autentification::class, 'showLoginFormAdmin'])->name('login');
-    Route::post('/connexion', [Autentification::class, 'loginAdmin']);
     Route::get('/accueil', function () {
         if (session('role') !== 'admin') {
             return redirect('/'); // Redirige si le rôle n'est pas 'admin'
         }
         return view('acceuilAdmin');
     })->name('accueil');
-   
+    Route::get('/listeClients', [AdminController::class, 'showListeClients']);
+    Route::post('/modifClientAsso', [AdminController::class, 'modifClientAsso']);
 
 });
