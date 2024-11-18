@@ -29,12 +29,22 @@
         </thead>
         <tbody>
             @foreach ($devices as $device)
+                @php
+                    // Conditions pour le stockage
+                    $storagePercentage = ($device->storage / $device->max_storage) * 100;
+
+                    // Définir les classes
+                    $pingClass = $device->ping ? 'status-ok' : 'status-error';
+                    $storageClass = $storagePercentage >= 95 ? 'status-error' : ($storagePercentage >= 80 ? 'status-warning' : '');
+                    $ramClass = $device->ram >= 100 ? 'status-error' : ($device->ram >= 90 ? 'status-warning' : '');
+                    $cpuClass = $device->cpu >= 100 ? 'status-error' : ($device->cpu >= 90 ? 'status-warning' : '');
+                @endphp
                 <tr>
-                    <td class="titleTableau">{{ $device->FK_machine_id }}</td>
-                    <td class="{{ $device->ping ? 'status-ok' : 'status-error' }}">{{ $device->ping ? 'oui' : 'non' }}</td>
-                    <td class="{{ $device->storage >= 90 ? 'status-warning' : '' }}">{{ $device->storage }}/500Go</td>
-                    <td class="{{ $device->ram >= 90 ? 'status-warning' : '' }}">{{ $device->ram }}%</td>
-                    <td>{{ $device->cpu }}%</td>
+                    <td class="titleTableau">{{ $device->machine_name }}</td>
+                    <td class="{{ $pingClass }}">{{ $device->ping ? 'oui' : 'non' }}</td>
+                    <td class="{{ $storageClass }}">{{ $device->storage }}/{{ $device->max_storage }}Go</td>
+                    <td class="{{ $ramClass }}">{{ $device->ram }}%</td>
+                    <td class="{{ $cpuClass }}">{{ $device->cpu }}%</td>
                 </tr>
             @endforeach
         </tbody>
