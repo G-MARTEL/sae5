@@ -8,6 +8,10 @@ use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
 
+use App\Http\Controllers\PrestationsController;
+
+
+
 
 Route::get('/', function () {
     return view('accueil');
@@ -19,14 +23,10 @@ Route::get('qui-sommes-nous', function () {
     return view('presentation');
 })->name('presentation');
 
-Route::get('prestations', function () {
-    return view('prestations');
-})->name('prestations');
 
-
-Route::get('prestation', function () {
-    return view('prestation');
-})->name('prestation');
+// Route::get('prestation', function () {
+//     return view('prestation');
+// })->name('prestation');
 
 Route::get('simulateur', function () {
   return view('simulateur');
@@ -39,7 +39,10 @@ Route::get('test', function () {
 
 Route::get('devis', function () {return view('devis');})->name('devis');
 
+Route::get('/prestations', [PrestationsController::class, 'showPrestations'])->name('prestations');
+Route::get('/prestation/{id}', [PrestationsController::class,'show'])->name('prestation.show');
 
+Route::get('/prestation', [PrestationsController::class, 'showPrestations'])->name('prestations');
 
 
 Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
