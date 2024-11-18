@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB; // Importer DB pour utiliser le Query Builder
+use Illuminate\Support\Facades\DB;
 
 class SupervisionController extends Controller
 {
     public function showSupervision()
+    {
+        return view('supervision');
+    }
+
+    public function getDevices()
     {
         // Récupération des données avec jointure
         $ressources = DB::table('ressources')
@@ -17,8 +22,8 @@ class SupervisionController extends Controller
                 'machines.max_storage'
             )
             ->get();
-
-        // Passage des données à la vue
-        return view('supervision', ['devices' => $ressources]);
+    
+        // Retour des données en JSON pour l'AJAX
+        return response()->json($ressources);
     }
 }
