@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Hashing\BcryptHasher;
+use App\Models\Account;
+use App\Models\Client;
+
 
 class CreationCompte extends Controller
 {
@@ -15,10 +18,12 @@ class CreationCompte extends Controller
     }
 
     public function CreationAccount(Request $request){
-        $account = DB::table('accounts')->where('email', $request->email)->first();
-        $password = Hash::make($request->password);
+        
+        $account = Account::where('email', $request->email)->first();
+
+        $password = Hash::make($request->password);//hachage du mdp
         if (!$account) {
-            DB::table('accounts')->insert([
+            Account::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'phone' => $request->phone,
@@ -26,15 +31,24 @@ class CreationCompte extends Controller
                 'code_address' => $request->code_address,
                 'city' => $request->city,
                 'email' => $request->email,
-                'password' => $password, // Enregistre le mot de passe haché
+                'password' => $password, 
                 'creation_date' => $request->creation_date,
             ]);
-            $idAccount = DB::table('accounts')
-                ->orderBy('account_id', 'desc') // Remplacez `id` par la colonne qui convient dans votre table
+
+            /*$idAccount = DB::table('accounts')
+                ->orderBy('account_id', 'desc') 
                 ->first()->account_id;
+
             DB::table('clients')->insert([
                 'FK_account_id'=>$idAccount,
-            ]);
+            ]);*/
+            // sans utiliser le model 
+
+            $idAccount = Account::orderBy('account_id', 'desc')->first()->account_id;
+
+            Client::create(['FK_account_id' => $idAccount,]); // avec le model
+
+
             return redirect('acceuil');
         } else {
             dd('Cet email est déjà utilisé');
