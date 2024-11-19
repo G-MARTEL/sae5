@@ -26,7 +26,7 @@
             <label for="last_name">Nom:</label>
             <input type="text" id="last_name" name="last_name" required>
 
-            <label for="phone">Nom:</label>
+            <label for="phone">phone:</label>
             <input type="number" id="phone" name="phone" required>
 
             <label for="postal_address">postal_address:</label>
