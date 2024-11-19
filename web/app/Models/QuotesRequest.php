@@ -9,7 +9,7 @@ class QuotesRequest extends Model
 {
     use HasFactory;
 
-    protected $table = 'quoted_request';
+    protected $table = 'quotes_request';
     protected $primaryKey = 'quote_request_id';
 
     protected $fillable = ['quote_request_id','first_name','last_name','phone','email','type_of_service','message','creation_date'];
