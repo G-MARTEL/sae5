@@ -78,3 +78,5 @@
 </div>
 
 @endsection
+
+<script src="{{ asset('js/scriptAccueil.js') }}"></script>

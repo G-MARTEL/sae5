@@ -7,6 +7,8 @@ use App\Http\Controllers\Autentification;
 use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DevisController;
+
 
 use App\Http\Controllers\PrestationsController;
 
@@ -38,6 +40,8 @@ Route::get('test', function () {
 
 
 Route::get('devis', function () {return view('devis');})->name('devis');
+Route::post('/devis', [DevisController::class, 'store']);
+
 
 Route::get('/prestations', [PrestationsController::class, 'showPrestations'])->name('prestations');
 Route::get('/prestation/{id}', [PrestationsController::class,'show'])->name('prestation.show');
