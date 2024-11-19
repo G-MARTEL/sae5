@@ -5,6 +5,7 @@
 
 
 @section('scripts')
+
 @endsection
 @section('content')
 
@@ -20,11 +21,12 @@
                 </div>   
                 <div class="colonne">
                     <div class="contact-form">
-                        <form action="#" method="POST">
+                        <form action="devis" method="POST">
+                        @csrf
                             <div class="colonnes">
                                 <div class="colonne">
                                     <div class="form-group">
-                                        <label for="Nom">Nom</label>
+                                        <label for="nom">Nom</label>
                                         <input type="nom" id="nom" name="nom" placeholder="Doe" required>
                                     </div>
                                 </div>
@@ -57,7 +59,16 @@
                 </div>
             </div>
         </div>
+        @if (session('success'))
+            <div id="success-popup" class="popup">
+                <div class="popup-content">
+                    {{ session('success') }}
+                </div>
+            </div>
+        @endif
     </div>
 
 
 @endsection
+
+<script src="{{asset('./js/scriptDevis.js')}}"></script>
