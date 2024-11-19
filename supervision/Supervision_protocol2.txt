@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Chemin vers la clé SSH et la base de données
+DB_PATH="/home/kali/Desktop/supervisionfolder/supervision.db"
+SSH_KEY="/home/kali/.ssh/id_rsa"
+
+# Adresse IP et nom d'utilisateur SSH
+ip_address="192.168.239.135"
+user="kali"
+
+# Informations de connexion à la base MySQL
+DB_HOST="db"
+DB_PORT="3306"
+DB_DATABASE="supervision"
+DB_USERNAME="root"
+DB_PASSWORD="password"
+
+# Vérifier le PING (succès renvoie "1", échec renvoie "0")
+ping_status=$(ping -c 1 -W 2 "$ip_address" > /dev/null 2>&1 && echo "1" || echo "0")
+
+# Récupérer les informations système de la machine distante
+hostname=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "hostname" 2>/dev/null)
+ram=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "free -m | awk '/Mem:/ {print \$3}'" 2>/dev/null)
+cpu=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "top -bn1 | grep '%Cpu(s)' | awk '{print 100 - \$8}'" 2>/dev/null)
+storage_remaining=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "df -BM / | awk 'NR==2 {print \$4}' | sed 's/M//'" 2>/dev/null)
+max_storage=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "df -BM / | awk 'NR==2 {print \$2}' | sed 's/M//'" 2>/dev/null)
+
+# Insérer ou mettre à jour les données dans MySQL
+mysql -u "$DB_USERNAME" -p"$DB_PASSWORD" -h "$DB_HOST" -P "$DB_PORT" "$DB_DATABASE" <<EOF
+-- Insérer ou mettre à jour la machine
+INSERT INTO machines (name, max_storage)
+VALUES ('$hostname', '$max_storage')
+ON DUPLICATE KEY UPDATE max_storage = '$max_storage';
+
+-- Récupérer l'ID de la machine
+SET @machine_id = (SELECT machine_id FROM machines WHERE name = '$hostname' LIMIT 1);
+
+-- Insérer les données dans la table ressources
+INSERT INTO ressources (FK_machine_id, ping, storage, ram, cpu)
+VALUES (@machine_id, '$ping_status', '$storage_remaining', '$ram', '$cpu');
+EOF
+
+# Vérification de l'insertion dans la base de données
+if [ $? -eq 0 ]; then
+    echo "Données de supervision enregistrées avec succès."
+else
+    echo "Erreur : Échec de l'insertion dans la base de données."
+fi

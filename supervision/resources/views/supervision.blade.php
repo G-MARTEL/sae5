@@ -186,8 +186,8 @@
             });
         });
 
-        // Appeler la fonction fetchDevices toutes les 2 secondes pour actualiser les données
-        setInterval(fetchDevices, 2000);
+        // Appeler la fonction fetchDevices toutes les 5 secondes pour actualiser les données
+        setInterval(fetchDevices, 5000);
 
         // Initialiser l'affichage dès le chargement de la page
         fetchDevices();

@@ -22,7 +22,20 @@ class SupervisionController extends Controller
                 'machines.max_storage'
             )
             ->get();
-    
+
+        // Insertion dans la table ressources_hist
+        foreach ($ressources as $ressource) {
+            DB::table('ressources_hist')->insert([
+                'FK_resource_id' => $ressource->ressource_id,
+                'FK_machine_id' => $ressource->FK_machine_id,
+                'ping' => $ressource->ping,
+                'storage' => $ressource->storage,
+                'ram' => $ressource->ram,
+                'cpu' => $ressource->cpu,
+                'save_date' => now() // Ajoute la date et l'heure actuelles
+            ]);
+        }
+
         // Retour des données en JSON pour l'AJAX
         return response()->json($ressources);
     }
