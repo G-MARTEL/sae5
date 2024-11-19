@@ -91,5 +91,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     })->name('accueil');
     Route::get('/listeClients', [AdminController::class, 'showListeClients']);
     Route::post('/modifClientAsso', [AdminController::class, 'modifClientAsso']);
+    Route::get('/listeEmployee', [AdminController::class, 'showListeEmployee']);
 
 });

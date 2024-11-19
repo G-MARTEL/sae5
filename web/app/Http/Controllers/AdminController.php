@@ -54,4 +54,16 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+
+
+    public function showListeEmployee()
+    {
+        if (session('role')!== 'admin') {
+            return redirect('/'); // Redirige si le rôle n'est pas 'admin'
+        }
+        // Récupérer tous les employés
+        $listeEmployees = Employee::all();
+        // Passer les employés à la vue
+        return view('listeEmployee', ['listeEmployees' => $listeEmployees]);
+    }
 }
