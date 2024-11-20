@@ -51,5 +51,5 @@
 
 @foreach ($listeEmployees as $employee)
 
-    <p> {{$employee->Account->first_name}} , {{$employee->Account->last_name}}</p>
+    <p> Non : {{$employee->Account->first_name}} ,  Prenom : {{$employee->Account->last_name}},  Fonctions :{{$employee->functions->function_name}}</p>
 @endforeach
