@@ -19,6 +19,16 @@ class Autentification extends Controller
     // Auth guard, simplifie la gestion des utilisateurs  
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ], [
+            'email.required' => 'Veuillez fournir votre adresse email.',
+            'email.email' => 'L\'adresse email doit être valide.',
+            'password.required' => 'Le mot de passe est obligatoire.',
+        ]);
+
+
         $mdp =$request -> password;
         $email = $request -> email;
         $account = DB::table('accounts')->where('email', $request->email)->first();
@@ -58,6 +68,7 @@ class Autentification extends Controller
 
               return redirect()->route('client.accueil');
           }
+          return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants!')->withInput();
         }
         else 
         {
