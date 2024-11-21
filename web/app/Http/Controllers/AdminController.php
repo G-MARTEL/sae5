@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Client;
 use App\Models\Account;
 use App\Models\Employee;
+use App\Models\Functions;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -65,8 +66,9 @@ class AdminController extends Controller
         }
         // Récupérer tous les employés
         $listeEmployees = Employee::all();
+        $listeFunction =Functions::all();
         // Passer les employés à la vue
-        return view('listeEmployee', ['listeEmployees' => $listeEmployees]);
+        return view('listeEmployee', ['listeEmployees' => $listeEmployees, 'listeFunction' => $listeFunction]);
     }
 
     public function crationEmployee(Request $request)
@@ -100,5 +102,18 @@ class AdminController extends Controller
         $employee->save();
 
         return redirect()->back();
+    }
+
+    public function modifEmployee(Request $request)
+    {
+        $employee_id = $request->input('employee_id');
+        $funtions_id = $request->input('Funtions_id');
+
+        $employee = Employee::where('employee_id', $employee_id)->first();
+        $employee->FK_function_id=$funtions_id;
+        $employee->save();
+
+        return redirect()->back();
+
     }
 }
