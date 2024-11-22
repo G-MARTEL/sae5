@@ -94,5 +94,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/listeEmployee', [AdminController::class, 'showListeEmployee']);
     Route::post('/crationEmployee', [AdminController::class, 'crationEmployee']);
     Route::post('/modifEmployee', [AdminController::class, 'modifEmployee']);
+    Route::get('/listePrestations', [AdminController::class, 'showlistePrestations']);
 
 });

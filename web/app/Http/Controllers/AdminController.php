@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Account;
 use App\Models\Employee;
 use App\Models\Functions;
+use App\Models\Services;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -115,5 +116,12 @@ class AdminController extends Controller
 
         return redirect()->back();
 
+    }
+
+
+    public function showListePrestations()
+    {
+        $listePresta= Services::all();
+        return view('listePrestations', ['listePresta' => $listePresta]);
     }
 }
