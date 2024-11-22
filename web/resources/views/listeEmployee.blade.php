@@ -51,8 +51,8 @@
 
 @foreach ($listeEmployees as $employee)
 
-    <p> Nom : {{$employee->Account->first_name}} ,
-        Prenom : {{$employee->Account->last_name}}, 
+    <p> Nom : {{$employee->Account->last_name}} ,
+        Prenom : {{$employee->Account->first_name}}, 
         <form action="modifEmployee" method="post">
         @csrf
         <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
