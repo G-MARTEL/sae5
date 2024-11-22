@@ -12,8 +12,16 @@
         </div>
         <button type="submit">Se connecter</button>
     </form>
-    <a href="creationCompte">Creéé un Compte</a>
+    <a href="creationCompte">Créer un Compte</a>
 </div>
+
+@if ($errors->any())
+    <div class="center-child error-message">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
 
 @if(session('error'))
     <div class="alert alert-danger">
