@@ -71,7 +71,7 @@ class AdminController extends Controller
         return view('listeEmployee', ['listeEmployees' => $listeEmployees, 'listeFunction' => $listeFunction]);
     }
 
-    public function crationEmployee(Request $request)
+    public function creationEmployee(Request $request)
     {
         // Récupérer les entrées du formulaire ou de la requête
         $first_name = $request->input('first_name');
@@ -82,6 +82,7 @@ class AdminController extends Controller
         $code_address = $request->input('code_address');
         $city = $request->input('city');
         $password = $request->input('password');
+        $function_id = $request->input('function_id');
 
         // Créer un nouveau compte pour l'employé
         $account = new Account();
@@ -99,6 +100,7 @@ class AdminController extends Controller
         // Créer un nouvel employé avec le compte créé
         $employee = new Employee();
         $employee->FK_account_id = $account->account_id;
+        $employee->FK_function_id = $function_id;
         $employee->save();
 
         return redirect()->back();

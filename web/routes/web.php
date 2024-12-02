@@ -26,10 +26,6 @@ Route::get('qui-sommes-nous', function () {
 })->name('presentation');
 
 
-// Route::get('prestation', function () {
-//     return view('prestation');
-// })->name('prestation');
-
 Route::get('simulateur', function () {
   return view('simulateur');
 })->name('simulateur') ;
@@ -93,7 +89,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/listeClients', [AdminController::class, 'showListeClients']);
     Route::post('/modifClientAsso', [AdminController::class, 'modifClientAsso']);
     Route::get('/listeEmployee', [AdminController::class, 'showListeEmployee']);
-    Route::post('/crationEmployee', [AdminController::class, 'crationEmployee']);
+    Route::post('/creationEmployee', [AdminController::class, 'creationEmployee']);
     Route::post('/modifEmployee', [AdminController::class, 'modifEmployee']);
 
 });
