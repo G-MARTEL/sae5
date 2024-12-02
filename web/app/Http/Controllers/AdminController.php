@@ -66,7 +66,8 @@ class AdminController extends Controller
             return redirect('/'); // Redirige si le rôle n'est pas 'admin'
         }
         // Récupérer tous les employés
-        $listeEmployees = Employee::all();
+        $listeEmployees = Employee::where('fk_function_id', '!=', 1)->get();
+
         $listeFunction =Functions::all();
         // Passer les employés à la vue
         return view('listeEmployee', ['listeEmployees' => $listeEmployees, 'listeFunction' => $listeFunction]);
