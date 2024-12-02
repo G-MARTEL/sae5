@@ -18,12 +18,6 @@ return new class extends Migration
             $table->foreign('FK_employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
         });
 
-        // Table 'contracts'
-        Schema::table('contracts', function (Blueprint $table) {
-            $table->foreign('FK_client_id')->references('client_id')->on('clients')->onDelete('cascade');
-            $table->foreign('FK_service_id')->references('service_id')->on('services')->onDelete('cascade');
-        });
-
         // Table 'employees'
         Schema::table('employees', function (Blueprint $table) {
             $table->foreign('FK_account_id')->references('account_id')->on('accounts')->onDelete('cascade');
@@ -79,6 +73,12 @@ return new class extends Migration
             $table->foreign('FK_service_id')->references('service_id')->on('services')->onDelete('cascade');
             $table->foreign('FK_employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
         });
+        // Table 'contracts'
+        Schema::table('contracts', function (Blueprint $table) {
+            $table->foreign('FK_client_id')->references('client_id')->on('clients')->onDelete('cascade');
+            $table->foreign('FK_service_id')->references('service_id')->on('services')->onDelete('cascade');
+            $table->foreign('FK_employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
+        });
     }
 
     /**
@@ -98,6 +98,7 @@ return new class extends Migration
         Schema::table('contracts', function (Blueprint $table) {
             $table->dropForeign(['FK_client_id']);
             $table->dropForeign(['FK_service_id']);
+            $table->dropForeign(['FK_employee_id']);
         });
 
         // Table 'employees'

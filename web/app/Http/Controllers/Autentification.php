@@ -36,6 +36,7 @@ class Autentification extends Controller
         {
             
             $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
+            $func=Functions::where('function_id',$employees->FK_function_id)->first();
             if ($employees)
             {
                 $func=Functions::where('function_id',$employees->FK_function_id)->first();
@@ -75,4 +76,10 @@ class Autentification extends Controller
             return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput();
         }
     }
+
+    public function logout()
+{
+    Session::flush(); 
+    return redirect('/'); 
+}
 }

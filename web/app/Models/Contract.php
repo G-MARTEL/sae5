@@ -11,11 +11,15 @@ class Contract extends Model
     protected $table = 'contracts';
     protected $primaryKey = 'contract_id';
 
-    protected $fillable = ['contract_id','numero_contract','FK_service_id','FK_client_id','creation_date'];
+    protected $fillable = ['contract_id','numero_contract','FK_service_id','FK_client_id','FK_employee_id','creation_date','is_active'];
 
     public function Client()
     {
         return $this->belongsTo(Client::class, 'FK_client_id');
+    }
+    public function employee()
+    {
+        return $this->belongsTo(Employees::class, 'FK_employee_id');
     }
 
     public function service()

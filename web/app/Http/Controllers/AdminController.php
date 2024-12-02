@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Account;
 use App\Models\Employee;
 use App\Models\Functions;
+use App\Models\Services;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -65,13 +66,14 @@ class AdminController extends Controller
             return redirect('/'); // Redirige si le rôle n'est pas 'admin'
         }
         // Récupérer tous les employés
-        $listeEmployees = Employee::all();
+        $listeEmployees = Employee::where('fk_function_id', '!=', 1)->get();
+
         $listeFunction =Functions::all();
         // Passer les employés à la vue
         return view('listeEmployee', ['listeEmployees' => $listeEmployees, 'listeFunction' => $listeFunction]);
     }
 
-    public function crationEmployee(Request $request)
+    public function creationEmployee(Request $request)
     {
         // Récupérer les entrées du formulaire ou de la requête
         $first_name = $request->input('first_name');
@@ -82,6 +84,7 @@ class AdminController extends Controller
         $code_address = $request->input('code_address');
         $city = $request->input('city');
         $password = $request->input('password');
+        $function_id = $request->input('function_id');
 
         // Créer un nouveau compte pour l'employé
         $account = new Account();
@@ -99,6 +102,7 @@ class AdminController extends Controller
         // Créer un nouvel employé avec le compte créé
         $employee = new Employee();
         $employee->FK_account_id = $account->account_id;
+        $employee->FK_function_id = $function_id;
         $employee->save();
 
         return redirect()->back();
@@ -112,6 +116,31 @@ class AdminController extends Controller
         $employee = Employee::where('employee_id', $employee_id)->first();
         $employee->FK_function_id=$funtions_id;
         $employee->save();
+
+        return redirect()->back();
+
+    }
+
+
+    public function showListePrestations()
+    {
+        $listePresta= Services::all();
+        return view('listePrestations', ['listePresta' => $listePresta]);
+    }
+
+    public function creationPrestation(Request $request)  
+    {
+        $titre = $request->input('titre');
+        $description = $request->input('description');
+        $situation = $request->input('situation');
+        $advantage = $request->input('advantage');
+
+        $prestation = new Services();
+        $prestation->title = $titre;
+        $prestation->description = $description;
+        $prestation->advantage = $advantage;
+        $prestation->situations = $situation;
+        $prestation->save();
 
         return redirect()->back();
 
