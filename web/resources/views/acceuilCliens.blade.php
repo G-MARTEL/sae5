@@ -15,7 +15,8 @@
         <div class="colonnes">
             <div class="colonne">
                 <div class="container-inner">
-                    <h2>Bienvenue, {{ $clientData['account']->first_name }} {{ $clientData['account']->last_name }}</h1>
+                    <h2>Bienvenue, {{ $clientData['account']->first_name }} {{ $clientData['account']->last_name }}</h2>
+
                     <ul>
                         <li>Email : {{ $clientData['account']->email }}</li>
                         <li>Téléphone : {{ $clientData['account']->phone }}</li>

@@ -75,4 +75,10 @@ class Autentification extends Controller
             return redirect()->back()->with('error', 'Veuillez vérifier vos identifiants !')->withInput();
         }
     }
+
+    public function logout()
+{
+    Session::flush(); 
+    return redirect('/'); 
+}
 }

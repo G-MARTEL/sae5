@@ -97,3 +97,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/modifEmployee', [AdminController::class, 'modifEmployee']);
 
 });
+
+
+Route::get('/logout', function () {
+    Session::flush(); 
+    return redirect('/'); 
+})->name('logout');
+
+
+
