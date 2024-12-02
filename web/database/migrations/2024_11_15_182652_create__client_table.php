@@ -17,6 +17,10 @@ return new class extends Migration
             $table->unsignedInteger('FK_account_id'); // Clé étrangère obligatoire
         });
 
+        DB::table('clients')->insert([
+            ['FK_account_id' => 1,],
+        ]);
+
         // Configurer l'engine et le charset
         DB::statement('ALTER TABLE clients ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
     }

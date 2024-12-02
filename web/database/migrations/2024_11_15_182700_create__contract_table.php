@@ -15,11 +15,14 @@ return new class extends Migration
             $table->increments('contract_id')->primary();
             $table->integer('numero_contract');
             $table->unsignedInteger('FK_service_id');
+            $table->unsignedInteger('FK_employee_id');
+            $table->boolean('is_active');
             $table->unsignedInteger('FK_client_id');
             $table->timestamp('creation_date')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
 
         DB::statement('ALTER TABLE contracts ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
+        
     }
 
     /**

@@ -22,6 +22,7 @@ return new class extends Migration
         Schema::table('contracts', function (Blueprint $table) {
             $table->foreign('FK_client_id')->references('client_id')->on('clients')->onDelete('cascade');
             $table->foreign('FK_service_id')->references('service_id')->on('services')->onDelete('cascade');
+            $table->foreign('FK_employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
         });
 
         // Table 'employees'

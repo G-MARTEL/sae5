@@ -19,8 +19,13 @@ return new class extends Migration
         });
 
         DB::statement('ALTER TABLE employees ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
-    }
 
+        DB::table('employees')->insert([
+            ['FK_function_id' => 1, 'FK_account_id' => 2],
+        ]);
+
+    }
+    
     /**
      * Annuler la migration.
      */
