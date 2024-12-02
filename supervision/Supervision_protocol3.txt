@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Chemin vers la clé SSH et la base de données
+DB_PATH="/home/kali/Desktop/supervisionfolder/supervision.db"
+SSH_KEY="/home/kali/.ssh/id_rsa"
+
+# Adresse IP et nom d'utilisateur SSH
+ip_address="192.168.239.135"
+user="kali"
+
+# Informations de connexion à la base MySQL
+DB_HOST="db"
+DB_PORT="3306"
+DB_DATABASE="supervision"
+DB_USERNAME="root"
+DB_PASSWORD="password"
+
+# Vérifier le PING (succès renvoie "1", échec renvoie "0")
+ping_status=$(ping -c 1 -W 2 "$ip_address" > /dev/null 2>&1 && echo "1" || echo "0")
+
+# Récupérer les informations système de la machine distante
+hostname=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "hostname" 2>/dev/null)
+ram=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "free -m | awk '/Mem:/ {print \$3}'" 2>/dev/null)
+cpu=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "top -bn1 | grep '%Cpu(s)' | awk '{print 100 - \$8}'" 2>/dev/null)
+storage_remaining=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "df -BM / | awk 'NR==2 {print \$4}' | sed 's/M//'" 2>/dev/null)
+max_storage=$(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "df -BM / | awk 'NR==2 {print \$2}' | sed 's/M//'" 2>/dev/null)
+
+# Mettre à jour les données dans MySQL
+mysql -u "$DB_USERNAME" -p"$DB_PASSWORD" -h "$DB_HOST" -P "$DB_PORT" "$DB_DATABASE" <<EOF
+-- Récupérer l'ID de la machine
+SET @machine_id = (SELECT machine_id FROM machines WHERE name = '$hostname' LIMIT 1);
+
+-- Si la machine n'existe pas, arrêter le script
+IF @machine_id IS NULL THEN
+    SELECT 'Erreur : Machine non trouvée dans la base de données.';
+    EXIT;
+END IF;
+
+-- Mettre à jour les données de la machine
+UPDATE machines
+SET max_storage = '$max_storage'
+WHERE machine_id = @machine_id;
+
+-- Mettre à jour ou insérer les données dans la table ressources
+UPDATE ressources
+SET ping = '$ping_status',
+    storage = '$storage_remaining',
+    ram = '$ram',
+    cpu = '$cpu'
+WHERE FK_machine_id = @machine_id;
+
+-- Vérifier si une ligne a été mise à jour dans ressources, sinon insérer
+IF ROW_COUNT() = 0 THEN
+    INSERT INTO ressources (FK_machine_id, ping, storage, ram, cpu)
+    VALUES (@machine_id, '$ping_status', '$storage_remaining', '$ram', '$cpu');
+END IF;
+EOF
+
+# Vérification de l'exécution des commandes SQL
+if [ $? -eq 0 ]; then
+    echo "Données de supervision mises à jour avec succès."
+else
+    echo "Erreur : Échec de la mise à jour des données dans la base de données."
+fi
