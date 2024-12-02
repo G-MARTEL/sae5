@@ -56,9 +56,9 @@ public function showClientDashboard()
 public function updateClientInfo(Request $request)
 {
     // Valider les données du formulaire
-    $validated = $request->validate([
+    $request->validate([
         'email' => 'required|email',
-        'phone' => 'required|string|max:15',
+        'phone' => 'required|string|min:10|max:10',
         'address' => 'required|string|max:255',
         'city' => 'required|string|max:100',
     ]);
@@ -69,17 +69,17 @@ public function updateClientInfo(Request $request)
 
     // Mettre à jour les informations dans la table 'accounts'
     DB::table('accounts')->where('account_id', $clientData['account']->account_id)->update([
-        'email' => $validated['email'],
-        'phone' => $validated['phone'],
-        'postal_address' => $validated['address'],
-        'city' => $validated['city'],
+        'email' => $request['email'],
+        'phone' => $request['phone'],
+        'postal_address' => $request['address'],
+        'city' => $request['city'],
     ]);
 
     // Mettre à jour les données de session
-    $clientData['account']->email = $validated['email'];
-    $clientData['account']->phone = $validated['phone'];
-    $clientData['account']->postal_address = $validated['address'];
-    $clientData['account']->city = $validated['city'];
+    $clientData['account']->email = $request['email'];
+    $clientData['account']->phone = $request['phone'];
+    $clientData['account']->postal_address = $request['address'];
+    $clientData['account']->city = $request['city'];
 
     // Sauvegarder les nouvelles informations dans la session
     session(['clientData' => $clientData]);
