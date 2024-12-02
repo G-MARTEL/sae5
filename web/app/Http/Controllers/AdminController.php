@@ -124,4 +124,22 @@ class AdminController extends Controller
         $listePresta= Services::all();
         return view('listePrestations', ['listePresta' => $listePresta]);
     }
+
+    public function creationPrestation(Request $request)  
+    {
+        $titre = $request->input('titre');
+        $description = $request->input('description');
+        $situation = $request->input('situation');
+        $advantage = $request->input('advantage');
+
+        $prestation = new Services();
+        $prestation->title = $titre;
+        $prestation->description = $description;
+        $prestation->advantage = $advantage;
+        $prestation->situations = $situation;
+        $prestation->save();
+
+        return redirect()->back();
+
+    }
 }

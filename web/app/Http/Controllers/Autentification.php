@@ -36,6 +36,7 @@ class Autentification extends Controller
         {
             
             $employees = DB::table('employees')->where('FK_account_id',$account ->account_id)->first();
+            $func=Functions::where('function_id',$employees->FK_function_id)->first();
             if ($employees)
             {
                 $func=Functions::where('function_id',$employees->FK_function_id)->first();
