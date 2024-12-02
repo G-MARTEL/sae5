@@ -69,6 +69,7 @@ Route::prefix('client')->name('client.')->group(function() {
 
 });
 
+Route::post('/client/update', [ClientController::class, 'updateClientInfo'])->name('client.update');
 
 
 Route::prefix('employees')->name('employees.')->group(function() {
