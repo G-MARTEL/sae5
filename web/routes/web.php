@@ -69,6 +69,7 @@ Route::prefix('client')->name('client.')->group(function() {
 
 });
 
+Route::post('/client/update', [ClientController::class, 'updateClientInfo'])->name('client.update');
 
 
 Route::prefix('employees')->name('employees.')->group(function() {
@@ -96,3 +97,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/modifEmployee', [AdminController::class, 'modifEmployee']);
 
 });
+
+
+Route::get('/logout', function () {
+    Session::flush(); 
+    return redirect('/'); 
+})->name('logout');
+
+
+

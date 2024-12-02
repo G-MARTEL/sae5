@@ -57,3 +57,48 @@
         }
     }
 }
+
+
+/* Style de la modale */
+.modal {
+    display: none; // Initialement cachée
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); // Fond semi-transparent
+    justify-content: center;
+    align-items: center;
+    
+    &.active {
+      display: flex; // Modale visible quand l'élément a la classe active
+    }
+  
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+  
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .btn-close {
+          font-size: 1.5rem;
+          cursor: pointer;
+          background: none;
+          border: none;
+          color: #000;
+          font-weight: bold;
+        }
+      }
+  
+      .modal-body {
+        margin-top: 10px;
+      }
+    }
+  }
+  

@@ -19,8 +19,20 @@
             <li><a href="{{ route('devis') }}">Faire un devis</a></li>
         </ul>
         <div class="nav-btn">
-        <a href="{{ route('login') }}"><button>Connexion </button></a>
+            @if (Session::has('role'))
+                @if (Session::get('role') === 'client')
+                    <a href="{{ route('client.accueil') }}"><button>Profil</button></a>
+                @elseif (Session::get('role') === 'employee')
+                    <a href="{{ route('employees.accueil') }}"><button>Espace Employé</button></a>
+                @elseif (Session::get('role') === 'admin')
+                    <a href="{{ route('admin.accueil') }}"><button>Espace Admin</button></a>
+                @endif
+                <a href="{{ route('logout') }}"><button>Déconnexion</button></a>
+            @else
+                <a href="{{ route('login') }}"><button>Connexion</button></a>
+            @endif
         </div>
+        
     </nav>
         
         @yield('content')
