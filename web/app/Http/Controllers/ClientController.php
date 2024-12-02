@@ -53,6 +53,39 @@ public function showClientDashboard()
     return view('acceuilCliens', ['clientData' => $clientData]);
 }
 
+public function updateClientInfo(Request $request)
+{
+    // Valider les données du formulaire
+    $request->validate([
+        'email' => 'required|email',
+        'phone' => 'required|string|min:10|max:10',
+        'address' => 'required|string|max:255',
+        'city' => 'required|string|max:100',
+    ]);
+
+    // Récupérer les données du client depuis la session
+    $clientData = session('clientData');
+    $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
+
+    // Mettre à jour les informations dans la table 'accounts'
+    DB::table('accounts')->where('account_id', $clientData['account']->account_id)->update([
+        'email' => $request['email'],
+        'phone' => $request['phone'],
+        'postal_address' => $request['address'],
+        'city' => $request['city'],
+    ]);
+
+    // Mettre à jour les données de session
+    $clientData['account']->email = $request['email'];
+    $clientData['account']->phone = $request['phone'];
+    $clientData['account']->postal_address = $request['address'];
+    $clientData['account']->city = $request['city'];
+
+    // Sauvegarder les nouvelles informations dans la session
+    session(['clientData' => $clientData]);
+
+    return view('acceuilCliens', ['clientData' => $clientData]);
+}
 
 
 }
