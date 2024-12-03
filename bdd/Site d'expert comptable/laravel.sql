@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mer. 06 nov. 2024 à 15:19
+-- Généré le : mar. 03 déc. 2024 à 10:51
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -90,7 +90,21 @@ CREATE TABLE `contracts` (
   `numero_contract` int(11) NOT NULL,
   `FK_service_id` int(11) NOT NULL,
   `FK_client_id` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `conversations`
+--
+
+CREATE TABLE `conversations` (
+  `conversation_id` int(11) NOT NULL,
+  `FK_employee_id` int(11) NOT NULL,
+  `FK_client_id` int(11) NOT NULL,
+  `is_active` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -200,6 +214,32 @@ CREATE TABLE `log_reviews` (
   `status` int(11) DEFAULT NULL,
   `edited_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FK_action_type` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `messages`
+--
+
+CREATE TABLE `messages` (
+  `message_id` int(11) NOT NULL,
+  `FK_sender_id` int(11) NOT NULL,
+  `FK_recipient_id` int(11) NOT NULL,
+  `FK_conversation_id` int(11) NOT NULL,
+  `FK_message_content_id` int(11) NOT NULL,
+  `creation_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `message_contents`
+--
+
+CREATE TABLE `message_contents` (
+  `message_content_id` int(11) NOT NULL,
+  `content` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -317,6 +357,14 @@ ALTER TABLE `contracts`
   ADD KEY `FK_contracts_service` (`FK_service_id`);
 
 --
+-- Index pour la table `conversations`
+--
+ALTER TABLE `conversations`
+  ADD PRIMARY KEY (`conversation_id`),
+  ADD KEY `Conversation_FK_client` (`FK_client_id`),
+  ADD KEY `Conversation_FK_employee` (`FK_employee_id`);
+
+--
 -- Index pour la table `employees`
 --
 ALTER TABLE `employees`
@@ -366,6 +414,22 @@ ALTER TABLE `log_reviews`
   ADD KEY `FK_account_log_review` (`FK_account_id`),
   ADD KEY `FK_action_type_log_review` (`FK_action_type`),
   ADD KEY `FK_review_log` (`FK_review_id`);
+
+--
+-- Index pour la table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`message_id`),
+  ADD KEY `FK_message_conversation` (`FK_conversation_id`),
+  ADD KEY `FK_message_message_content` (`FK_message_content_id`),
+  ADD KEY `FK_message_account_recipient` (`FK_recipient_id`),
+  ADD KEY `FK_message_account_sender` (`FK_sender_id`);
+
+--
+-- Index pour la table `message_contents`
+--
+ALTER TABLE `message_contents`
+  ADD PRIMARY KEY (`message_content_id`);
 
 --
 -- Index pour la table `quotes_request`
@@ -429,6 +493,12 @@ ALTER TABLE `contracts`
   MODIFY `contract_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `conversations`
+--
+ALTER TABLE `conversations`
+  MODIFY `conversation_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `employees`
 --
 ALTER TABLE `employees`
@@ -463,6 +533,18 @@ ALTER TABLE `log_employees`
 --
 ALTER TABLE `log_reviews`
   MODIFY `log_review_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `message_contents`
+--
+ALTER TABLE `message_contents`
+  MODIFY `message_content_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `quotes_request`
@@ -513,6 +595,13 @@ ALTER TABLE `contracts`
   ADD CONSTRAINT `FK_contracts_service` FOREIGN KEY (`FK_service_id`) REFERENCES `services` (`service_id`);
 
 --
+-- Contraintes pour la table `conversations`
+--
+ALTER TABLE `conversations`
+  ADD CONSTRAINT `Conversation_FK_client` FOREIGN KEY (`FK_client_id`) REFERENCES `clients` (`client_id`),
+  ADD CONSTRAINT `Conversation_FK_employee` FOREIGN KEY (`FK_employee_id`) REFERENCES `employees` (`employee_id`);
+
+--
 -- Contraintes pour la table `employees`
 --
 ALTER TABLE `employees`
@@ -551,6 +640,15 @@ ALTER TABLE `log_reviews`
   ADD CONSTRAINT `FK_account_log_review` FOREIGN KEY (`FK_account_id`) REFERENCES `accounts` (`account_id`),
   ADD CONSTRAINT `FK_action_type_log_review` FOREIGN KEY (`FK_action_type`) REFERENCES `actions_type` (`action_type_id`),
   ADD CONSTRAINT `FK_review_log` FOREIGN KEY (`FK_review_id`) REFERENCES `reviews` (`review_id`);
+
+--
+-- Contraintes pour la table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `FK_message_account_recipient` FOREIGN KEY (`FK_recipient_id`) REFERENCES `accounts` (`account_id`),
+  ADD CONSTRAINT `FK_message_account_sender` FOREIGN KEY (`FK_sender_id`) REFERENCES `accounts` (`account_id`),
+  ADD CONSTRAINT `FK_message_conversation` FOREIGN KEY (`FK_conversation_id`) REFERENCES `conversations` (`conversation_id`),
+  ADD CONSTRAINT `FK_message_message_content` FOREIGN KEY (`FK_message_content_id`) REFERENCES `message_contents` (`message_content_id`);
 
 --
 -- Contraintes pour la table `reviews`
