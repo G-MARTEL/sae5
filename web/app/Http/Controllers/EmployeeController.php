@@ -9,6 +9,7 @@ use App\Models\Account;
 use App\Models\Employee;
 use App\Models\Functions;
 use App\Models\Services;
+use App\Models\Contract;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
@@ -39,7 +40,35 @@ class EmployeeController extends Controller
     }
 
     public function creationContrat(Request $request){
+        if (session('role') !== 'employee') {
+            return redirect('/'); // Redirige si le rôle n'est pas 'employee'
+        }
+    
+        $clientId = $request->input('client_id'); 
+        $serviceId = $request->input('prestation_id'); 
+        $employeeId = session('id'); 
+        $employee = Employee::where('FK_account_id', $employeeId)->first();
+        $idEmployee = $employee ? $employee->employee_id : null;
+        // Génération d'un numéro de contrat
         
+        $contractCount = Contract::count() + 1;
+
+        $date = now()->format('dmY');
+
+        $contractNumber = $contractCount . $clientId . $idEmployee . $serviceId . $date;
+        // dd($contractNumber);
+    
+        // Création du contrat
+        $newContract = Contract::create([
+            'numero_contract' => $contractNumber,
+            'FK_service_id' => $serviceId,
+            'FK_client_id' => $clientId,
+            'FK_employee_id' => $idEmployee,
+            'creation_date' => now(),
+            'is_active' => true,
+        ]);
+    
+        return redirect()->back();
     }
 
 

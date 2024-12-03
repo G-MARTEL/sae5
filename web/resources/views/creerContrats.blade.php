@@ -17,18 +17,39 @@
 <div class="containeur">
     <div class="container-inner">
         @foreach ($clients as $clientData)
-        <p>  <strong>Nom et Prénom du client  :</strong> {{$clientData['donneeClient']->first_name.' '.$clientData['donneeClient']->last_name}}
-        <br> <strong>Id : </strong>{{$clientData['clientAccounts']->client_id}}
-        </p>
-        <button id="open-popup-btn">Créer contrat</button>
-        @endforeach
-        
+        <div class="client-section">
+            <p>
+                <strong>Nom et Prénom du client :</strong> 
+                {{ $clientData['donneeClient']->first_name.' '.$clientData['donneeClient']->last_name }}
+                <br>
+                <strong>Id :</strong> 
+                {{ $clientData['clientAccounts']->client_id }}
+            </p>
 
+            <!-- Formulaire pour créer un contrat pour ce client -->
+            <form action="creationContrat" method="POST">
+                @csrf
+                <!-- ID du client -->
+                <input type="hidden" name="client_id" value="{{ $clientData['clientAccounts']->client_id }}">
+                
+                <!-- Sélection de la prestation -->
+                <label for="prestation">Type de prestation :</label>
+                <select name="prestation_id">
+                    @foreach ($services as $service)
+                        <option value="{{ $service->service_id }}">{{ $service->title }}</option>
+                    @endforeach
+                </select>
+                
+                <!-- Bouton de soumission -->
+                <button type="submit">Créer contrat</button>
+            </form>
+        </div>
+        @endforeach
     </div>
 </div>
 
 
-<!-- Popup -->
+{{-- <!-- Popup -->
 <div id="pop-up" class="popup">
     <div class="popup-content">
         <span id="close-popup-btn" class="close-btn">&times;</span>
@@ -46,4 +67,4 @@
             <button type="submit">Créer</button>
         </form>
     </div>
-</div>
+</div> --}}

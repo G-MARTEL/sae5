@@ -74,6 +74,7 @@ Route::prefix('employees')->name('employees.')->group(function() {
         return view('acceuilEmployees');
     })->name('accueil');
     Route::get('creerContrats', [EmployeeController::class, 'showListeClients']);
+    Route::post('/creationContrat', [EmployeeController::class, 'creationContrat']);
 });
 
 
