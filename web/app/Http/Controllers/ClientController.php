@@ -4,20 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Contract;
 
 class ClientController extends Controller
 {
-    // public function showClientDashboard()
-    // {
-    //     $clientData = session('clientData');
-    //     return view('acceuilCliens', ['client' => $clientData]);
-    // }
-
-//     public function showClientDashboard()
-// {
-//     $clientData = session('clientData');
-//     return view('acceuilCliens', ['clientData' => $clientData]);
-// }
 
 // public function showClientDashboard()
 // {
@@ -27,31 +17,60 @@ class ClientController extends Controller
 //     if (!$clientData) {
 //         return redirect()->route('login')->with('error', 'Veuillez vous connecter d\'abord !');
 //     }
-    
+
+//     // Recharger les informations de l'employé associé au client
+//     $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
+
+
+//     $associatedEmployee = DB::table('employees')
+//         ->join('accounts', 'employees.FK_account_id', '=', 'accounts.account_id')
+//         ->where('employee_id', $client->FK_employee_id)
+//         ->select('accounts.first_name', 'accounts.last_name', 'accounts.email','accounts.picture')
+//         ->first();
+
+//     $clientData['employee'] = $associatedEmployee;
+
 //     return view('acceuilCliens', ['clientData' => $clientData]);
 // }
+
 
 public function showClientDashboard()
 {
     $clientData = session('clientData');
-    
+
     // Vérifiez que les données existent avant de les utiliser
     if (!$clientData) {
         return redirect()->route('login')->with('error', 'Veuillez vous connecter d\'abord !');
     }
 
-    // Recharger les informations de l'employé associé au client
+    // Récupérer le client à partir de l'account_id
     $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
+
+    // Vérifiez que le client a été trouvé
+    if (!$client) {
+        return redirect()->route('login')->with('error', 'Client non trouvé !');
+    }
+
+    // Récupérer les contrats associés au client
+    $contrats = Contract::where('FK_client_id', $client->client_id)->get(); 
+
+    // Déboguer pour vérifier les données
+    //dd($client, $contrats);
+
+    // Rechercher l'employé associé au client
     $associatedEmployee = DB::table('employees')
         ->join('accounts', 'employees.FK_account_id', '=', 'accounts.account_id')
         ->where('employee_id', $client->FK_employee_id)
-        ->select('accounts.first_name', 'accounts.last_name', 'accounts.email','accounts.picture')
+        ->select('accounts.first_name', 'accounts.last_name', 'accounts.email', 'accounts.picture')
         ->first();
 
+    // Ajouter les données de l'employé aux données du client
     $clientData['employee'] = $associatedEmployee;
 
-    return view('acceuilCliens', ['clientData' => $clientData]);
+    // Retourner la vue avec les données du client et les contrats
+    return view('acceuilCliens', ['clientData' => $clientData, 'contrats' => $contrats]);
 }
+
 
 public function updateClientInfo(Request $request)
 {
@@ -84,7 +103,10 @@ public function updateClientInfo(Request $request)
     // Sauvegarder les nouvelles informations dans la session
     session(['clientData' => $clientData]);
 
-    return view('acceuilCliens', ['clientData' => $clientData]);
+    $contrats = Contract::where('FK_client_id', $client->client_id)->get();
+
+
+    return view('acceuilCliens', ['clientData' => $clientData, 'contrats' => $contrats]);
 }
 
 
