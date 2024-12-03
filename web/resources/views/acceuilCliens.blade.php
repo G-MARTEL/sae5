@@ -6,6 +6,7 @@
 
 
 @section('scripts')
+<script src="{{asset('./js/scriptAccueil.js')}}"defer></script>
 @endsection
 @section('content')
 

@@ -8,10 +8,8 @@ use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DevisController;
-
-
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PrestationsController;
-
 
 
 
@@ -75,6 +73,7 @@ Route::prefix('employees')->name('employees.')->group(function() {
         }
         return view('acceuilEmployees');
     })->name('accueil');
+    Route::get('creerContrats', [EmployeeController::class, 'showListeClients']);
 });
 
 
