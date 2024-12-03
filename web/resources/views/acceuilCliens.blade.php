@@ -6,6 +6,7 @@
 
 
 @section('scripts')
+<script src="{{asset('./js/scriptAccueil.js')}}"defer></script>
 @endsection
 @section('content')
 
@@ -21,7 +22,17 @@
                         <li>Email : {{ $clientData['account']->email }}</li>
                         <li>Téléphone : {{ $clientData['account']->phone }}</li>
                         <li>Adresse : {{ $clientData['account']->postal_address }}, {{ $clientData['account']->code_address }} {{ $clientData['account']->city }}</li>
-                        <li>Numéro de contrat : 51561565 </li>
+                        <li>  
+                            @if($contrats->isNotEmpty())
+                            <p>Mes contrats actifs : </p>
+
+                                @foreach ($contrats as $contrat)
+                                    <li>Numéro de contrat : {{$contrat->numero_contract}} <li>
+                                @endforeach
+                            @else
+                                <p>Vous n'avez pas encore de contrat, contactez nous vite !</p>
+                            @endif
+                        </li>
                     </ul>
                     <ul>    
                         <li><button>Prendre rdv</button></li>

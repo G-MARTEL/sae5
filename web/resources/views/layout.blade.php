@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}"/>
         @yield('styles')
-    @yield('script')
+    {{-- @yield('script') --}}
      </head>
     <body>
     <nav class="navbar">
