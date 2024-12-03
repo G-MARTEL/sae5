@@ -56,7 +56,6 @@ class EmployeeController extends Controller
         $date = now()->format('dmY');
 
         $contractNumber = $contractCount . $clientId . $idEmployee . $serviceId . $date;
-        // dd($contractNumber);
     
         // Création du contrat
         $newContract = Contract::create([
