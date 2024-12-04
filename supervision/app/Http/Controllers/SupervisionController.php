@@ -23,8 +23,23 @@ class SupervisionController extends Controller
             )
             ->get();
 
-        // Insertion dans la table ressources_hist
+        // Définir la limite maximale pour ressources_hist
+        $maxRows = 900000;
+
         foreach ($ressources as $ressource) {
+            // Vérifiez le nombre total de lignes dans ressources_hist
+            $totalRows = DB::table('ressources_hist')->count();
+
+            // Si le total dépasse la limite, supprimez les enregistrements les plus anciens
+            if ($totalRows >= $maxRows) {
+                $rowsToDelete = $totalRows - $maxRows + 1; // Ajuster pour faire de la place
+                DB::table('ressources_hist')
+                    ->orderBy('save_date', 'asc') // Supprime les plus anciennes
+                    ->limit($rowsToDelete)
+                    ->delete();
+            }
+
+            // Insérer les nouvelles données
             DB::table('ressources_hist')->insert([
                 'FK_resource_id' => $ressource->ressource_id,
                 'FK_machine_id' => $ressource->FK_machine_id,
