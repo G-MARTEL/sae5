@@ -10,6 +10,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DevisController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PrestationsController;
+use App\Http\Controllers\PretImmobilierController;
+
 
 
 
@@ -25,7 +27,7 @@ Route::get('qui-sommes-nous', function () {
 
 
 Route::get('simulateur', function () {
-  return view('simulateur');
+  return view('simulateur/simulateur');
 })->name('simulateur') ;
 
 Route::get('test', function () {
@@ -102,5 +104,9 @@ Route::get('/logout', function () {
     return redirect('/'); 
 })->name('logout');
 
+
+
+Route::get('/simulateur-pret', [PretImmobilierController::class, 'index'])->name('simulateur-pret-form');
+Route::post('/simulateur-pret', [PretImmobilierController::class, 'simulate'])->name('simulateur-pret');
 
 
