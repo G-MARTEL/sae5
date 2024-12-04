@@ -142,4 +142,15 @@ th:not(:last-child) {
     font-weight: bold;
 }
 
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+}
+.icon-btn img {
+    width: 20px;
+    height: 20px;
+}
 
