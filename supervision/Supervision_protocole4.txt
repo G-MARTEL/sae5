@@ -1,0 +1,148 @@
+========================
+SUPERVISION
+========================
+
+Créer la Base De Donnée :
+
+	CREATE TABLE IF NOT EXISTS supervision (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ping VARCHAR(5),
+    hostname VARCHAR(50),
+    ram_usage VARCHAR(20),
+    cpu_usage VARCHAR(50),
+    storage_remaining VARCHAR(20)
+);
+
+--------------------------------------------------------------------------------------------------
+Créer le script shell "supervision.sh" (modifier le db_path pour le faire correspondre à la base):
+
+#!/bin/bash
+
+# Chemin vers la base de données SQLite
+DB_PATH="/home/kali/Desktop/supervision/supervision.db"
+
+# Adresse IP et nom d'utilisateur SSH
+ip_address="192.168.139.130"
+user="kali"
+
+# Mise en place de l adresse e-mail pour envoyer des msg d'erreurs
+admin_email="your_name@gmail.com"
+
+# Informations de connexion à la base MySQL
+DB_HOST="db"
+DB_PORT="3306"
+DB_DATABASE="supervision"
+DB_USERNAME="root"
+DB_PASSWORD="password"
+
+# Methode d'alerte
+send_alert() {
+    local message=$1
+    echo "$message" | mail -s "ALERTE CRITIQUE : Supervision" $admin_email
+}
+
+
+# Vérifier le PING
+ping_status=$(ping -c 1 -W 2 "$ip_address" > /dev/null 2>&1 && echo "true" || echo "false")
+
+if [[ $ping_status == "false" ]]; then
+    send_alert "La machine à l'adresse $ip_address est injoignable."
+else
+	# Récupérer les non du host de la machine distante
+	hostname=$(ssh -i /home/kali/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=2 "$user@$ip_address" "hostname" 2>/dev/null)
+
+	# Vérifier RAM
+	ram=$(ssh -i /home/kali/.ssh/id_rsa -o ConnectTimeout=2 "$user@$ip_address" "free -m | grep Mem | awk '{print \$3}'")
+	ram_pourcent=$(ssh -i /home/kali/.ssh/id_rsa -o ConnectTimeout=2 "$user@$ip_address" "free | grep Mem | awk '{print \$3/\$2 * 100.0}'")
+
+    	if [ $(echo "$ram_pourcent >= 90" | bc -l) -eq 1 ]; then
+        	send_alert "La machine à l'adresse $ip_address est à 90% de sa RAM."
+	fi
+
+	# Vérifier CPU
+	cpu=$(ssh -i /home/kali/.ssh/id_rsa -o ConnectTimeout=2 "$user@$ip_address" "top -bn1 | grep '%Cpu(s)' | awk '{print 100 - \$8}'")
+
+  	if [ $(echo "$cpu >= 90" | bc -l) -eq 1 ]; then
+        	send_alert "La machine à l'adresse $ip_address est à 90% de son CPU."
+	fi
+
+	# Vérifier stockage
+	storage_remaining=$(ssh -i /home/kali/.ssh/id_rsa -o ConnectTimeout=2 "$user@$ip_address" "df -h / | awk 'NR==2 {print \$5}' | sed 's/%//g'")
+
+    	if [ "$storage_remaining" -ge 90 ]; then
+        	send_alert "La machine à l'adresse $ip_address n'a plus que 10% de stockage."
+	fi
+
+fi
+
+# Mettre à jour les données dans MySQL
+mysql -u "$DB_USERNAME" -p"$DB_PASSWORD" -h "$DB_HOST" -P "$DB_PORT" "$DB_DATABASE" <<EOF
+-- Récupérer l'ID de la machine
+SET @machine_id = (SELECT machine_id FROM machines WHERE name = '$hostname' LIMIT 1);
+
+-- Si la machine n'existe pas, arrêter le script
+IF @machine_id IS NULL THEN
+    SELECT 'Erreur : Machine non trouvée dans la base de données.';
+    EXIT;
+END IF;
+
+-- Mettre à jour les données de la machine
+UPDATE machines
+SET max_storage = '$max_storage'
+WHERE machine_id = @machine_id;
+
+-- Mettre à jour ou insérer les données dans la table ressources
+UPDATE ressources
+SET ping = '$ping_status',
+    storage = '$storage_remaining',
+    ram = '$ram',
+    cpu = '$cpu'
+WHERE FK_machine_id = @machine_id;
+
+-- Vérifier si une ligne a été mise à jour dans ressources, sinon insérer
+IF ROW_COUNT() = 0 THEN
+    INSERT INTO ressources (FK_machine_id, ping, storage, ram, cpu)
+    VALUES (@machine_id, '$ping_status', '$storage_remaining', '$ram', '$cpu');
+END IF;
+EOF
+
+# Vérification de l'exécution des commandes SQL
+if [ $? -eq 0 ]; then
+    echo "Données de supervision mises à jour avec succès."
+else
+    echo "Erreur : Échec de la mise à jour des données dans la base de données."
+fi
+
+
+--------------------------------------------------------------------------------------------------
+rendre le script exécutable :
+	chmod +x supervision.sh
+
+--------------------------------------------------------------------------------------------------
+Outils pour faire des calcul en ligne de commande :
+	apt install bc
+
+--------------------------------------------------------------------------------------------------
+Editer le Cron :
+	crontab -e
+	insérer la ligne suivante (se fait toute les 5 min) :
+		*/5 * * * * /home/kali/Desktop/supervision/supervision.db
+
+--------------------------------------------------------------------------------------------------
+Ouvrir le service ssh:
+	systemctl start ssh
+
+--------------------------------------------------------------------------------------------------
+Ouvrir le port ssh de façon permanante :
+	systemctl enable ssh
+
+--------------------------------------------------------------------------------------------------
+Créer les clefs rsa :
+	ssh-keygen -t rsa -b 2048
+	
+--------------------------------------------------------------------------------------------------
+Copier la clé publique sur la machine distante (permet l'authentification sans mdp)
+	ssh-copy-id kali@Ip_Machine_A_Superviser
+
+--------------------------------------------------------------------------------------------------
