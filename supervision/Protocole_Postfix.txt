@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------------
+installer postfix et mailutils :
+	apt install postfix mailutils
+
+---------------------------------------------------------------------------------
+
+Dans le fichier "/etc/postfix/main.cf" ajouter les lignes :
+
+relayhost = [smtp.gmail.com]:587
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_security_options = noanonymous
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+Ne pas oublier de supprimer la ligne "relayhost" présente de base dans le fichier.
+
+---------------------------------------------------------------------------------
+
+Créer le fichier /etc/postfix/sasl_passwd et y insérer la ligne suivante :
+	[smtp.gmail.com]:587 your_email@gmail.com:your_application_password
+
+Aller sur le lien suivant : https://myaccount.google.com/apppasswords
+Puis générer un mot de passe pour l'application (donner un nom cohérant)
+Un mot de passe sera donné, puis le placer à la place de "your_application_password" présent dans le fichier précédemment créé.
+Ne pas oublier de mettre l'email voulu à la place de "your_email@gmail.com".
+
+---------------------------------------------------------------------------------
+
+Démarer l'application : 
+	sudo systemctl start postfix
+
+---------------------------------------------------------------------------------
+
+Tester l'envoi d'email :
+	echo "Message de test" | mail -s "Sujet de test" your_email@gmail.com
+
+---------------------------------------------------------------------------------
+
+Pour mettre l'accès au fichier de mot de passe pour automatisation :
+	sudo chmod 600 /etc/postfix/sasl_passwd
+
+---------------------------------------------------------------------------------
+
+Hasher le fichier "sasl_passwd" :
+	sudo postmap /etc/postfix/sasl_passwd
+
+---------------------------------------------------------------------------------
+
+Redémarer le service pour mettre en place les modifications :
+	sudo systemctl restart postfix
+
+---------------------------------------------------------------------------------
+
+
