@@ -7,12 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Functions;
 use App\Models\QuotesRequest;
 
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\QuotesRequest;
-
 class DevisController extends Controller
 {
     public function store(Request $request){

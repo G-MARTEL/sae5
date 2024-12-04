@@ -104,3 +104,10 @@ Route::get('/logout', function () {
 
 
 
+use App\Http\Controllers\DocumentController;
+
+Route::get('/generate-pdf', [DocumentController::class, 'showForm'])->name('pdf.form');
+Route::post('/generate-pdf', [DocumentController::class, 'generatePdf'])->name('pdf.generate');
+
+
+Route::post('/documents/create', [DocumentController::class, 'create'])->name('documents.create');
