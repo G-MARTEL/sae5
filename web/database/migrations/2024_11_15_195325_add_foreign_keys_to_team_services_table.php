@@ -79,6 +79,19 @@ return new class extends Migration
             $table->foreign('FK_service_id')->references('service_id')->on('services')->onDelete('cascade');
             $table->foreign('FK_employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
         });
+
+        Schema::table('messages' , function (Blueprint $table) {
+            $table->foreign('FK_sender_id')->references('account_id')->on('accounts')->onDelete('cascade');
+            $table->foreign('FK_recipient_id')->references('account_id')->on('accounts')->onDelete('cascade');
+            $table->foreign('FK_conversation_id')->references('conversation_id')->on('conversations')->onDelete('cascade');
+            $table->foreign('FK_message_content_id')->references('message_content_id')->on('message_contents')->onDelete('cascade');
+        });
+
+        Schema::table('conversations' , function (Blueprint $table) {
+            $table->foreign('FK_employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
+            $table->foreign('FK_client_id')->references('client_id')->on('clients')->onDelete('cascade');
+        });
+        
     }
 
     /**
@@ -146,6 +159,21 @@ return new class extends Migration
             $table->dropForeign(['FK_service_id']);
             $table->dropForeign(['FK_employee_id']);
         });
+
+
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropForeign(['FK_sender_id']);
+            $table->dropForeign(['FK_recipient_id']);
+            $table->dropForeign(['FK_conversation_id']);
+            $table->dropForeign(['FK_message_content_id']);
+        });
+
+        Schema::table('conversations', function (Blueprint $table) {
+            $table->dropForeign(['FK_employee_id']);
+            $table->dropForeign(['FK_client_id']);
+        });
+        
+        
     }
 };
 
