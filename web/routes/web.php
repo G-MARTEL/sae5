@@ -8,6 +8,7 @@ use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DevisController;
+use App\Http\Controllers\MessageriControlleur;
 
 
 use App\Http\Controllers\PrestationsController;
@@ -66,7 +67,8 @@ Route::prefix('client')->name('client.')->group(function() {
     // })->name('accueil');
     Route::get('/accueil', [ClientController::class, 'showClientDashboard'])->name('accueil');
     Route::post('/update', [ClientController::class, 'updateClientInfo'])->name('update');
-    Route::get('/messagerie', [ClientController::class, 'showMessagerie'])->name('messagerie');
+    Route::get('/messagerie', [MessageriControlleur::class, 'showMessagerie'])->name('messagerie');
+    Route::post('/sendMessage', [MessageriControlleur::class, 'sendMessageClient']);
     
 
 });

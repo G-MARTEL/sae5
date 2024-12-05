@@ -12,7 +12,7 @@ return new class extends Migration
             $table->increments('conversation_id');
             $table->unsignedInteger('FK_employee_id');
             $table->unsignedInteger('FK_client_id');
-            $table->date('is_active');
+            $table->boolean('is_active');
         });
     }
 

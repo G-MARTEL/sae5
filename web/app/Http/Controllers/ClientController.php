@@ -86,11 +86,5 @@ public function updateClientInfo(Request $request)
 
     return view('acceuilCliens', ['clientData' => $clientData]);
     }
-
-    public function showMessagerie(Request $request)
-    {
-        return view('messagerieClient');
-    }
-
-
+    
 }
