@@ -13,7 +13,6 @@ use App\Http\Controllers\PrestationsController;
 use App\Http\Controllers\PretImmobilierController;
 
 
-
 Route::get('/', function () {
     return view('accueil');
 });

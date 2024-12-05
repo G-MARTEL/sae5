@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 03 déc. 2024 à 10:51
+-- Généré le : jeu. 05 déc. 2024 à 15:21
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -82,6 +82,20 @@ CREATE TABLE `clients` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `contentdocuments`
+--
+
+CREATE TABLE `contentdocuments` (
+  `contentdocument_id` int(11) NOT NULL,
+  `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `contenu` text COLLATE utf8_unicode_ci NOT NULL,
+  `FK_createdocument_id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `contracts`
 --
 
@@ -105,6 +119,32 @@ CREATE TABLE `conversations` (
   `FK_employee_id` int(11) NOT NULL,
   `FK_client_id` int(11) NOT NULL,
   `is_active` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `createdocuments`
+--
+
+CREATE TABLE `createdocuments` (
+  `createdocument_id` int(11) NOT NULL,
+  `FK_employee_id` int(11) NOT NULL,
+  `FK_client_id` int(11) NOT NULL,
+  `facture` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `documents`
+--
+
+CREATE TABLE `documents` (
+  `document_id` int(11) NOT NULL,
+  `FK_client_id` int(11) NOT NULL,
+  `document` blob NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -349,6 +389,13 @@ ALTER TABLE `clients`
   ADD KEY `FK_employee_client` (`FK_employee_id`);
 
 --
+-- Index pour la table `contentdocuments`
+--
+ALTER TABLE `contentdocuments`
+  ADD PRIMARY KEY (`contentdocument_id`),
+  ADD KEY `FK_contentdocument_createdocument` (`FK_createdocument_id`);
+
+--
 -- Index pour la table `contracts`
 --
 ALTER TABLE `contracts`
@@ -363,6 +410,21 @@ ALTER TABLE `conversations`
   ADD PRIMARY KEY (`conversation_id`),
   ADD KEY `Conversation_FK_client` (`FK_client_id`),
   ADD KEY `Conversation_FK_employee` (`FK_employee_id`);
+
+--
+-- Index pour la table `createdocuments`
+--
+ALTER TABLE `createdocuments`
+  ADD PRIMARY KEY (`createdocument_id`),
+  ADD KEY `FK_createdocument_client` (`FK_client_id`),
+  ADD KEY `FK_createdocument_employee` (`FK_employee_id`);
+
+--
+-- Index pour la table `documents`
+--
+ALTER TABLE `documents`
+  ADD PRIMARY KEY (`document_id`),
+  ADD KEY `document_client` (`FK_client_id`);
 
 --
 -- Index pour la table `employees`
@@ -487,6 +549,12 @@ ALTER TABLE `clients`
   MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `contentdocuments`
+--
+ALTER TABLE `contentdocuments`
+  MODIFY `contentdocument_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `contracts`
 --
 ALTER TABLE `contracts`
@@ -497,6 +565,18 @@ ALTER TABLE `contracts`
 --
 ALTER TABLE `conversations`
   MODIFY `conversation_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `createdocuments`
+--
+ALTER TABLE `createdocuments`
+  MODIFY `createdocument_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `documents`
+--
+ALTER TABLE `documents`
+  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `employees`
@@ -588,6 +668,12 @@ ALTER TABLE `clients`
   ADD CONSTRAINT `FK_employee_client` FOREIGN KEY (`FK_employee_id`) REFERENCES `employees` (`employee_id`);
 
 --
+-- Contraintes pour la table `contentdocuments`
+--
+ALTER TABLE `contentdocuments`
+  ADD CONSTRAINT `FK_contentdocument_createdocument` FOREIGN KEY (`FK_createdocument_id`) REFERENCES `createdocuments` (`createdocument_id`);
+
+--
 -- Contraintes pour la table `contracts`
 --
 ALTER TABLE `contracts`
@@ -600,6 +686,19 @@ ALTER TABLE `contracts`
 ALTER TABLE `conversations`
   ADD CONSTRAINT `Conversation_FK_client` FOREIGN KEY (`FK_client_id`) REFERENCES `clients` (`client_id`),
   ADD CONSTRAINT `Conversation_FK_employee` FOREIGN KEY (`FK_employee_id`) REFERENCES `employees` (`employee_id`);
+
+--
+-- Contraintes pour la table `createdocuments`
+--
+ALTER TABLE `createdocuments`
+  ADD CONSTRAINT `FK_createdocument_client` FOREIGN KEY (`FK_client_id`) REFERENCES `clients` (`client_id`),
+  ADD CONSTRAINT `FK_createdocument_employee` FOREIGN KEY (`FK_employee_id`) REFERENCES `employees` (`employee_id`);
+
+--
+-- Contraintes pour la table `documents`
+--
+ALTER TABLE `documents`
+  ADD CONSTRAINT `document_client` FOREIGN KEY (`FK_client_id`) REFERENCES `clients` (`client_id`);
 
 --
 -- Contraintes pour la table `employees`
