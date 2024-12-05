@@ -52,6 +52,10 @@
             margin-top: 2px;
             margin-bottom: 2px;
         }
+        .company-contact {
+            text-align: right;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
@@ -61,11 +65,19 @@
             <h1>Contrat n°{{ $numero_contract }}</h1>
             <h2>Détails du contrat</h2>
         </div>
+        <div class="company-contact">
+            <p>AvyCompta</p>
+            <p>70 avenue Paul Claudel, 80000 Aamiens</p>
+            <p>0612345678</p>
+            <p>contact@avycompta.com</p>
+        </div>
     </div>
     <div class="content">
         <div class="section">
-            <p class="section-title">Informations sur le client :</p>
-            <p>Nom : {{ $client_name }}</p>
+            <p class="section-title">Souscripteur :</p>
+            <p>{{ $client_name }}</p>
+            <p>{{ $client_email }}</p>
+            <p>{{ $client_phone }}</p>
         </div>
 
         <div class="section">
