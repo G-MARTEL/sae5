@@ -17,6 +17,9 @@
 .container#client-1 .container-inner .colonnes .colonne:first-child {
   flex: 2;
 }
+.container#client-1 .container-inner .colonnes .colonne:first-child a {
+  color: #2c7d7b;
+}
 .container#client-1 .container-inner .colonnes .colonne:nth-child(2) {
   flex: 1;
   text-align: center;

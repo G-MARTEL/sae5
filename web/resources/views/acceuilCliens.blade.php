@@ -27,7 +27,11 @@
                             <p>Mes contrats actifs : </p>
 
                                 @foreach ($contrats as $contrat)
-                                    <li>Numéro de contrat : {{$contrat->numero_contract}} <li>
+                                    <li>Numéro de contrat : {{$contrat->numero_contract}} <form method="GET" action="{{ route('download.contract', $contrat->contract_id) }}" style="display:inline;">
+                                        <a href="{{ route('download.contract', $contrat->contract_id) }}" class="link-download" style="text-decoration: none; cursor: pointer;">
+                                            Télécharger le contrat
+                                        </a>                                    </form> <li>
+                                        
                                 @endforeach
                             @else
                                 <p>Vous n'avez pas encore de contrat, contactez nous vite !</p>

@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Contract;
+use App\Models\Employee;
+use App\Models\Functions;
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 
 class ClientController extends Controller
 {
+
 
 // public function showClientDashboard()
 // {
@@ -107,6 +116,77 @@ public function updateClientInfo(Request $request)
 
 
     return view('acceuilCliens', ['clientData' => $clientData, 'contrats' => $contrats]);
+}
+
+
+// public function downloadContract($contractId)
+// {
+//     // Charger le contrat avec ses relations nécessaires
+//     $contract = Contract::with(['client.account', 'employee.account', 'service','employee.functions'])
+//         ->findOrFail($contractId);
+
+//     // Créer les données pour le PDF
+//     $data = [
+//         'numero_contract' => $contract->numero_contract,
+//         'client_name' => $contract->client->account->first_name . ' ' . $contract->client->account->last_name,
+//         'employee_name' => $contract->employee->account->first_name . ' ' . $contract->employee->account->last_name,
+//         'employee_email' => $contract->employee->account->email,
+//         'employee_function' => $contract->employee->functions->function_name,
+//         'employee_phone' => $contract->employee->account->phone,
+//         'service_name' => $contract->service->title,
+//         'creation_date' => $contract->creation_date,
+//         'is_active' => $contract->is_active ? 'Actif' : 'Inactif',
+//     ];
+    
+
+//     // Générer le PDF
+//     $pdf = Pdf::loadView('pdf.contractPdf', $data);
+//     return $pdf->download('Contrat_'.$contract->numero_contract.'.pdf');
+// }
+
+
+public function downloadContract($contractId)
+{
+    // Récupérer les données du client depuis la session
+    $clientData = session('clientData');
+
+    // Vérifiez que les données existent avant de les utiliser
+    if (!$clientData) {
+        return redirect('/');
+    }
+
+    // Récupérer le client à partir de l'account_id
+    $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
+
+    // Vérifiez que le client a été trouvé
+    if (!$client) {
+        return redirect('/');;
+    }
+
+    // Charger le contrat avec ses relations nécessaires
+    $contract = Contract::with(['client', 'employee.account', 'service', 'employee.functions'])
+        ->findOrFail($contractId);
+
+    // Vérifiez que le contrat appartient bien au client
+    if ($contract->FK_client_id !== $client->client_id) {
+        return redirect('/');
+    }
+
+    // Créer les données pour le PDF
+    $data = [
+        'numero_contract' => $contract->numero_contract,
+        'client_name' => $contract->client->account->first_name . ' ' . $contract->client->account->last_name,
+        'employee_name' => $contract->employee->account->first_name . ' ' . $contract->employee->account->last_name,
+        'employee_email' => $contract->employee->account->email,
+        'employee_function' => $contract->employee->functions->function_name,
+        'employee_phone' => $contract->employee->account->phone,
+        'service_name' => $contract->service->title,
+        'creation_date' => $contract->creation_date,
+        'is_active' => $contract->is_active ? 'Actif' : 'Inactif',
+    ];
+
+    $pdf = Pdf::loadView('pdf.contractPdf', $data);
+    return $pdf->download('Contrat_'.$contract->numero_contract.'.pdf');
 }
 
 

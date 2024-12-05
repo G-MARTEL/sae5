@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contrat - 15615151515</title>
+    <title>Contrat - {{ $numero_contract }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .header img {
+            width: 100px; /* Ajustez la largeur du logo selon vos besoins */
+            height: auto; /* Conserve le ratio de l'image */
         }
         h1, h2 {
             text-align: center;
@@ -16,7 +29,7 @@
             margin: 20px;
         }
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .section-title {
             font-weight: bold;
@@ -35,33 +48,37 @@
         table th {
             background-color: #f4f4f4;
         }
-
         p {
-            margin-top:5px;
-            margin-bottom: 5px;
+            margin-top: 2px;
+            margin-bottom: 2px;
         }
     </style>
 </head>
 <body>
-    <img src="{{ asset('assets/pdf/placeholder.jpg') }}" alt="Logo de l'entreprise">
-    <h1>Contrat n°1565651515</h1>
-    <h2>Détails du contrat</h2>
+    <div class="header">
+        {{-- <img src="{{ asset('assets/pdf/placeholder.jpg') }}" alt="Logo de l'entreprise">  --}}
+        <div>
+            <h1>Contrat n°{{ $numero_contract }}</h1>
+            <h2>Détails du contrat</h2>
+        </div>
+    </div>
     <div class="content">
         <div class="section">
             <p class="section-title">Informations sur le client :</p>
-            <p>Nom : Hugo Duboisset </p>
+            <p>Nom : {{ $client_name }}</p>
         </div>
 
         <div class="section">
-            <p class="section-title">Informations sur l'employé associé :</p>
-            <p>Nom :Quentin massoulle</p>
-            <p>Email : massoullecity@mail.com</p>
-            <p>Téléphone : 06265656565</p>
+            <p class="section-title">Votre conseiller :</p>
+            <p>{{ $employee_name }}</p>
+            <p>{{ $employee_function }}</p>
+            <p>{{ $employee_email }}</p>
+            <p>{{ $employee_phone }}</p>
         </div>
 
         <div class="section">
-            <p class="section-title">Informations sur la prestation :</p>
-            <p>Nom de la prestation : optimisation fiscale</p>
+            <p class="section-title">Votre souscription :</p>
+            <p>Vous avez souscrit à ce service : {{ $service_name }}</p>
         </div>
 
         <div class="section">
@@ -69,11 +86,11 @@
             <table>
                 <tr>
                     <th>Date de création</th>
-                    <td>12/09/1998</td>
+                    <td>{{ $creation_date }}</td>
                 </tr>
                 <tr>
                     <th>Statut</th>
-                    <td>actif</td>
+                    <td>{{ $is_active }}</td>
                 </tr>
             </table>
         </div>
