@@ -108,11 +108,23 @@ class Autentification extends Controller
                 // Récupération de la fonction de l'employé
                 $function = Functions::where('function_id', $employee->FK_function_id)->first();
                 if ($function) {
-                    Session::put('role', $function->function_name);
+                    $role= $function->function_name;
+                    if ($role=='admin')
+                    {
+                        Session::put('role', 'admin');
+                    }
+                    else 
+                    {
+                        Session::put('role', 'employee');
+                    }
                     Session::put('id', $employee->FK_account_id);
                     // Redirection en fonction du rôle
                     return redirect($function->function_name === "Admin" ? 'admin/accueil' : '/employees/accueil');
                 }
+                Session::put('role', 'employee');
+                Session::put('id', $employee->FK_account_id);
+                
+                return redirect()->route('employee.accueil');
             }
 
             // Vérification s'il s'agit d'un client
