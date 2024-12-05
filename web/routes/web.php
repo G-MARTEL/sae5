@@ -14,7 +14,6 @@ use App\Http\Controllers\PretImmobilierController;
 
 
 
-
 Route::get('/', function () {
     return view('accueil');
 });
@@ -61,9 +60,9 @@ Route::prefix('client')->name('client.')->group(function() {
 
     // })->name('accueil');
     Route::get('/accueil', [ClientController::class, 'showClientDashboard'])->name('accueil');
-
-
 });
+Route::get('/download-contract/{contractId}', [ClientController::class, 'downloadContract'])->name('download.contract');
+
 
 Route::post('/client/update', [ClientController::class, 'updateClientInfo'])->name('client.update');
 

@@ -13,11 +13,16 @@
                 background-color: $gris;
                 border-radius: 20px;
                 box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+                
                 .container-inner{
                     padding: 40px;
+                  
                 }
                 &:first-child{
                     flex: 2;
+                    a{
+                      color : $vert;
+                    }
                 }
                 &:nth-child(2){
                     img{

@@ -19,7 +19,7 @@ class Contract extends Model
     }
     public function employee()
     {
-        return $this->belongsTo(Employees::class, 'FK_employee_id');
+        return $this->belongsTo(Employee::class, 'FK_employee_id');
     }
 
     public function service()
