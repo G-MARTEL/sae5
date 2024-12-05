@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('createdocuments', function (Blueprint $table) {
-            $table->id('createdocument_id'); // Clé primaire
+            $table->increments('createdocument_id'); // Clé primaire
             $table->unsignedInteger('FK_employee_id'); // Colonne FK_employee_id
             $table->unsignedInteger('FK_client_id'); // Colonne FK_client_id
             $table->boolean('facture'); // Colonne facture (tinyint 1)

@@ -9,7 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('contentdocuments', function (Blueprint $table) {
-            $table->id('contentdocument_id'); // Clé primaire
+            $table->increments('contentdocument_id'); // Clé primaire
             $table->string('title', 50); // Colonne title
             $table->text('contenu'); // Colonne contenu
             $table->unsignedInteger('FK_createdocument_id'); // Colonne FK_createdocument_id
