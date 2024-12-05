@@ -65,11 +65,13 @@ Route::prefix('client')->name('client.')->group(function() {
 
     // })->name('accueil');
     Route::get('/accueil', [ClientController::class, 'showClientDashboard'])->name('accueil');
-
+    Route::post('/update', [ClientController::class, 'updateClientInfo'])->name('update');
+    Route::get('/messagerie', [ClientController::class, 'showMessagerie'])->name('messagerie');
+    
 
 });
 
-Route::post('/client/update', [ClientController::class, 'updateClientInfo'])->name('client.update');
+
 
 
 Route::prefix('employees')->name('employees.')->group(function() {

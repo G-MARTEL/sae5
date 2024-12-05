@@ -85,7 +85,12 @@ public function updateClientInfo(Request $request)
     session(['clientData' => $clientData]);
 
     return view('acceuilCliens', ['clientData' => $clientData]);
-}
+    }
+
+    public function showMessagerie(Request $request)
+    {
+        return view('messagerieClient');
+    }
 
 
 }
