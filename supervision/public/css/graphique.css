@@ -98,3 +98,7 @@ html {
     border-radius: 5px;
     border-color: white;
 }
+
+.active {
+    font-weight: bold;
+}

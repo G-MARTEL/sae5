@@ -42,6 +42,11 @@
             margin-bottom: 10px;
             text-align: center;
         }
+        /* Style pour l'élément actif dans le menu */
+        .machine-link.active {
+            font-weight: bold;
+            color: #ffde59;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +57,8 @@
             <ul>
                 @foreach ($machines as $machine)
                 <li>
-                    <a href="{{ url('/graphique/' . $machine->machine_id) }}" class="machine-link">
+                    <a href="{{ url('/graphique/' . $machine->machine_id) }}" 
+                       class="machine-link {{ $machine->machine_id == $currentMachineId ? 'active' : '' }}">
                         {{ $machine->name }}
                     </a>
                 </li>
@@ -275,21 +281,20 @@
         const pingCommembersChart = new Chart(ctxPingCommembers, {
             type: 'doughnut',
             data: {
-                labels: ['Normal', 'Alerte'],
+                labels: ['Normal', 'Alert'],
                 datasets: [{
-                    label: 'État Ping (%)',
-                    backgroundColor: ['#4CAF50', '#F44336'],
-                    data: [0, 100]
+                    data: [],
+                    backgroundColor: ['#4caf50', '#f44336']
                 }]
             },
             options: {
-                responsive: true,
                 plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    title: {
-                        display: false
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw.toFixed(2) + '%';
+                            }
+                        }
                     }
                 }
             }
@@ -299,21 +304,20 @@
         const cpuCommembersChart = new Chart(ctxCpuCommembers, {
             type: 'doughnut',
             data: {
-                labels: ['Normal', 'Warning', 'Alerte'],
+                labels: ['Normal', 'Warning', 'Alert'],
                 datasets: [{
-                    label: 'État CPU (%)',
-                    backgroundColor: ['#4CAF50', '#FFC107', '#F44336'],
-                    data: [0, 0, 100]
+                    data: [],
+                    backgroundColor: ['#4caf50', '#ff9800', '#f44336']
                 }]
             },
             options: {
-                responsive: true,
                 plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    title: {
-                        display: false
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw.toFixed(2) + '%';
+                            }
+                        }
                     }
                 }
             }
@@ -323,21 +327,20 @@
         const ramCommembersChart = new Chart(ctxRamCommembers, {
             type: 'doughnut',
             data: {
-                labels: ['Normal', 'Warning', 'Alerte'],
+                labels: ['Normal', 'Warning', 'Alert'],
                 datasets: [{
-                    label: 'État RAM (%)',
-                    backgroundColor: ['#4CAF50', '#FFC107', '#F44336'],
-                    data: [0, 0, 100]
+                    data: [],
+                    backgroundColor: ['#4caf50', '#ff9800', '#f44336']
                 }]
             },
             options: {
-                responsive: true,
                 plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    title: {
-                        display: false
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw.toFixed(2) + '%';
+                            }
+                        }
                     }
                 }
             }
@@ -347,21 +350,20 @@
         const storageCommembersChart = new Chart(ctxStorageCommembers, {
             type: 'doughnut',
             data: {
-                labels: ['Normal', 'Warning', 'Alerte'],
+                labels: ['Normal', 'Warning', 'Alert'],
                 datasets: [{
-                    label: 'État Stockage (%)',
-                    backgroundColor: ['#4CAF50', '#FFC107', '#F44336'],
-                    data: [0, 0, 100]
+                    data: [],
+                    backgroundColor: ['#4caf50', '#ff9800', '#f44336']
                 }]
             },
             options: {
-                responsive: true,
                 plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    title: {
-                        display: false
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw.toFixed(2) + '%';
+                            }
+                        }
                     }
                 }
             }
