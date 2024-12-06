@@ -77,23 +77,13 @@ Route::prefix('client')->name('client.')->group(function() {
 
 
 Route::prefix('employees')->name('employees.')->group(function() {
-    Route::get('/accueil', function () {
-        if (session('role') !== 'employee') {
-            return redirect('/'); // Redirige si le rôle n'est pas 'employee'
-        }
-        return view('acceuilEmployees');
-    })->name('accueil');
+    Route::get('/accueil', function () {return view('acceuilEmployees');})->name('accueil');
 });
 
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/accueil', function () {
-        if (session('role') !== 'admin') {
-            return redirect('/'); // Redirige si le rôle n'est pas 'admin'
-        }
-        return view('acceuilAdmin');
-    })->name('accueil');
+    Route::get('/accueil', function () {return view('acceuilAdmin');})->name('accueil');
     Route::get('/listeClients', [AdminController::class, 'showListeClients']);
     Route::post('/modifClientAsso', [AdminController::class, 'modifClientAsso']);
     Route::get('/listeEmployee', [AdminController::class, 'showListeEmployee']);
