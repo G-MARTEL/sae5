@@ -9,6 +9,11 @@ Route::get('/', [SupervisionController::class, 'showSupervision'])->name('superv
 // Route pour récupérer les dispositifs
 Route::get('/devices', [SupervisionController::class, 'getDevices'])->name('getDevices');
 
+// Route de redirection vers /graphique/1
+Route::get('/graphique', function () {
+    return redirect('/graphique/1'); // Redirige vers la machine avec ID 1
+});
+
 // Route pour afficher les graphiques d'une machine spécifique
 Route::get('/graphique/{machineId}', [SupervisionController::class, 'showGraphique']);
 
