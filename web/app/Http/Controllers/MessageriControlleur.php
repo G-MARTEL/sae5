@@ -19,8 +19,8 @@ class MessageriControlleur extends Controller
     {
         $client=session('id');
         $clientdate=Client::where('FK_account_id', $client)->first();
-        $conv= DB::table('conversations')->where('FK_client_id', $client)->first();
-        if ($conv==null)
+        $conversation= DB::table('conversations')->where('FK_client_id', $client)->first();
+        if ($conversation==null)
         {
             $conversation= new Conversation();
             $conversation->FK_employee_id=$clientdate->FK_employee_id;
@@ -33,6 +33,14 @@ class MessageriControlleur extends Controller
         $Message->content =$ContentMessage;
         $Message->save();
         
-        dd($Message->message_content_id);
+        $Mess = new Message();
+
+        $Mess->FK_sender_id=$client;
+        $Mess->FK_recipient_id=$clientdate->FK_employee_id;
+        $Mess->FK_conversation_id=$conversation->conversation_id;
+        $Mess->FK_message_content_id=$Message->message_content_id;
+        $Mess->creation_date=date('Y-m-d');
+        $Mess->save();
+        return redirect()->back();
     }
 }
