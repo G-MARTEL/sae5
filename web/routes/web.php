@@ -79,7 +79,8 @@ Route::prefix('client')->name('client.')->group(function() {
 Route::prefix('employees')->name('employees.')->group(function() {
     Route::get('/accueil', function () {return view('acceuilEmployees');})->name('accueil');
     Route::get('/conversation', [MessageriControlleur::class, 'showConversationEmployee']);
-    Route::get('/conversation/{id}', [MessageriControlleur::class, 'sendMessageClient']);
+    Route::get('/conversation/{id}', [MessageriControlleur::class, 'showConversation']);
+    Route::post('sendMessage', [MessageriControlleur::class, 'sendMessageEmployee']);
 });
 
 

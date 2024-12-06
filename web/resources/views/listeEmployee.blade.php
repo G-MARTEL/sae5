@@ -57,13 +57,13 @@
         @csrf
         <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
         <select name="Funtions_id" id="Functions">
-        @foreach($listeFunction as $Functions)
             @php
             if ($employee->FK_function_id == null)
             {
                 echo '<option value="">Aucun fonction associé</option>';
             }
             @endphp
+        @foreach($listeFunction as $Functions)
             <option value="{{ $Functions->function_id}}" 
                 {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
                 {{ $Functions->function_name }}

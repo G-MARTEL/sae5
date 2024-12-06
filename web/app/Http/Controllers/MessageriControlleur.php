@@ -55,6 +55,48 @@ class MessageriControlleur extends Controller
 
     public function showConversationEmployee(Request $request)
     {
-        
+        $employee = session('id');
+        $employee = Employee::where('FK_account_id', $employee)->first();
+        $conversation = Conversation::where('FK_employee_id', $employee->employee_id)->get();
+        return view('listeConv', ['conversations' => $conversation]);
     }
+
+    public function showConversation(Request $request)
+    {
+
+        $id=$request->id;
+        $conversation = Conversation::where('conversation_id', $id)->first();
+        $employee = session('id');
+        $employee = Employee::where('FK_account_id', $employee)->first();
+
+        $messages = Message::where('FK_sender_id', $employee->FK_account_id)
+            ->orWhere('FK_recipient_id', $employee->FK_account_id)
+            ->get();
+
+        return view('conversationEmployes', ['messages' => $messages]);
+    }
+
+    public function sendMessageEmployee(Request $request)
+    {
+        $id=$request->get('id');
+        $employee = session('id');
+        $ContentMessage =$request->message;
+        $Message = new MessageContents();
+        $Message->content =$ContentMessage;
+        $Message->save();
+        $accoutEmployees = Employee::where('employee_id',$employee)->first();
+        $conversation= Conversation::where('conversation_id',$id)->first();
+
+        $Mess = new Message();
+
+        $Mess->FK_sender_id=$employee;
+        $Mess->FK_recipient_id=$conversation->FK_client_id;
+        $Mess->FK_conversation_id=$conversation->conversation_id;
+        $Mess->FK_message_content_id=$Message->message_content_id;
+        $Mess->creation_date=date('Y-m-d');
+        $Mess->save();
+
+        return redirect('/employees/conversation/' . $id);
+    }
+
 }
