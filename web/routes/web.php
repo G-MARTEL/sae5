@@ -8,7 +8,11 @@ use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DevisController;
+
+use App\Http\Controllers\MessageriControlleur;
+
 use App\Http\Controllers\EmployeeController;
+
 use App\Http\Controllers\PrestationsController;
 use App\Http\Controllers\PretImmobilierController;
 
@@ -59,33 +63,33 @@ Route::prefix('client')->name('client.')->group(function() {
 
     // })->name('accueil');
     Route::get('/accueil', [ClientController::class, 'showClientDashboard'])->name('accueil');
+    Route::post('/update', [ClientController::class, 'updateClientInfo'])->name('update');
+    Route::get('/messagerie', [MessageriControlleur::class, 'showMessagerie'])->name('messagerie');
+    Route::post('/sendMessage', [MessageriControlleur::class, 'sendMessageClient']);
+    
 });
 Route::get('/download-contract/{contractId}', [ClientController::class, 'downloadContract'])->name('download.contract');
 
 
-Route::post('/client/update', [ClientController::class, 'updateClientInfo'])->name('client.update');
+
 
 
 Route::prefix('employees')->name('employees.')->group(function() {
-    Route::get('/accueil', function () {
-        if (session('role') !== 'employee') {
-            return redirect('/'); // Redirige si le rôle n'est pas 'employee'
-        }
-        return view('acceuilEmployees');
+
+    Route::get('/accueil', function () {return view('acceuilEmployees');})->name('accueil');
+    Route::get('/conversation', [MessageriControlleur::class, 'showConversationEmployee']);
+    Route::get('/conversation/{id}', [MessageriControlleur::class, 'showConversation']);
+    Route::post('sendMessage', [MessageriControlleur::class, 'sendMessageEmployee']);
     })->name('accueil');
     Route::get('creerContrats', [EmployeeController::class, 'showListeClients']);
     Route::post('/creationContrat', [EmployeeController::class, 'creationContrat']);
+
 });
 
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/accueil', function () {
-        if (session('role') !== 'admin') {
-            return redirect('/'); // Redirige si le rôle n'est pas 'admin'
-        }
-        return view('acceuilAdmin');
-    })->name('accueil');
+    Route::get('/accueil', function () {return view('acceuilAdmin');})->name('accueil');
     Route::get('/listeClients', [AdminController::class, 'showListeClients']);
     Route::post('/modifClientAsso', [AdminController::class, 'modifClientAsso']);
     Route::get('/listeEmployee', [AdminController::class, 'showListeEmployee']);

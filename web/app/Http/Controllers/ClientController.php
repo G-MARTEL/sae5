@@ -190,6 +190,4 @@ public function downloadContract($contractId)
     $pdf = Pdf::loadView('pdf.contractPdf', $data);
     return $pdf->download('Contrat_'.$contract->numero_contract.'.pdf');
 }
-
-
 }

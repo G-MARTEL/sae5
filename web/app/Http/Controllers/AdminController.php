@@ -16,9 +16,6 @@ class AdminController extends Controller
 {
     public function showListeClients()
     {
-        if (session('role') !== 'admin') {
-            return redirect('/'); // Redirige si le rôle n'est pas 'admin'
-        }
         $clientAccounts = Client::all(); // Récupérer tous les clients
         $clients = [];
         $listeEmployees = Employee::all();
@@ -62,11 +59,11 @@ class AdminController extends Controller
 
     public function showListeEmployee()
     {
-        if (session('role')!== 'admin') {
-            return redirect('/'); // Redirige si le rôle n'est pas 'admin'
-        }
+
         // Récupérer tous les employés
-        $listeEmployees = Employee::where('fk_function_id', '!=', 1)->get();
+        $listeEmployees = Employee::where('fk_function_id', '!=', 1)
+            ->orWhereNull('fk_function_id')
+            ->get();
 
         $listeFunction =Functions::all();
         // Passer les employés à la vue
