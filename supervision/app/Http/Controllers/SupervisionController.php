@@ -48,6 +48,10 @@ class SupervisionController extends Controller
         $storageData = $ressources->pluck('storage');
         $pingData = $ressources->pluck('ping');
         
+        // Récupérer le nom de la machine actuelle
+        $machine = DB::table('machines')->where('machine_id', $currentMachineId)->first();
+        $machineName = $machine ? $machine->name : 'Machine inconnue';  // Nom de la machine (si trouvé)
+
         // Transmettre les données à la vue
         return view('graphique', compact(
             'machines',
@@ -57,7 +61,8 @@ class SupervisionController extends Controller
             'ramData',
             'storageData',
             'pingData',
-            'maxStorage'
+            'maxStorage',
+            'machineName' // Passez le nom de la machine
         ));
     }
 
@@ -154,4 +159,3 @@ class SupervisionController extends Controller
         }
     }
 }
-

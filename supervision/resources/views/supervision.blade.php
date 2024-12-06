@@ -48,6 +48,21 @@
         .notification.show {
             opacity: 1;
         }
+        .stats-btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 2px solid white;
+            background-color: #ffffff00;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: auto; /* Aligne le bouton à droite */
+        }
+        .stats-btn:hover {
+            background-color: #ffde59;
+            color: #248680;
+            border: 2px solid #248680;
+        }
     </style>
 </head>
 <body>
@@ -57,6 +72,7 @@
         <button class="filter-btn"><img src="{{ asset('img/icone/filtre.png') }}" alt="Icone de filtre"></button>
         <button class="status-btn active" id="globalBtn">Etat global</button>
         <button class="status-btn" id="criticalBtn">Etat critique</button>
+        <button class="stats-btn" id="statsBtn">Statistique</button>
     </div>
     <table>
         <thead>
@@ -206,56 +222,40 @@
             updateTable(filteredDevices);
         }
 
-        function resetSort() {
-            currentSort = { column: null, direction: 'asc' };
-            document.querySelectorAll('th').forEach(header => {
-                header.classList.remove('sort-asc', 'sort-desc');
-            });
-            filterAndSortDevices();
-        }
-
         document.getElementById("searchInput").addEventListener("input", filterAndSortDevices);
 
         document.getElementById("globalBtn").addEventListener("click", () => {
             document.querySelector(".status-btn.active").classList.remove("active");
             document.getElementById("globalBtn").classList.add("active");
-            resetSort();
+            filterAndSortDevices();
         });
 
         document.getElementById("criticalBtn").addEventListener("click", () => {
             document.querySelector(".status-btn.active").classList.remove("active");
             document.getElementById("criticalBtn").classList.add("active");
-            resetSort();
+            filterAndSortDevices();
         });
 
-        document.querySelectorAll('th[data-sort]').forEach(th => {
-            let lastClickTime = 0;
-            th.addEventListener('click', (event) => {
-                const currentTime = new Date().getTime();
-                const column = th.dataset.sort;
-                
-                if (currentTime - lastClickTime < 300) {
-                    resetSort();
+        document.querySelectorAll("th").forEach(header => {
+            header.addEventListener("click", () => {
+                const column = header.dataset.sort;
+                if (currentSort.column === column) {
+                    currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
                 } else {
-                    if (currentSort.column === column) {
-                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-                    } else {
-                        currentSort.column = column;
-                        currentSort.direction = 'asc';
-                    }
-                    
-                    document.querySelectorAll('th').forEach(header => {
-                        header.classList.remove('sort-asc', 'sort-desc');
-                    });
-                    th.classList.add(`sort-${currentSort.direction}`);
+                    currentSort.column = column;
+                    currentSort.direction = 'asc';
                 }
-                
-                lastClickTime = currentTime;
+                document.querySelectorAll("th").forEach(th => th.classList.remove("sort-asc", "sort-desc"));
+                header.classList.add(currentSort.direction === 'asc' ? "sort-asc" : "sort-desc");
                 filterAndSortDevices();
             });
         });
 
-        setInterval(fetchDevices, 300000);
+        // Bouton statistique - Redirection
+        document.getElementById("statsBtn").addEventListener("click", () => {
+            window.location.href = "http://localhost:9090/graphique";
+        });
+
         fetchDevices();
     </script>
 </body>

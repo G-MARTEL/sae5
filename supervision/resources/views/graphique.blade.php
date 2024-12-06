@@ -13,6 +13,9 @@
     <div class="dashboard">
         <!-- Barre latérale gauche -->
         <div class="sidebar">
+            <!-- Bouton de retour à l'accueil -->
+            <a href="{{ url('/') }}" class="back-to-home-btn">Retour à la supervision</a>
+
             <h2>Machines</h2>
             <ul>
                 @foreach ($machines as $machine)
@@ -27,7 +30,7 @@
 
         <!-- Contenu principal -->
         <div class="main-content">
-            <h1>Supervision des Machines</h1>
+            <h1>Supervision de la machine : {{ $machineName }}</h1>
             <div id="charts-container">
                 <!-- Graphique CPU -->
                 <div class="chart-container">

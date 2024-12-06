@@ -27,8 +27,26 @@ html {
     overflow-y: auto; /* Permet de défiler si le contenu dépasse */
 }
 
+.sidebar .back-to-home-btn {
+    background-color: #248680;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 15px;
+    display: block;
+    border: 2px solid white; /* Ajout de la bordure blanche */
+}
+
+.sidebar .back-to-home-btn:hover {
+    background-color: #1d6c61;
+}
+
 .sidebar h2 {
     text-align: center;
+    margin-top: 20px; /* Espacement après le bouton */
 }
 
 .sidebar ul {
@@ -51,7 +69,7 @@ html {
 }
 
 .sidebar ul li a:hover {
-    background-color: #248680;
+    background-color: #1d6c61;
 }
 
 .main-content {
@@ -67,4 +85,9 @@ html {
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-home-btn {
+    border-radius: 5px;
+    border-color: white;
 }
