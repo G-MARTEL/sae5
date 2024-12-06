@@ -80,7 +80,6 @@ Route::prefix('employees')->name('employees.')->group(function() {
     Route::get('/conversation', [MessageriControlleur::class, 'showConversationEmployee']);
     Route::get('/conversation/{id}', [MessageriControlleur::class, 'showConversation']);
     Route::post('sendMessage', [MessageriControlleur::class, 'sendMessageEmployee']);
-    })->name('accueil');
     Route::get('creerContrats', [EmployeeController::class, 'showListeClients']);
     Route::post('/creationContrat', [EmployeeController::class, 'creationContrat']);
 
