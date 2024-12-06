@@ -11,6 +11,8 @@
 @section('content')
 
 
+
+
 <div class="container" id="client-1">
     <div class="container-inner">
         <div class="colonnes">
@@ -38,11 +40,19 @@
                             @endif
                         </li>
                     </ul>
-                    <ul>    
-                        <li><button>Prendre rdv</button></li>
+                    <ul>
+                        <form method="POST" action="{{ route('client.upload.document') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="document" class="form-label">Déposer un document PDF</label>
+                                <input type="file" class="form-control" id="document" name="document" accept="application/pdf" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Déposer</button>
+                        </form>
                     </ul>
+                    
                     <ul>    
-                        <li><button>Gérer mes engagements</button>          <button id="openModalBtn" class="btn btn-primary">Gérer mes informations</button> </li>
+                        <button id="openModalBtn" class="btn btn-primary">Gérer mes informations</button> </li>
                     </ul>
                     
                 </div>
