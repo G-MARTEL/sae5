@@ -154,23 +154,6 @@ th:not(:last-child) {
     height: 20px;
 }
 
-th {
-    cursor: pointer;
-}
-th::after {
-    content: '\25B2\25BC';
-    font-size: 0.8em;
-    margin-left: 5px;
-    opacity: 0.5;
-}
-th.sort-asc::after {
-    content: '\25B2';
-    opacity: 1;
-}
-th.sort-desc::after {
-    content: '\25BC';
-    opacity: 1;
-}
 .notification-container {
     position: fixed;
     bottom: 20px;

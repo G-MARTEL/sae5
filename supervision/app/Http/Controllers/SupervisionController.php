@@ -11,6 +11,68 @@ class SupervisionController extends Controller
         return view('supervision');
     }
 
+    public function showGraphique($machineId)
+    {
+        // Récupérer la liste des machines
+        $machines = DB::table('machines')->get();
+    
+        // Vérifier que la machine existe
+        $machine = DB::table('machines')->where('machine_id', $machineId)->first();
+        if (!$machine) {
+            return redirect('/graphique'); // Redirige vers une page d'erreur ou la page principale
+        }
+    
+        // Récupérer les données de la machine sélectionnée
+        $ressources = DB::table('ressources_hist')
+            ->where('FK_machine_id', $machineId)
+            ->orderBy('save_date', 'asc')
+            ->get();
+    
+        // Préparer les données pour les graphiques
+        $labels = $ressources->pluck('save_date')->map(function ($date) {
+            return \Carbon\Carbon::parse($date)->format('Y-m-d H:i');
+        });
+        $cpuData = $ressources->pluck('cpu');
+        $ramData = $ressources->pluck('ram');
+        $storageData = $ressources->pluck('storage');
+        $pingData = $ressources->pluck('ping');
+    
+        // Transmettre les données à la vue
+        return view('graphique', compact(
+            'machines',
+            'machineId', // Transmettre l'ID de la machine à la vue
+            'labels',
+            'cpuData',
+            'ramData',
+            'storageData',
+            'pingData'
+        ));
+    }
+    
+
+    public function getMachineData(Request $request)
+    {
+        $machineId = $request->query('machine_id', 1); // Par défaut, machine_id = 1
+    
+        $ressources = DB::table('ressources_hist')
+            ->where('FK_machine_id', $machineId)
+            ->orderBy('save_date', 'asc')
+            ->get();
+    
+        $labels = $ressources->pluck('save_date')->map(function ($date) {
+            return \Carbon\Carbon::parse($date)->format('Y-m-d H:i');
+        });
+    
+        return response()->json([
+            'labels' => $labels,
+            'cpuData' => $ressources->pluck('cpu'),
+            'ramData' => $ressources->pluck('ram'),
+            'storageData' => $ressources->pluck('storage'),
+            'pingData' => $ressources->pluck('ping'),
+        ]);
+    }
+    
+
     public function getDevices()
     {
         $ressources = DB::table('ressources')
