@@ -54,11 +54,12 @@
 
     <script>
         // Initialisation des données globales
-        let currentMachineId = "{{ $machineId }}";  // ID de la machine depuis le contrôleur
+        let currentMachineId = "{{ $currentMachineId }}";  // ID de la machine depuis le contrôleur
         const apiUrl = "{{ route('api.get_machine_data') }}"; // API pour récupérer les données
 
         // Fonction pour mettre à jour les graphiques
-        const updateCharts = (labels, cpuData, ramData, storageData, pingData) => {
+        const updateCharts = (labels, cpuData, ramData, storageData, pingData, maxStorage) => {
+            // Mise à jour des graphiques
             cpuChart.data.labels = labels;
             cpuChart.data.datasets[0].data = cpuData;
             cpuChart.update();
@@ -80,80 +81,114 @@
         fetch(`${apiUrl}?machine_id=${currentMachineId}`)
             .then(response => response.json())
             .then(data => {
-                updateCharts(data.labels, data.cpuData, data.ramData, data.storageData, data.pingData);
+                updateCharts(data.labels, data.cpuData, data.ramData, data.storageData, data.pingData, {{ $maxStorage }});
             })
-            .catch(error => console.error('Erreur:', error));
+            .catch(error => console.error("Erreur lors de la récupération des données : ", error));
 
-        // Initialisation des graphiques avec Chart.js
+        // Configuration des graphiques
         const ctxCpu = document.getElementById('cpuChart').getContext('2d');
         const cpuChart = new Chart(ctxCpu, {
             type: 'line',
-            data: { 
-                labels: {!! json_encode($labels) !!}, 
-                datasets: [{ 
-                    label: 'CPU (%)', 
-                    data: {!! json_encode($cpuData) !!}, 
-                    borderColor: 'red', 
-                    tension: 0.1 
-                }] 
+            data: {
+                labels: [], 
+                datasets: [{
+                    label: 'CPU Usage (%)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,
+                    data: []
+                }]
             },
-            options: { 
-                responsive: true, 
-                plugins: { title: { display: true, text: 'Utilisation CPU' } } 
+            options: {
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: "CPU Usage"
+                        }
+                    }
+                }
             }
         });
 
         const ctxRam = document.getElementById('ramChart').getContext('2d');
         const ramChart = new Chart(ctxRam, {
             type: 'line',
-            data: { 
-                labels: {!! json_encode($labels) !!}, 
-                datasets: [{ 
-                    label: 'RAM (%)', 
-                    data: {!! json_encode($ramData) !!}, 
-                    borderColor: 'blue', 
-                    tension: 0.1 
-                }] 
+            data: {
+                labels: [], 
+                datasets: [{
+                    label: 'RAM Usage (%)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    fill: false,
+                    data: []
+                }]
             },
-            options: { 
-                responsive: true, 
-                plugins: { title: { display: true, text: 'Utilisation RAM' } } 
+            options: {
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: "RAM Usage"
+                        }
+                    }
+                }
             }
         });
 
         const ctxStorage = document.getElementById('storageChart').getContext('2d');
         const storageChart = new Chart(ctxStorage, {
             type: 'line',
-            data: { 
-                labels: {!! json_encode($labels) !!}, 
-                datasets: [{ 
-                    label: 'Stockage (Go)', 
-                    data: {!! json_encode($storageData) !!}, 
-                    borderColor: 'green', 
-                    tension: 0.1 
-                }] 
+            data: {
+                labels: [], 
+                datasets: [{
+                    label: 'Storage Usage (GB)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    fill: false,
+                    data: []
+                }]
             },
-            options: { 
-                responsive: true, 
-                plugins: { title: { display: true, text: 'Utilisation Stockage' } } 
+            options: {
+                scales: {
+                    y: {
+                        min: 0, // Défini le minimum de stockage à 0
+                        title: {
+                            display: true,
+                            text: "Storage (GB)"
+                        }
+                    }
+                }
             }
         });
 
         const ctxPing = document.getElementById('pingChart').getContext('2d');
         const pingChart = new Chart(ctxPing, {
             type: 'line',
-            data: { 
-                labels: {!! json_encode($labels) !!}, 
-                datasets: [{ 
-                    label: 'Ping (ms)', 
-                    data: {!! json_encode($pingData) !!}, 
-                    borderColor: 'purple', 
-                    tension: 0.1 
-                }] 
+            data: {
+                labels: [], 
+                datasets: [{
+                    label: 'Ping (0 or 1)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    fill: false,
+                    data: []
+                }]
             },
-            options: { 
-                responsive: true, 
-                plugins: { title: { display: true, text: 'Temps de Réponse (Ping)' } } 
+            options: {
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 1,
+                        title: {
+                            display: true,
+                            text: "Ping (0 or 1)"
+                        },
+                        ticks: {
+                            stepSize: 1 // Afficher uniquement 0 et 1
+                        }
+                    }
+                }
             }
         });
     </script>

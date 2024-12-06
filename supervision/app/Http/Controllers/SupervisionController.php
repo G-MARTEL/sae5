@@ -3,64 +3,77 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SupervisionController extends Controller
 {
+    // Afficher la page de supervision
     public function showSupervision()
     {
         return view('supervision');
     }
 
-    public function showGraphique($machineId)
+    // Afficher le graphique pour une machine spécifique
+    public function showGraphique($machineId = null)
     {
         // Récupérer la liste des machines
         $machines = DB::table('machines')->get();
-    
-        // Vérifier que la machine existe
-        $machine = DB::table('machines')->where('machine_id', $machineId)->first();
-        if (!$machine) {
-            return redirect('/graphique'); // Redirige vers une page d'erreur ou la page principale
+        
+        // Déterminer la machine sélectionnée
+        $currentMachineId = $machineId ?? ($machines->first() ? $machines->first()->machine_id : null);
+        
+        // Si aucune machine n'existe, retourner la vue avec les machines disponibles
+        if (!$currentMachineId) {
+            return view('graphique', ['machines' => $machines]); 
         }
-    
+
         // Récupérer les données de la machine sélectionnée
         $ressources = DB::table('ressources_hist')
-            ->where('FK_machine_id', $machineId)
+            ->where('FK_machine_id', $currentMachineId)
             ->orderBy('save_date', 'asc')
             ->get();
-    
+        
+        // Calculer la valeur maximale du stockage pour cette machine
+        $maxStorage = DB::table('machines')
+            ->where('machine_id', $currentMachineId)
+            ->value('max_storage');
+        
         // Préparer les données pour les graphiques
         $labels = $ressources->pluck('save_date')->map(function ($date) {
-            return \Carbon\Carbon::parse($date)->format('Y-m-d H:i');
+            return Carbon::parse($date)->format('Y-m-d H:i');
         });
         $cpuData = $ressources->pluck('cpu');
         $ramData = $ressources->pluck('ram');
         $storageData = $ressources->pluck('storage');
         $pingData = $ressources->pluck('ping');
-    
+        
         // Transmettre les données à la vue
         return view('graphique', compact(
             'machines',
-            'machineId', // Transmettre l'ID de la machine à la vue
+            'currentMachineId',  // Transmettre la machine actuelle à la vue
             'labels',
             'cpuData',
             'ramData',
             'storageData',
-            'pingData'
+            'pingData',
+            'maxStorage'
         ));
     }
-    
 
+    // API pour récupérer les données de la machine
     public function getMachineData(Request $request)
     {
         $machineId = $request->query('machine_id', 1); // Par défaut, machine_id = 1
     
+        // Récupérer les ressources de la machine
         $ressources = DB::table('ressources_hist')
             ->where('FK_machine_id', $machineId)
             ->orderBy('save_date', 'asc')
             ->get();
     
         $labels = $ressources->pluck('save_date')->map(function ($date) {
-            return \Carbon\Carbon::parse($date)->format('Y-m-d H:i');
+            return Carbon::parse($date)->format('Y-m-d H:i');
         });
     
         return response()->json([
@@ -71,8 +84,8 @@ class SupervisionController extends Controller
             'pingData' => $ressources->pluck('ping'),
         ]);
     }
-    
 
+    // Récupérer les dispositifs et gérer les notifications
     public function getDevices()
     {
         $ressources = DB::table('ressources')
@@ -108,6 +121,7 @@ class SupervisionController extends Controller
         return response()->json($ressources);
     }
 
+    // Vérifier et créer une notification en cas de problème
     private function checkAndCreateNotification($ressource)
     {
         $storagePercentage = ($ressource->storage / $ressource->max_storage) * 100;
@@ -140,3 +154,4 @@ class SupervisionController extends Controller
         }
     }
 }
+

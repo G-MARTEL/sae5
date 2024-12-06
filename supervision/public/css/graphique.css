@@ -19,7 +19,7 @@ html {
 
 .sidebar {
     width: 250px;
-    background-color: #333;
+    background-color: #248680;
     color: white;
     padding: 20px;
     height: 100vh; /* Assure que la barre latérale prend toute la hauteur visible */
@@ -51,7 +51,7 @@ html {
 }
 
 .sidebar ul li a:hover {
-    background-color: #575757;
+    background-color: #248680;
 }
 
 .main-content {
