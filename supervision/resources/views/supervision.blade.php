@@ -23,19 +23,41 @@
             content: '\25BC';
             opacity: 1;
         }
+        .notification-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .notification {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .notification.warning {
+            background-color: orange;
+            color: white;
+        }
+        .notification.critical {
+            background-color: red;
+            color: white;
+        }
+        .notification.show {
+            opacity: 1;
+        }
     </style>
 </head>
-
 <body>
     <div class="titre"><h1>Supervision</h1></div>
-    
     <div class="toolbar">
         <input type="text" placeholder="Rechercher..." class="search-bar" id="searchInput">
         <button class="filter-btn"><img src="{{ asset('img/icone/filtre.png') }}" alt="Icone de filtre"></button>
         <button class="status-btn active" id="globalBtn">Etat global</button>
         <button class="status-btn" id="criticalBtn">Etat critique</button>
     </div>
-
     <table>
         <thead>
             <tr>
@@ -50,41 +72,79 @@
             <!-- Le corps du tableau sera rempli dynamiquement par AJAX -->
         </tbody>
     </table>
-
+    <div id="notificationContainer" class="notification-container"></div>
+    <audio id="notificationSound" src="{{ asset('sounds/notification.mp3') }}"></audio>
     <script>
-        let allDevices = []; // Stocker toutes les données des appareils
-        let filteredDevices = []; // Stocker les appareils filtrés (basé sur la recherche et l'état)
-        let currentSort = { column: null, direction: 'asc' }; // Garder une trace du tri actuel
+        let allDevices = [];
+        let filteredDevices = [];
+        let currentSort = { column: null, direction: 'asc' };
 
-        // Fonction pour récupérer et afficher les données des appareils
+        function showNotification(message, type) {
+            const notificationContainer = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.classList.add('notification', type);
+            notification.textContent = message;
+            notificationContainer.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+
+            document.getElementById('notificationSound').play();
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notificationContainer.removeChild(notification);
+                }, 300);
+            }, 30000);
+        }
+
+        function checkDeviceNotifications(devices) {
+            devices.forEach(device => {
+                const storagePercentage = (device.storage / device.max_storage) * 100;
+                if (!device.ping) {
+                    showNotification(`${device.machine_name}: Ping échoué`, 'critical');
+                }
+                if (storagePercentage >= 90) {
+                    showNotification(`${device.machine_name}: Stockage critique (${storagePercentage.toFixed(1)}%)`, 'critical');
+                } else if (storagePercentage >= 85) {
+                    showNotification(`${device.machine_name}: Avertissement stockage (${storagePercentage.toFixed(1)}%)`, 'warning');
+                }
+                if (device.ram >= 90) {
+                    showNotification(`${device.machine_name}: Utilisation RAM critique (${device.ram}%)`, 'critical');
+                } else if (device.ram >= 80) {
+                    showNotification(`${device.machine_name}: Avertissement utilisation RAM (${device.ram}%)`, 'warning');
+                }
+                if (device.cpu >= 90) {
+                    showNotification(`${device.machine_name}: Utilisation CPU critique (${device.cpu}%)`, 'critical');
+                } else if (device.cpu >= 80) {
+                    showNotification(`${device.machine_name}: Avertissement utilisation CPU (${device.cpu}%)`, 'warning');
+                }
+            });
+        }
+
         function fetchDevices() {
             fetch('{{ route("getDevices") }}')
                 .then(response => response.json())
                 .then(data => {
-                    allDevices = data; // Sauvegarder toutes les données
-                    filterAndSortDevices();  // Appliquer les filtres et le tri
+                    allDevices = data;
+                    checkDeviceNotifications(data);
+                    filterAndSortDevices();
                 })
                 .catch(error => console.error("Erreur lors de la récupération des données :", error));
         }
 
-        // Fonction pour afficher les appareils dans le tableau
         function updateTable(devices) {
             const tableBody = document.querySelector("#deviceTableBody");
-            tableBody.innerHTML = ""; // Effacer les lignes existantes
-
+            tableBody.innerHTML = "";
             devices.forEach(device => {
                 const storagePercentage = (device.storage / device.max_storage) * 100;
-
-                // Définir les classes pour chaque statut
                 const pingClass = device.ping ? "status-ok" : "status-error";
-                const storageClass = storagePercentage >= 95 ? "status-error" :
-                                     (storagePercentage >= 80 ? "status-warning" : "");
-                const ramClass = device.ram >= 100 ? "status-error" :
-                                 (device.ram >= 90 ? "status-warning" : "");
-                const cpuClass = device.cpu >= 100 ? "status-error" :
-                                 (device.cpu >= 90 ? "status-warning" : "");
-
-                // Ajouter la ligne du tableau pour chaque appareil
+                const storageClass = storagePercentage >= 90 ? "status-error" : (storagePercentage >= 85 ? "status-warning" : "");
+                const ramClass = device.ram >= 90 ? "status-error" : (device.ram >= 80 ? "status-warning" : "");
+                const cpuClass = device.cpu >= 90 ? "status-error" : (device.cpu >= 80 ? "status-warning" : "");
+                
                 tableBody.innerHTML += `
                     <tr>
                         <td class="titleTableau">${device.machine_name}</td>
@@ -97,14 +157,12 @@
             });
         }
 
-        // Fonction pour filtrer et trier les appareils
         function filterAndSortDevices() {
             const query = document.getElementById("searchInput").value.toLowerCase();
             const activeStatus = document.querySelector(".status-btn.active").id;
             
-            // Filtrage par nom
             let filteredByName = allDevices.filter(device => device.machine_name.toLowerCase().includes(query));
-
+            
             if (activeStatus === "globalBtn") {
                 filteredDevices = filteredByName;
             } else if (activeStatus === "criticalBtn") {
@@ -113,8 +171,7 @@
                     return !device.ping || storagePercentage >= 80 || device.ram >= 90 || device.cpu >= 90;
                 });
             }
-
-            // Appliquer le tri
+            
             if (currentSort.column) {
                 filteredDevices.sort((a, b) => {
                     let valueA, valueB;
@@ -145,51 +202,60 @@
                     return 0;
                 });
             }
-
+            
             updateTable(filteredDevices);
         }
 
-        // Écouter les changements dans la zone de recherche
+        function resetSort() {
+            currentSort = { column: null, direction: 'asc' };
+            document.querySelectorAll('th').forEach(header => {
+                header.classList.remove('sort-asc', 'sort-desc');
+            });
+            filterAndSortDevices();
+        }
+
         document.getElementById("searchInput").addEventListener("input", filterAndSortDevices);
 
-        // Gérer le clic sur les boutons pour l'état global et critique
         document.getElementById("globalBtn").addEventListener("click", () => {
             document.querySelector(".status-btn.active").classList.remove("active");
             document.getElementById("globalBtn").classList.add("active");
-            filterAndSortDevices();
+            resetSort();
         });
 
         document.getElementById("criticalBtn").addEventListener("click", () => {
             document.querySelector(".status-btn.active").classList.remove("active");
             document.getElementById("criticalBtn").classList.add("active");
-            filterAndSortDevices();
+            resetSort();
         });
 
-        // Gérer le tri des colonnes
         document.querySelectorAll('th[data-sort]').forEach(th => {
-            th.addEventListener('click', () => {
+            let lastClickTime = 0;
+            th.addEventListener('click', (event) => {
+                const currentTime = new Date().getTime();
                 const column = th.dataset.sort;
-                if (currentSort.column === column) {
-                    currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                
+                if (currentTime - lastClickTime < 300) {
+                    resetSort();
                 } else {
-                    currentSort.column = column;
-                    currentSort.direction = 'asc';
+                    if (currentSort.column === column) {
+                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        currentSort.column = column;
+                        currentSort.direction = 'asc';
+                    }
+                    
+                    document.querySelectorAll('th').forEach(header => {
+                        header.classList.remove('sort-asc', 'sort-desc');
+                    });
+                    th.classList.add(`sort-${currentSort.direction}`);
                 }
                 
-                // Mettre à jour les classes de tri sur les en-têtes
-                document.querySelectorAll('th').forEach(header => {
-                    header.classList.remove('sort-asc', 'sort-desc');
-                });
-                th.classList.add(`sort-${currentSort.direction}`);
-
+                lastClickTime = currentTime;
                 filterAndSortDevices();
             });
         });
 
-        // Appeler la fonction fetchDevices toutes les 5 secondes pour actualiser les données
-        setInterval(fetchDevices, 5000);
-
-        // Initialiser l'affichage dès le chargement de la page
+        setInterval(fetchDevices, 300000);
         fetchDevices();
     </script>
 </body>

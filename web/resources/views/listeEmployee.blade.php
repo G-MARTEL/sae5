@@ -18,7 +18,7 @@
     <div class="popup-content">
         <span id="close-popup-btn" class="close-btn">&times;</span>
         <h2>Créer un nouvel Employee</h2>
-        <form id="crationEmployee" action="crationEmployee" method="POST">
+        <form id="creationEmployee" action="creationEmployee" method="POST">
             @csrf 
             <label for="first_name">Prénom:</label>
             <input type="text" id="first_name" name="first_name" required>
@@ -43,6 +43,17 @@
             
             <label for="password">Mot de passe:</label>
             <input type="password" id="password" name="password" required>
+
+
+            <label for="function">Fonction de l'employe:</label>
+            <select name="function_id" id="Functions">
+                @foreach($listeFunction as $Functions)
+                    <option value="{{ $Functions->function_id}}" 
+                        {{ $Functions->function_id ? 'selected' : '' }}>
+                        {{ $Functions->function_name }}
+                    </option>
+                @endforeach
+            </select>
             
             <button type="submit">Créer</button>
         </form>

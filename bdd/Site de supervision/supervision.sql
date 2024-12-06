@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : db
--- Généré le : mar. 05 nov. 2024 à 13:01
+-- Hôte : db-supervision
+-- Généré le : mer. 04 déc. 2024 à 14:27
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `supervision`
+-- Base de données : `laravel`
 --
 
 -- --------------------------------------------------------
@@ -33,6 +33,51 @@ CREATE TABLE `machines` (
   `max_storage` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Déchargement des données de la table `machines`
+--
+
+INSERT INTO `machines` (`machine_id`, `name`, `max_storage`) VALUES
+(1, 'PC1', 600),
+(2, 'PC2', 500),
+(3, 'Routeur', 400);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `notification_id` int(11) NOT NULL,
+  `FK_machine_id` int(11) NOT NULL,
+  `ping` tinyint(1) DEFAULT NULL,
+  `storage` int(11) DEFAULT NULL,
+  `ram` int(11) DEFAULT NULL,
+  `cpu` int(11) DEFAULT NULL,
+  `FK_notification_type_id` int(11) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `notifications_type`
+--
+
+CREATE TABLE `notifications_type` (
+  `notification_type_id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `notifications_type`
+--
+
+INSERT INTO `notifications_type` (`notification_type_id`, `type`) VALUES
+(1, 'Avertissement'),
+(2, 'Alerte');
+
 -- --------------------------------------------------------
 
 --
@@ -42,10 +87,10 @@ CREATE TABLE `machines` (
 CREATE TABLE `ressources` (
   `ressource_id` int(11) NOT NULL,
   `FK_machine_id` int(11) NOT NULL,
-  `ping` tinyint(1) NOT NULL,
-  `storage` int(11) NOT NULL,
-  `ram` int(11) NOT NULL,
-  `cpu` int(11) NOT NULL
+  `ping` tinyint(1) DEFAULT NULL,
+  `storage` int(11) DEFAULT NULL,
+  `ram` int(11) DEFAULT NULL,
+  `cpu` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -58,10 +103,10 @@ CREATE TABLE `ressources_hist` (
   `resource_hist_id` int(11) NOT NULL,
   `FK_resource_id` int(11) NOT NULL,
   `FK_machine_id` int(11) NOT NULL,
-  `ping` tinyint(1) NOT NULL,
-  `storage` int(11) NOT NULL,
-  `ram` int(11) NOT NULL,
-  `cpu` int(11) NOT NULL,
+  `ping` tinyint(1) DEFAULT NULL,
+  `storage` int(11) DEFAULT NULL,
+  `ram` int(11) DEFAULT NULL,
+  `cpu` int(11) DEFAULT NULL,
   `save_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -74,6 +119,20 @@ CREATE TABLE `ressources_hist` (
 --
 ALTER TABLE `machines`
   ADD PRIMARY KEY (`machine_id`);
+
+--
+-- Index pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`notification_id`),
+  ADD KEY `notification_machine` (`FK_machine_id`),
+  ADD KEY `notification_notif_type` (`FK_notification_type_id`);
+
+--
+-- Index pour la table `notifications_type`
+--
+ALTER TABLE `notifications_type`
+  ADD PRIMARY KEY (`notification_type_id`);
 
 --
 -- Index pour la table `ressources`
@@ -98,7 +157,19 @@ ALTER TABLE `ressources_hist`
 -- AUTO_INCREMENT pour la table `machines`
 --
 ALTER TABLE `machines`
-  MODIFY `machine_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `machine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `notifications_type`
+--
+ALTER TABLE `notifications_type`
+  MODIFY `notification_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `ressources`
@@ -115,6 +186,13 @@ ALTER TABLE `ressources_hist`
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notification_machine` FOREIGN KEY (`FK_machine_id`) REFERENCES `machines` (`machine_id`),
+  ADD CONSTRAINT `notification_notif_type` FOREIGN KEY (`FK_notification_type_id`) REFERENCES `notifications_type` (`notification_type_id`);
 
 --
 -- Contraintes pour la table `ressources`

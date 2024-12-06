@@ -1,50 +1,82 @@
-@extends('layout')
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrat - 15615151515</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .content {
+            margin: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
 
-@section('styles')
-<link rel="stylesheet" href="./css/espace_client.css"/>
-@endsection
+        p {
+            margin-top:5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <img src="{{ asset('assets/pdf/placeholder.jpg') }}" alt="Logo de l'entreprise">
+    <h1>Contrat n°1565651515</h1>
+    <h2>Détails du contrat</h2>
+    <div class="content">
+        <div class="section">
+            <p class="section-title">Informations sur le client :</p>
+            <p>Nom : Hugo Duboisset </p>
+        </div>
 
+        <div class="section">
+            <p class="section-title">Informations sur l'employé associé :</p>
+            <p>Nom :Quentin massoulle</p>
+            <p>Email : massoullecity@mail.com</p>
+            <p>Téléphone : 06265656565</p>
+        </div>
 
-@section('scripts')
-@endsection
-@section('content')
+        <div class="section">
+            <p class="section-title">Informations sur la prestation :</p>
+            <p>Nom de la prestation : optimisation fiscale</p>
+        </div>
 
-<div class="container" id="client-1">
-    <div class="container-inner">
-        <div class="colonnes">
-            <div class="colonne">
-                <div class="container-inner">
-                    <h2>Bienvenue, {{ $clientData['account']->first_name }} {{ $clientData['account']->last_name }}</h1>
-                    <ul>
-                        <li>Email : {{ $clientData['account']->email }}</li>
-                        <li>Téléphone : {{ $clientData['account']->phone }}</li>
-                        <li>Adresse : {{ $clientData['account']->postal_address }}, {{ $clientData['account']->code_address }} {{ $clientData['account']->city }}</li>
-                        <li>Numéro de contrat : 51561565 </li>
-                    </ul>
-                    <ul>    
-                        <li><button>Prendre rdv</button></li>
-                    </ul>
-                    <ul>    
-                        <li><button>Gérer mes engagements</button></li>
-                    </ul>
-                    
-                </div>
-            </div>
-            @if (isset($clientData['employee']))
-            <div class="colonne">
-                    <h3>Mon conseiller</h3>
-                    <img src="{{ asset('assets/presentation/employe2.jpg') }}" alt="Photo de l'équipe">
-                    <ul>
-                        <li>{{ $clientData['employee']->first_name }}</li>
-                        <li>{{ $clientData['employee']->last_name }}</li>
-                        <li>{{ $clientData['employee']->email }}</li>
-                    </ul>
-                    <button>Envoyer un message</button>
-            </div>
-            @endif
+        <div class="section">
+            <p class="section-title">Détails du contrat :</p>
+            <table>
+                <tr>
+                    <th>Date de création</th>
+                    <td>12/09/1998</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>actif</td>
+                </tr>
+            </table>
         </div>
     </div>
-</div>
-
-
-@endsection
+</body>
+</html>

@@ -1,12 +1,13 @@
+# Utiliser l'image PHP officielle avec FPM
 FROM php:8.3-fpm
 
-# Copy composer.lock and composer.json
+# Copier les fichiers composer.lock et composer.json dans le conteneur
 COPY composer.lock composer.json /var/www/
 
-# Set working directory
+# Définir le répertoire de travail
 WORKDIR /var/www
 
-# Install dependencies
+# Installer les dépendances nécessaires
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
@@ -22,31 +23,39 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libzip-dev \
     libgd-dev
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-#Mine
 
-# Install extensions
+# Nettoyer les fichiers inutiles après l'installation
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Installer les extensions PHP nécessaires
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
 RUN docker-php-ext-configure gd --with-external-gd
 RUN docker-php-ext-install gd
 
-# Install composer
+# Installer Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Add user for laravel application
+
+# Ajouter un utilisateur dédié pour l'application Laravel
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
-# Copy existing application directory contents
+# Copier les fichiers de l'application dans le conteneur
 COPY . /var/www
 
-# Copy existing application directory permissions
+# Attribuer les permissions à l'utilisateur www
 COPY --chown=www:www . /var/www
 
-# Change current user to www
+# Passer à l'utilisateur www pour éviter les permissions root
 USER www
 
-# Expose port 9000 and start php-fpm server
+RUN composer update
+
+# Installer barryvdh/laravel-dompdf
+RUN composer require barryvdh/laravel-dompdf
+
+# Exposer le port 9000 pour PHP-FPM
 EXPOSE 9000
+
+# Lancer le serveur PHP-FPM
 CMD ["php-fpm"]
