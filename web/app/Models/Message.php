@@ -15,7 +15,7 @@ class Message extends Model
 
     public function Sender()
     {
-        return $this->belongsTo(Account::class, 'FK_clFK_sender_idient_id');
+        return $this->belongsTo(Account::class, 'FK_sender_id');
     }
     public function Recipient()
     {
@@ -25,6 +25,11 @@ class Message extends Model
     public function Conversation()
     {
         return $this->belongsTo(Conversation::class, 'FK_conversation_id');
+    }
+
+    public function MessageContent()
+    {
+        return $this->belongsTo(MessageContents::class, 'FK_message_content_id');
     }
 
     public $timestamps = false;
