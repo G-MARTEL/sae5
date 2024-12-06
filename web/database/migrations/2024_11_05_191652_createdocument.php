@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('createdocuments', function (Blueprint $table) {
+        Schema::create('create_documents', function (Blueprint $table) {
             $table->increments('createdocument_id'); // Clé primaire
             $table->unsignedInteger('FK_employee_id'); // Colonne FK_employee_id
             $table->unsignedInteger('FK_client_id'); // Colonne FK_client_id
@@ -18,7 +18,7 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('createdocuments');
+        Schema::dropIfExists('create_documents');
     }
 
 };

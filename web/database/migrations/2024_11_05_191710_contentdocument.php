@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('contentdocuments', function (Blueprint $table) {
+        Schema::create('content_documents', function (Blueprint $table) {
             $table->increments('contentdocument_id'); // Clé primaire
             $table->string('title', 50); // Colonne title
             $table->text('contenu'); // Colonne contenu
@@ -19,6 +19,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('contentdocuments');
+        Schema::dropIfExists('content_documents');
     }
 };
