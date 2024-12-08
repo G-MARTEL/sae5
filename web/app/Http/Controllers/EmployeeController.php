@@ -39,6 +39,25 @@ class EmployeeController extends Controller
         return view('creerContrats', ['clients' => $clients, 'services' => $services]);
     }
 
+
+
+    public function listeClientAttitres()
+    {
+        $employeeId = session('employee_id');
+
+        // Récupérer les clients associés à cet employé
+        $clients = Client::where('FK_employee_id', $employeeId)
+            ->with('account') // Charge la relation Account
+            ->get();
+
+        // Passer les données à la vue
+        return view('listeClientAttitres', [
+            'clients' => $clients,
+        ]);
+    }
+
+
+
     public function creationContrat(Request $request){
         if (session('role') !== 'employee') {
             return redirect('/'); // Redirige si le rôle n'est pas 'employee'

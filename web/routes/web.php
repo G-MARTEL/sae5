@@ -82,6 +82,7 @@ Route::prefix('employees')->name('employees.')->group(function() {
     Route::post('sendMessage', [MessageriControlleur::class, 'sendMessageEmployee']);
     Route::get('creerContrats', [EmployeeController::class, 'showListeClients']);
     Route::post('/creationContrat', [EmployeeController::class, 'creationContrat']);
+    Route::get('listeClientAttitres', [EmployeeController::class, 'listeClientAttitres']);
 
 });
 
