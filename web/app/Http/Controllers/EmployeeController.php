@@ -49,12 +49,26 @@ class EmployeeController extends Controller
         $clients = Client::where('FK_employee_id', $employeeId)
             ->with('account') // Charge la relation Account
             ->get();
-
+    
         // Passer les données à la vue
         return view('listeClientAttitres', [
             'clients' => $clients,
         ]);
     }
+
+    public function showClient($id)
+    {
+        // Récupérer le client avec son compte
+        $client = Client::with(['account', 'contracts'])->findOrFail($id);
+        $services = Services::all();
+
+        // Passer les données à la vue
+        return view('clientDetails', [
+            'client' => $client,
+            'services' => $services,
+        ]);
+    }
+
 
 
 

@@ -27,5 +27,12 @@ class Client extends Model
     public function account()
     {
         return $this->belongsTo(Account::class, 'FK_account_id');
+
+        
+    }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class, 'FK_client_id');
     }
 }

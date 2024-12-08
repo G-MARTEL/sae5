@@ -8,7 +8,11 @@
     <tbody>
         @foreach ($clients as $client)
             <tr>
-                <td>{{ $client->account->last_name }}</td>
+                <td>
+                    <a href="{{ route('employees.clients.show', $client->client_id) }}">
+                        {{ $client->account->last_name }}
+                    </a>
+                </td>
                 <td>{{ $client->account->first_name }}</td>
             </tr>
         @endforeach
