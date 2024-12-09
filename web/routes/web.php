@@ -54,14 +54,6 @@ Route::get('/creationCompte',[CreationCompte::class, 'showFormCreationAccount'])
 Route::post('/creationCompte',[CreationCompte::class, 'CreationAccount']);
 
 Route::prefix('client')->name('client.')->group(function() {
-
-    // Route::get('/accueil', function () {
-    //     if (session('role') !== 'client') {
-    //         return redirect('/'); // Redirige si le rôle n'est pas 'client'
-    //     }
-    //     return view('acceuilCliens');
-
-    // })->name('accueil');
     Route::get('/accueil', [ClientController::class, 'showClientDashboard'])->name('accueil');
     Route::post('/update', [ClientController::class, 'updateClientInfo'])->name('update');
     Route::get('/messagerie', [MessageriControlleur::class, 'showMessagerie'])->name('messagerie');
