@@ -26,6 +26,10 @@ Route::get('/', function () {
         return redirect()->route('client.accueil');
     }
     return view('accueil'); // Si aucun rôle n'est défini, afficher la vue d'accueil par défaut
+})->name('accueil');
+
+Route::fallback(function () {
+    return redirect()->route('accueil'); // Redirige vers la route 'home' en cas de 404
 });
 
 
