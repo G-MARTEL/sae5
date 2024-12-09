@@ -45,6 +45,11 @@ class ClientController extends Controller
 
 public function showClientDashboard()
 {
+    if (session('role') != 'client')
+    {
+        return redirect('/');
+    }
+
     $clientData = session('clientData');
 
     // Vérifiez que les données existent avant de les utiliser
@@ -83,6 +88,11 @@ public function showClientDashboard()
 
 public function updateClientInfo(Request $request)
 {
+    if (session('role') != 'client')
+    {
+        return redirect('/');
+    }
+    
     // Valider les données du formulaire
     $request->validate([
         'email' => 'required|email',
@@ -147,6 +157,7 @@ public function updateClientInfo(Request $request)
 
 public function downloadContract($contractId)
 {
+    
     // Récupérer les données du client depuis la session
     $clientData = session('clientData');
 

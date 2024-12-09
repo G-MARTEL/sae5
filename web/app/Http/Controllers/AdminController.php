@@ -16,6 +16,10 @@ class AdminController extends Controller
 {
     public function showListeClients()
     {
+        if (session('role') != 'admin')
+        {
+            return redirect('/');
+        }
         $clientAccounts = Client::all(); // Récupérer tous les clients
         $clients = [];
         $listeEmployees = Employee::all();
@@ -36,6 +40,10 @@ class AdminController extends Controller
 
     public function modifClientAsso(Request $request)
     {
+        if (session('role') != 'admin')
+        {
+            return redirect('/');
+        }
         // Récupérer les entrées du formulaire ou de la requête
         $employee_id = $request->input('employee_id');
         $clients_id = $request->input('client_id');
@@ -60,6 +68,10 @@ class AdminController extends Controller
     public function showListeEmployee()
     {
 
+        if (session('role') != 'admin')
+        {
+            return redirect('/');
+        }
         // Récupérer tous les employés
         $listeEmployees = Employee::where('fk_function_id', '!=', 1)
             ->orWhereNull('fk_function_id')
@@ -72,6 +84,10 @@ class AdminController extends Controller
 
     public function creationEmployee(Request $request)
     {
+        if (session('role') != 'admin')
+        {
+            return redirect('/');
+        }
         // Récupérer les entrées du formulaire ou de la requête
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
@@ -107,6 +123,10 @@ class AdminController extends Controller
 
     public function modifEmployee(Request $request)
     {
+        if (session('role') != 'admin')
+        {
+            return redirect('/');
+        }
         $employee_id = $request->input('employee_id');
         $funtions_id = $request->input('Funtions_id');
 
@@ -121,12 +141,20 @@ class AdminController extends Controller
 
     public function showListePrestations()
     {
+        if (session('role') != 'admin')
+        {
+            return redirect('/');
+        }
         $listePresta= Services::all();
         return view('listePrestations', ['listePresta' => $listePresta]);
     }
 
     public function creationPrestation(Request $request)  
     {
+        if (session('role') != 'admin')
+        {
+            return redirect('/');
+        }
         $titre = $request->input('titre');
         $description = $request->input('description');
         $situation = $request->input('situation');
