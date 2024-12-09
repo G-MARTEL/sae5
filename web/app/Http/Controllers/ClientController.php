@@ -47,6 +47,7 @@ public function showClientDashboard()
 {
     if (session('role') != 'client')
     {
+        Session::flush(); 
         return redirect('/');
     }
 
@@ -90,6 +91,7 @@ public function updateClientInfo(Request $request)
 {
     if (session('role') != 'client')
     {
+        Session::flush(); 
         return redirect('/');
     }
     
@@ -163,16 +165,14 @@ public function downloadContract($contractId)
 
     // Vérifiez que les données existent avant de les utiliser
     if (!$clientData) {
+        Session::flush(); 
         return redirect('/');
     }
 
     // Récupérer le client à partir de l'account_id
     $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
 
-    // Vérifiez que le client a été trouvé
-    if (!$client) {
-        return redirect('/');;
-    }
+    
 
     // Charger le contrat avec ses relations nécessaires
     $contract = Contract::with(['client', 'employee.account', 'service', 'employee.functions'])

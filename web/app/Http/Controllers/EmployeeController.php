@@ -18,6 +18,7 @@ class EmployeeController extends Controller
     public function showListeClients()
     {
         if (session('role') !== 'employee') {
+            Session::flush(); 
             return redirect('/'); // Redirige si le rôle n'est pas 'admin'
         }
         $clientAccounts = Client::all(); // Récupérer tous les clients
@@ -41,6 +42,7 @@ class EmployeeController extends Controller
 
     public function creationContrat(Request $request){
         if (session('role') !== 'employee') {
+            Session::flush(); 
             return redirect('/'); // Redirige si le rôle n'est pas 'employee'
         }
     

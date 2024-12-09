@@ -18,8 +18,16 @@ use App\Http\Controllers\PretImmobilierController;
 
 
 Route::get('/', function () {
-    return view('accueil');
+    if (session('role') == 'admin') {
+        return redirect()->route('admin.accueil');
+    } elseif (session('role') == 'employee') {
+        return redirect()->route('employees.accueil');
+    } elseif (session('role') == 'client') {
+        return redirect()->route('client.accueil');
+    }
+    return view('accueil'); // Si aucun rôle n'est défini, afficher la vue d'accueil par défaut
 });
+
 
 Route::get('acceuil', function () {return view('accueil');});
 

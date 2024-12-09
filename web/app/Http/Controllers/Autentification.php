@@ -45,7 +45,7 @@ class Autentification extends Controller
                 if ($function) {
 
                    $role= $function->function_name;
-                    if ($role=='admin')
+                    if ($role=='Admin')
                     {
                         Session::put('role', 'admin');
                     }

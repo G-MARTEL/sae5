@@ -18,6 +18,7 @@ class AdminController extends Controller
     {
         if (session('role') != 'admin')
         {
+            Session::flush(); 
             return redirect('/');
         }
         $clientAccounts = Client::all(); // Récupérer tous les clients
@@ -42,6 +43,7 @@ class AdminController extends Controller
     {
         if (session('role') != 'admin')
         {
+            Session::flush(); 
             return redirect('/');
         }
         // Récupérer les entrées du formulaire ou de la requête
@@ -70,6 +72,7 @@ class AdminController extends Controller
 
         if (session('role') != 'admin')
         {
+            Session::flush(); 
             return redirect('/');
         }
         // Récupérer tous les employés
@@ -86,6 +89,7 @@ class AdminController extends Controller
     {
         if (session('role') != 'admin')
         {
+            Session::flush(); 
             return redirect('/');
         }
         // Récupérer les entrées du formulaire ou de la requête
@@ -125,6 +129,7 @@ class AdminController extends Controller
     {
         if (session('role') != 'admin')
         {
+            Session::flush(); 
             return redirect('/');
         }
         $employee_id = $request->input('employee_id');
@@ -143,6 +148,7 @@ class AdminController extends Controller
     {
         if (session('role') != 'admin')
         {
+            Session::flush(); 
             return redirect('/');
         }
         $listePresta= Services::all();
