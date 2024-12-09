@@ -9,7 +9,7 @@
 
 
 <body>
-        
+    <a href="{{ route('logout') }}"><button>Déconnexion</button></a>
     <div class="containneur">
         <div class="container-inner">
             <strong>Bienvenue, cher Administrateur!</strong>
