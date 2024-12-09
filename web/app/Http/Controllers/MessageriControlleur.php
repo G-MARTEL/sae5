@@ -13,6 +13,11 @@ class MessageriControlleur extends Controller
 {
     public function showMessagerie(Request $request)
     {
+        if (session('role') != 'client')
+        {
+            return redirect('/');
+        }
+
         $client = session('id');
 
         $messages = Message::where('FK_sender_id', $client)
@@ -55,6 +60,10 @@ class MessageriControlleur extends Controller
 
     public function showConversationEmployee(Request $request)
     {
+        if (session('role') != 'employee') 
+        {
+            return redirect('/');
+        }
         $employee = session('id');
         $employee = Employee::where('FK_account_id', $employee)->first();
         $conversation = Conversation::where('FK_employee_id', $employee->employee_id)->get();
@@ -63,6 +72,10 @@ class MessageriControlleur extends Controller
 
     public function showConversation(Request $request)
     {
+        if (session('role') != 'employee')
+        {
+            return redirect('/');
+        }
         $id = $request->id;
     
         // Récupérer la conversation avec l'ID donné
