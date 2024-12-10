@@ -13,6 +13,11 @@ class MessageriControlleur extends Controller
 {
     public function showMessagerie(Request $request)
     {
+        if (session('role') != 'client')
+        {
+            return redirect('/');
+        }
+
         $client = session('id');
 
         $messages = Message::where('FK_sender_id', $client)
@@ -25,7 +30,7 @@ class MessageriControlleur extends Controller
     {
         $client=session('id');
         $clientdate=Client::where('FK_account_id', $client)->first();
-        $conversation= DB::table('conversations')->where('FK_client_id', $client)->first();
+        $conversation= DB::table('conversations')->where('FK_client_id', $clientdate->client_id)->first();
         if ($conversation==null)
         {
             $conversation= new Conversation();
@@ -55,6 +60,10 @@ class MessageriControlleur extends Controller
 
     public function showConversationEmployee(Request $request)
     {
+        if (session('role') != 'employee') 
+        {
+            return redirect('/');
+        }
         $employee = session('id');
         $employee = Employee::where('FK_account_id', $employee)->first();
         $conversation = Conversation::where('FK_employee_id', $employee->employee_id)->get();
@@ -63,18 +72,21 @@ class MessageriControlleur extends Controller
 
     public function showConversation(Request $request)
     {
-
-        $id=$request->id;
+        if (session('role') != 'employee')
+        {
+            return redirect('/');
+        }
+        $id = $request->id;
+    
+        // Récupérer la conversation avec l'ID donné
         $conversation = Conversation::where('conversation_id', $id)->first();
-        $employee = session('id');
-        $employee = Employee::where('FK_account_id', $employee)->first();
+    
+        $messages= Message::where('FK_conversation_id', $id)->get();
 
-        $messages = Message::where('FK_sender_id', $employee->FK_account_id)
-            ->orWhere('FK_recipient_id', $employee->FK_account_id)
-            ->get();
-
+    
         return view('conversationEmployes', ['messages' => $messages]);
     }
+    
 
     public function sendMessageEmployee(Request $request)
     {
@@ -87,10 +99,12 @@ class MessageriControlleur extends Controller
         $accoutEmployees = Employee::where('employee_id',$employee)->first();
         $conversation= Conversation::where('conversation_id',$id)->first();
 
+        $client= Client::where('client_id',$conversation->FK_client_id)->first();
+
         $Mess = new Message();
 
         $Mess->FK_sender_id=$employee;
-        $Mess->FK_recipient_id=$conversation->FK_client_id;
+        $Mess->FK_recipient_id=$client->FK_account_id;
         $Mess->FK_conversation_id=$conversation->conversation_id;
         $Mess->FK_message_content_id=$Message->message_content_id;
         $Mess->creation_date=date('Y-m-d');

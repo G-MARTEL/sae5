@@ -25,6 +25,7 @@ class EmployeeController extends Controller
     //     foreach ($clientAccounts as $account) {
     //         $donnes = Account::where('account_id', $account->FK_account_id)
     //             ->first(); 
+
             
     //         // Ajouter les comptes du client dans le tableau $clients
     //         $clients[] = [
@@ -74,6 +75,7 @@ class EmployeeController extends Controller
 
     public function creationContrat(Request $request){
         if (session('role') !== 'employee') {
+            Session::flush(); 
             return redirect('/'); // Redirige si le rôle n'est pas 'employee'
         }
     

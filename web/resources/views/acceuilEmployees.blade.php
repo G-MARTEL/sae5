@@ -1,3 +1,5 @@
+
+<a href="{{ route('logout') }}"><button>Déconnexion</button></a>
 <h1>Page accueil employés</h1>
 
 

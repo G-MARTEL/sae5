@@ -18,8 +18,20 @@ use App\Http\Controllers\PretImmobilierController;
 
 
 Route::get('/', function () {
-    return view('accueil');
+    if (session('role') == 'admin') {
+        return redirect()->route('admin.accueil');
+    } elseif (session('role') == 'employee') {
+        return redirect()->route('employees.accueil');
+    } elseif (session('role') == 'client') {
+        return redirect()->route('client.accueil');
+    }
+    return view('accueil'); // Si aucun rôle n'est défini, afficher la vue d'accueil par défaut
+})->name('accueil');
+
+Route::fallback(function () {
+    return redirect()->route('accueil'); // Redirige vers la route 'home' en cas de 404
 });
+
 
 Route::get('acceuil', function () {return view('accueil');});
 
@@ -54,14 +66,6 @@ Route::get('/creationCompte',[CreationCompte::class, 'showFormCreationAccount'])
 Route::post('/creationCompte',[CreationCompte::class, 'CreationAccount']);
 
 Route::prefix('client')->name('client.')->group(function() {
-
-    // Route::get('/accueil', function () {
-    //     if (session('role') !== 'client') {
-    //         return redirect('/'); // Redirige si le rôle n'est pas 'client'
-    //     }
-    //     return view('acceuilCliens');
-
-    // })->name('accueil');
     Route::get('/accueil', [ClientController::class, 'showClientDashboard'])->name('accueil');
     Route::post('/update', [ClientController::class, 'updateClientInfo'])->name('update');
     Route::get('/messagerie', [MessageriControlleur::class, 'showMessagerie'])->name('messagerie');
