@@ -117,3 +117,4 @@ Route::get('/simulateur-pret', [PretImmobilierController::class, 'index'])->name
 Route::post('/simulateur-pret', [PretImmobilierController::class, 'simulate'])->name('simulateur-pret');
 
 
+Route::post('/client/upload-document', [ClientController::class, 'uploadDocument'])->name('client.upload.document');
