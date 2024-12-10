@@ -131,32 +131,6 @@ public function updateClientInfo(Request $request)
 }
 
 
-// public function downloadContract($contractId)
-// {
-//     // Charger le contrat avec ses relations nécessaires
-//     $contract = Contract::with(['client.account', 'employee.account', 'service','employee.functions'])
-//         ->findOrFail($contractId);
-
-//     // Créer les données pour le PDF
-//     $data = [
-//         'numero_contract' => $contract->numero_contract,
-//         'client_name' => $contract->client->account->first_name . ' ' . $contract->client->account->last_name,
-//         'employee_name' => $contract->employee->account->first_name . ' ' . $contract->employee->account->last_name,
-//         'employee_email' => $contract->employee->account->email,
-//         'employee_function' => $contract->employee->functions->function_name,
-//         'employee_phone' => $contract->employee->account->phone,
-//         'service_name' => $contract->service->title,
-//         'creation_date' => $contract->creation_date,
-//         'is_active' => $contract->is_active ? 'Actif' : 'Inactif',
-//     ];
-    
-
-//     // Générer le PDF
-//     $pdf = Pdf::loadView('pdf.contractPdf', $data);
-//     return $pdf->download('Contrat_'.$contract->numero_contract.'.pdf');
-// }
-
-
 public function downloadContract($contractId)
 {
     
@@ -201,4 +175,12 @@ public function downloadContract($contractId)
     $pdf = Pdf::loadView('pdf.contractPdf', $data);
     return $pdf->download('Contrat_'.$contract->numero_contract.'.pdf');
 }
+
+public function employee()
+{
+    return $this->belongsTo(Employee::class, 'FK_employee_id', 'employee_id');
+}
+
+
+
 }
