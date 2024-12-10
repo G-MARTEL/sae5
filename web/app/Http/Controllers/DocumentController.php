@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Functions;
 use App\Models\CreateDocuments;
 use App\Models\ContentDocuments;
+use App\Models\Employee;
+use App\Models\Client;
 
 class DocumentController extends Controller
 {
@@ -38,22 +40,58 @@ class DocumentController extends Controller
         return $pdf->download('document.pdf');
     }
 
+    // public function downloadDocument($id)
+    // {
+    //     $employee= session('id');
+    //     $employee = Employee::where('FK_account_id', $employeeId);
+    //     // Récupérer le contenu du document à partir de son ID
+    //     $content = ContentDocuments::findOrFail($id);
+    //     $createDocument = $content->createDocuments; // Relation avec CreateDocuments
+
+    //     // Passer les données au template PDF
+    //     $pdf = Pdf::loadView('pdf/documentPdf', [
+    //         'title' => $content->title,
+    //         'content' => $content->contenu,
+    //         'type' => $createDocument->facture ? 'Facture' : 'Autre',
+    //         'date' => $content->date,
+    //     ]);
+
+    //     // Télécharger le fichier PDF
+    //     return $pdf->download($content->title . '.pdf');
+    // }
+
+
     public function downloadDocument($id)
-    {
-        // Récupérer le contenu du document à partir de son ID
-        $content = ContentDocuments::findOrFail($id);
-        $createDocument = $content->createDocuments; // Relation avec CreateDocuments
+{
+    $employeeId = session('id'); // ID de l'employé connecté
+    $employee = Employee::where('FK_account_id', $employeeId)
+        ->with('account', 'functions')
+        ->firstOrFail();
 
-        // Passer les données au template PDF
-        $pdf = Pdf::loadView('pdf/documentPdf', [
-            'title' => $content->title,
-            'content' => $content->contenu,
-            'type' => $createDocument->facture ? 'Facture' : 'Autre',
-            'date' => $content->date,
-        ]);
+    // Récupérer le contenu du document à partir de son ID
+    $content = ContentDocuments::with('createDocuments.client.account')->findOrFail($id);
+    $createDocument = $content->createDocuments;
 
-        // Télécharger le fichier PDF
-        return $pdf->download($content->title . '.pdf');
-    }
+    // Récupérer le client associé
+    $client = $createDocument->client;
+
+    // Passer les données au template PDF
+    $pdf = Pdf::loadView('pdf/documentPdf', [
+        'title' => $content->title,
+        'content' => $content->contenu,
+        'type' => $createDocument->facture ? 'Facture' : 'Autre',
+        'date' => $content->date,
+        'client_name' => $client->account->first_name . ' ' . $client->account->last_name,
+        'client_email' => $client->account->email,
+        'client_phone' => $client->account->phone,
+        'employee_name' => $employee->account->first_name . ' ' . $employee->account->last_name,
+        'employee_email' => $employee->account->email,
+        'employee_phone' => $employee->account->phone,
+        'employee_function' => $employee->functions->function_name ?? 'Non spécifiée',
+    ]);
+
+    // Télécharger le fichier PDF
+    return $pdf->download($content->title . '.pdf');
+}
 
 }
