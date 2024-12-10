@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : jeu. 05 déc. 2024 à 15:21
+-- Généré le : mar. 10 déc. 2024 à 09:20
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -100,7 +100,7 @@ CREATE TABLE `contentdocuments` (
 --
 
 CREATE TABLE `contracts` (
-  `contract_id` int(11) NOT NULL,
+  `contract_id` bigint(20) NOT NULL,
   `numero_contract` int(11) NOT NULL,
   `FK_service_id` int(11) NOT NULL,
   `FK_client_id` int(11) NOT NULL,
@@ -142,6 +142,7 @@ CREATE TABLE `createdocuments` (
 
 CREATE TABLE `documents` (
   `document_id` int(11) NOT NULL,
+  `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `FK_client_id` int(11) NOT NULL,
   `document` blob NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -558,7 +559,7 @@ ALTER TABLE `contentdocuments`
 -- AUTO_INCREMENT pour la table `contracts`
 --
 ALTER TABLE `contracts`
-  MODIFY `contract_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `contract_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `conversations`
