@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->increments('contract_id')->primary();
-            $table->integer('numero_contract');
+            $table->string('numero_contract', 25)->collation('utf8_unicode_ci');
             $table->unsignedInteger('FK_service_id');
             $table->unsignedInteger('FK_employee_id');
             $table->boolean('is_active');

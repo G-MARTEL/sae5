@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100%; /* Assure que le body prend toute la hauteur de la page */
+    overflow: hidden; /* Optionnel pour désactiver tout défilement inattendu */
+}
+
+html {
+    height: 100%; /* S'assure que le body s'étend aussi au-delà de la page */
+}
+
+.dashboard {
+    display: flex;
+    flex: 1;
+    height: 100vh; /* S'assure que la section dashboard prend toute la hauteur */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #248680;
+    color: white;
+    padding: 20px;
+    height: 100vh; /* Assure que la barre latérale prend toute la hauteur visible */
+    box-sizing: border-box;
+    overflow-y: auto; /* Permet de défiler si le contenu dépasse */
+}
+
+.sidebar .back-to-home-btn {
+    background-color: #248680;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 15px;
+    display: block;
+    border: 2px solid white; /* Ajout de la bordure blanche */
+}
+
+.sidebar .back-to-home-btn:hover {
+    background-color: #1d6c61;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-top: 20px; /* Espacement après le bouton */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #1d6c61;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* Permet de faire défiler le contenu principal si nécessaire */
+    background-color: #f5f5f5; /* Optionnel : ajouter une couleur de fond */
+}
+
+#charts-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+    gap: 20px; /* Espace entre les graphiques */
+    padding: 20px;
+}
+
+.chart-container {
+    background-color: #f9f9f9; /* Optionnel : une couleur de fond */
+    padding: 10px; /* Optionnel : ajout de marges internes */
+    border-radius: 8px; /* Optionnel : coins arrondis */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optionnel : effet d'ombre */
+}
+
+
+.back-to-home-btn {
+    border-radius: 5px;
+    border-color: white;
+}
+
+.active {
+    font-weight: bold;
+}

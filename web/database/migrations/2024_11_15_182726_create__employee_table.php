@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('employee_id')->primary();
-            $table->unsignedInteger('FK_function_id');
+            $table->unsignedInteger('FK_function_id')->nullable();
             $table->unsignedInteger('FK_account_id');
         });
 
