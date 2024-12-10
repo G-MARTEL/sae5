@@ -71,9 +71,6 @@ public function showClientDashboard()
     // Récupérer les contrats associés au client
     $contrats = Contract::where('FK_client_id', $client->client_id)->get(); 
 
-    // Déboguer pour vérifier les données
-    //dd($client, $contrats);
-
     // Rechercher l'employé associé au client
     $associatedEmployee = DB::table('employees')
         ->join('accounts', 'employees.FK_account_id', '=', 'accounts.account_id')

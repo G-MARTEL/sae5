@@ -100,42 +100,6 @@
     <button type="submit">Créer le document</button>
 </form>
 
-{{-- <h2>Documents créés</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Titre</th>
-            <th>Contenu</th>
-            <th>Type</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if ($client->createDocuments !== null && $client->createDocuments->isNotEmpty())
-            @foreach ($client->createDocuments as $createDocument)
-                @if ($createDocument->contentDocuments !== null && $createDocument->contentDocuments->isNotEmpty())
-                    @foreach ($createDocument->contentDocuments as $content)
-                        <tr>
-                            <td>{{ $content->title }}</td>
-                            <td>{{ $content->contenu }}</td>
-                            <td>{{ $createDocument->facture ? 'Facture' : 'Autre' }}</td>
-                            <td>{{ $content->date }}</td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="4">Aucun contenu de document disponible.</td>
-                    </tr>
-                @endif
-            @endforeach
-        @else
-            <tr>
-                <td colspan="4">Aucun document n'a été créé pour ce client.</td>
-            </tr>
-        @endif
-    </tbody>
-</table> --}}
-
 <h2>Documents créés</h2>
 <table>
     <thead>
@@ -144,25 +108,29 @@
             <th>Contenu</th>
             <th>Type</th>
             <th>Date</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @if ($client->createDocuments !== null && $client->createDocuments->isNotEmpty())
             @foreach ($client->createDocuments as $createDocument)
-                
-                    @foreach ($createDocument->contentDocuments as $content)
-                        <tr>
-                            <td>{{ $content->title }}</td>
-                            <td>{{ $content->contenu }}</td>
-                            <td>{{ $createDocument->facture ? 'Facture' : 'Autre' }}</td>
-                            <td>{{ $content->date }}</td>
-                        </tr>
-                    @endforeach
-               
+                @foreach ($createDocument->contentDocuments as $content)
+                    <tr>
+                        <td>{{ $content->title }}</td>
+                        <td>{{ $content->contenu }}</td>
+                        <td>{{ $createDocument->facture ? 'Facture' : 'Autre' }}</td>
+                        <td>{{ $content->date }}</td>
+                        <td>
+                            <form action="{{ route('documents.downloadDocument', $content->contentdocument_id) }}" method="GET">
+                                <button type="submit" class="btn btn-primary">Télécharger</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             @endforeach
         @else
             <tr>
-                <td colspan="4">Aucun document n'a été créé pour ce client.</td>
+                <td colspan="5">Aucun document n'a été créé pour ce client.</td>
             </tr>
         @endif
     </tbody>

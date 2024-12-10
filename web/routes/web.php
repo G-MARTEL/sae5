@@ -122,4 +122,5 @@ Route::post('/client/upload-document', [ClientController::class, 'uploadDocument
 Route::get('/documents/download/{id}', [EmployeeController::class, 'download'])->name('download.document');
 Route::post('/documents/store', [EmployeeController::class, 'store'])->name('documents.store');
 
+Route::get('/documents/downloadDocument/{id}', [DocumentController::class, 'downloadDocument'])->name('documents.downloadDocument');
 

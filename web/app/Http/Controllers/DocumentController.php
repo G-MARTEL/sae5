@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB; // Importer DB pour utiliser le Query Builder
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\Functions;
+use App\Models\CreateDocuments;
+use App\Models\ContentDocuments;
 
 class DocumentController extends Controller
 {
@@ -34,6 +36,24 @@ class DocumentController extends Controller
 
         // Télécharger directement le PDF
         return $pdf->download('document.pdf');
+    }
+
+    public function downloadDocument($id)
+    {
+        // Récupérer le contenu du document à partir de son ID
+        $content = ContentDocuments::findOrFail($id);
+        $createDocument = $content->createDocuments; // Relation avec CreateDocuments
+
+        // Passer les données au template PDF
+        $pdf = Pdf::loadView('pdf/documentPdf', [
+            'title' => $content->title,
+            'content' => $content->contenu,
+            'type' => $createDocument->facture ? 'Facture' : 'Autre',
+            'date' => $content->date,
+        ]);
+
+        // Télécharger le fichier PDF
+        return $pdf->download($content->title . '.pdf');
     }
 
 }
