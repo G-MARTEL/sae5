@@ -1,30 +1,126 @@
-<div class="container">
-    <h1>Connexion</h1>
-    <form action="connexion" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit">Se connecter</button>
-    </form>
-    <a href="creationCompte">Créer un Compte</a>
-</div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-group label {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #2c7d7b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-sizing: border-box;
+        }
+        button[type="submit"]:hover {
+            background-color: rgb(30.7218934911, 87.2781065089, 85.8816568047);
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #2c7d7b;
+            text-decoration: none;
+            font-size: 14px;
+        
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .error-message, .alert-danger {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .error-message {
+            background-color: #fdecea;
+            color: #d32f2f;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Connexion</h1>
+        <form action="connexion" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Se connecter</button>
+        </form>
+        <a href="creationCompte">Créer un Compte</a>
 
-@if ($errors->any())
-    <div class="center-child error-message">
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-    </div>
-@endif
+        @if ($errors->any())
+            <div class="error-message">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
 
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
     </div>
-@endif
+</body>
+</html>
