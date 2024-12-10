@@ -19,8 +19,8 @@
             border-bottom: 1px solid #ddd;
         }
         .header img {
-            width: 100px; /* Ajustez la largeur du logo selon vos besoins */
-            height: auto; /* Conserve le ratio de l'image */
+            width: 100px; 
+            height: auto; 
         }
         h1, h2 {
             text-align: center;
@@ -67,7 +67,7 @@
         </div>
         <div class="company-contact">
             <p>AvyCompta</p>
-            <p>70 avenue Paul Claudel, 80000 Aamiens</p>
+            <p>70 avenue Paul Claudel, 80000 Amiens</p>
             <p>0612345678</p>
             <p>contact@avycompta.com</p>
         </div>
