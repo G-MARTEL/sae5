@@ -28,5 +28,10 @@ class CreateDocuments extends Model
         return $this->belongsTo(Client::class, 'FK_client_id');
     }
 
+    public function contentDocuments()
+    {
+        return $this->hasMany(ContentDocuments::class, 'FK_createdocument_id');
+    }
+
 
 }

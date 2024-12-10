@@ -17,9 +17,13 @@ class ContentDocuments extends Model
     
     public $timestamps = false;
 
-    public function createDocument()
+
+    public function createDocuments()
     {
-        return $this->belongsTo(CreateDocument::class, 'FK_createdocument_id');
+        return $this->belongsTo(CreateDocuments::class, 'FK_createdocument_id');
     }
+
+
+
 
 }
