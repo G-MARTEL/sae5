@@ -11,7 +11,30 @@ class SupervisionController extends Controller
     // Afficher la page de supervision
     public function showSupervision()
     {
-        return view('supervision');
+        // Récupérer la liste des machines
+        $machines = DB::table('machines')->get();
+        
+        // Récupérer le nombre de machines
+        $numberOfMachines = $machines->count();
+        
+        // Récupérer les x dernières entrées depuis ressources_hist
+        $ressources = DB::table('ressources_hist')
+            ->orderBy('save_date', 'desc')
+            ->take($numberOfMachines)
+            ->get();
+
+        // Ajouter les noms des machines dans les données récupérées
+        $ressourcesWithMachineNames = $ressources->map(function ($ressource) use ($machines) {
+            $machine = $machines->firstWhere('machine_id', $ressource->FK_machine_id);
+            $ressource->machine_name = $machine ? $machine->name : 'Machine inconnue';
+            return $ressource;
+        });
+
+        // Retourner les données à la vue supervision
+        return view('supervision', [
+            'machines' => $machines,
+            'ressources' => $ressourcesWithMachineNames,
+        ]);
     }
 
     // Afficher le graphique pour une machine spécifique
@@ -28,7 +51,7 @@ class SupervisionController extends Controller
             return view('graphique', ['machines' => $machines]); 
         }
 
-        // Récupérer les données de la machine sélectionnée
+        // Récupérer toutes les données de la machine sélectionnée
         $ressources = DB::table('ressources_hist')
             ->where('FK_machine_id', $currentMachineId)
             ->orderBy('save_date', 'asc')
@@ -93,35 +116,16 @@ class SupervisionController extends Controller
     // Récupérer les dispositifs et gérer les notifications
     public function getDevices()
     {
-        $ressources = DB::table('ressources')
-            ->join('machines', 'ressources.FK_machine_id', '=', 'machines.machine_id')
-            ->select('ressources.*', 'machines.name as machine_name', 'machines.max_storage')
+
+        $machines = DB::table('machines')->get();
+        $numberOfMachines = $machines->count();
+
+        $ressources = DB::table('ressources_hist')
+            ->join('machines', 'ressources_hist.FK_machine_id', '=', 'machines.machine_id')
+            ->select('ressources_hist.*', 'machines.name as machine_name', 'machines.max_storage')
+            ->orderBy('save_date', 'asc')
+            ->take($numberOfMachines)
             ->get();
-
-        $maxRows = 900000;
-
-        foreach ($ressources as $ressource) {
-            $totalRows = DB::table('ressources_hist')->count();
-            if ($totalRows >= $maxRows) {
-                $rowsToDelete = $totalRows - $maxRows + 1;
-                DB::table('ressources_hist')
-                    ->orderBy('save_date', 'asc')
-                    ->limit($rowsToDelete)
-                    ->delete();
-            }
-
-            DB::table('ressources_hist')->insert([
-                'FK_resource_id' => $ressource->ressource_id,
-                'FK_machine_id' => $ressource->FK_machine_id,
-                'ping' => $ressource->ping,
-                'storage' => $ressource->storage,
-                'ram' => $ressource->ram,
-                'cpu' => $ressource->cpu,
-                'save_date' => now()
-            ]);
-
-            $this->checkAndCreateNotification($ressource);
-        }
 
         return response()->json($ressources);
     }
