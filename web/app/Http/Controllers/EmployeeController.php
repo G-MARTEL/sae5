@@ -15,30 +15,63 @@ use Illuminate\Support\Facades\Hash;
 class EmployeeController extends Controller
 {
 
-    public function showListeClients()
-    {
-        if (session('role') !== 'employee') {
-            Session::flush(); 
-            return redirect('/'); // Redirige si le rôle n'est pas 'admin'
-        }
-        $clientAccounts = Client::all(); // Récupérer tous les clients
-        $clients = [];
-        foreach ($clientAccounts as $account) {
-            $donnes = Account::where('account_id', $account->FK_account_id)
-                ->first(); 
+    // public function showListeClients()
+    // {
+    //     if (session('role') !== 'employee') {
+    //         return redirect('/'); // Redirige si le rôle n'est pas 'admin'
+    //     }
+    //     $clientAccounts = Client::all(); // Récupérer tous les clients
+    //     $clients = [];
+    //     foreach ($clientAccounts as $account) {
+    //         $donnes = Account::where('account_id', $account->FK_account_id)
+    //             ->first(); 
+
             
-            // Ajouter les comptes du client dans le tableau $clients
-            $clients[] = [
-                'clientAccounts' => $account,
-                'donneeClient' => $donnes
-            ];
-        }
+    //         // Ajouter les comptes du client dans le tableau $clients
+    //         $clients[] = [
+    //             'clientAccounts' => $account,
+    //             'donneeClient' => $donnes
+    //         ];
+    //     }
 
-        $services = Services::all(); 
+    //     $services = Services::all(); 
 
-        // Passer les clients à la vue
-        return view('creerContrats', ['clients' => $clients, 'services' => $services]);
+    //     // Passer les clients à la vue
+    //     return view('creerContrats', ['clients' => $clients, 'services' => $services]);
+    // }
+
+
+
+    public function listeClientAttitres()
+    {
+        $employeeId = session('employee_id');
+
+        // Récupérer les clients associés à cet employé
+        $clients = Client::where('FK_employee_id', $employeeId)
+            ->with('account') // Charge la relation Account
+            ->get();
+    
+        // Passer les données à la vue
+        return view('listeClientAttitres', [
+            'clients' => $clients,
+        ]);
     }
+
+    public function showClient($id)
+    {
+        // Récupérer le client avec son compte
+        $client = Client::with(['account', 'contracts'])->findOrFail($id);
+        $services = Services::all();
+
+        // Passer les données à la vue
+        return view('clientDetails', [
+            'client' => $client,
+            'services' => $services,
+        ]);
+    }
+
+
+
 
     public function creationContrat(Request $request){
         if (session('role') !== 'employee') {

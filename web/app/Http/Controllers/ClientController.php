@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Contract;
 use App\Models\Employee;
 use App\Models\Functions;
+use App\Models\Documents;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -131,32 +133,6 @@ public function updateClientInfo(Request $request)
 }
 
 
-// public function downloadContract($contractId)
-// {
-//     // Charger le contrat avec ses relations nécessaires
-//     $contract = Contract::with(['client.account', 'employee.account', 'service','employee.functions'])
-//         ->findOrFail($contractId);
-
-//     // Créer les données pour le PDF
-//     $data = [
-//         'numero_contract' => $contract->numero_contract,
-//         'client_name' => $contract->client->account->first_name . ' ' . $contract->client->account->last_name,
-//         'employee_name' => $contract->employee->account->first_name . ' ' . $contract->employee->account->last_name,
-//         'employee_email' => $contract->employee->account->email,
-//         'employee_function' => $contract->employee->functions->function_name,
-//         'employee_phone' => $contract->employee->account->phone,
-//         'service_name' => $contract->service->title,
-//         'creation_date' => $contract->creation_date,
-//         'is_active' => $contract->is_active ? 'Actif' : 'Inactif',
-//     ];
-    
-
-//     // Générer le PDF
-//     $pdf = Pdf::loadView('pdf.contractPdf', $data);
-//     return $pdf->download('Contrat_'.$contract->numero_contract.'.pdf');
-// }
-
-
 public function downloadContract($contractId)
 {
     
@@ -201,4 +177,47 @@ public function downloadContract($contractId)
     $pdf = Pdf::loadView('pdf.contractPdf', $data);
     return $pdf->download('Contrat_'.$contract->numero_contract.'.pdf');
 }
+
+
+public function uploadDocument(Request $request)
+{
+    // Validation des données
+    $validator = Validator::make($request->all(), [
+        'document' => 'required|file|mimes:pdf|max:2048', // Limite à 2MB et uniquement les PDF
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    // Récupérer les données du client depuis la session
+    $clientData = session('clientData');
+    $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
+
+    if (!$client) {
+        return redirect()->route('login')->with('error', 'Client non trouvé !');
+    }
+
+    // Lire le contenu du fichier
+    $file = $request->file('document');
+    $fileContent = file_get_contents($file);
+
+    // Sauvegarder dans la base de données
+    Documents::create([
+        'FK_client_id' => $client->client_id,
+        'document' => $fileContent,
+        'date' => now(),
+    ]);
+
+    return redirect()->back()->with('success', 'Document déposé avec succès !');
+}
+
+public function employee()
+{
+    return $this->belongsTo(Employee::class, 'FK_employee_id', 'employee_id');
+
+}
+
+
+
 }

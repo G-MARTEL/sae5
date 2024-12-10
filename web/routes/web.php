@@ -84,8 +84,10 @@ Route::prefix('employees')->name('employees.')->group(function() {
     Route::get('/conversation', [MessageriControlleur::class, 'showConversationEmployee']);
     Route::get('/conversation/{id}', [MessageriControlleur::class, 'showConversation']);
     Route::post('sendMessage', [MessageriControlleur::class, 'sendMessageEmployee']);
-    Route::get('creerContrats', [EmployeeController::class, 'showListeClients']);
-    Route::post('/creationContrat', [EmployeeController::class, 'creationContrat']);
+    // Route::get('creerContrats', [EmployeeController::class, 'showListeClients']);
+    Route::post('/creationContrat', [EmployeeController::class, 'creationContrat'])->name('creationContrat');
+    Route::get('listeClientAttitres', [EmployeeController::class, 'listeClientAttitres'])->name('listeClientAttitres');
+    Route::get('clients/{id}', [EmployeeController::class, 'showClient'])->name('clients.show');
 
 });
 
@@ -115,3 +117,4 @@ Route::get('/simulateur-pret', [PretImmobilierController::class, 'index'])->name
 Route::post('/simulateur-pret', [PretImmobilierController::class, 'simulate'])->name('simulateur-pret');
 
 
+Route::post('/client/upload-document', [ClientController::class, 'uploadDocument'])->name('client.upload.document');
