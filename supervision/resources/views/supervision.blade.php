@@ -6,9 +6,7 @@
     <title>Supervision</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <style>
-        th {
-            cursor: pointer;
-        }
+        th { cursor: pointer; }
         th::after {
             content: '\25B2\25BC';
             font-size: 0.8em;
@@ -56,7 +54,7 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
-            margin-left: auto; /* Aligne le bouton à droite */
+            margin-left: auto;
         }
         .stats-btn:hover {
             background-color: #ffde59;
@@ -90,173 +88,165 @@
     </table>
     <div id="notificationContainer" class="notification-container"></div>
     <audio id="notificationSound" src="{{ asset('sounds/notification.mp3') }}"></audio>
+
     <script>
-        let allDevices = [];
-        let filteredDevices = [];
-        let currentSort = { column: null, direction: 'asc' };
+    let allDevices = [];
+    let filteredDevices = [];
+    let currentSort = { column: null, direction: 'asc' };
+    let previousDevicesState = []; // Variable to track previous device states for comparison
 
-        function showNotification(message, type) {
-            const notificationContainer = document.getElementById('notificationContainer');
-            const notification = document.createElement('div');
-            notification.classList.add('notification', type);
-            notification.textContent = message;
-            notificationContainer.appendChild(notification);
-            
+    function showNotification(message, type) {
+        const notificationContainer = document.getElementById('notificationContainer');
+        const notification = document.createElement('div');
+        notification.classList.add('notification', type);
+        notification.textContent = message;
+        notificationContainer.appendChild(notification);
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        document.getElementById('notificationSound').play();
+        setTimeout(() => {
+            notification.classList.remove('show');
             setTimeout(() => {
-                notification.classList.add('show');
-            }, 10);
+                notificationContainer.removeChild(notification);
+            }, 300);
+        }, 30000);
+    }
 
-            document.getElementById('notificationSound').play();
+    function checkDeviceNotifications(devices) {
+        devices.forEach(device => {
+            const storagePercentage = (device.storage / device.max_storage) * 100;
+            if (!device.ping) {
+                showNotification(`${device.machine_name}: Ping échoué`, 'critical');
+            }
+            if (storagePercentage >= 90) {
+                showNotification(`${device.machine_name}: Stockage critique (${storagePercentage.toFixed(1)}%)`, 'critical');
+            } else if (storagePercentage >= 85) {
+                showNotification(`${device.machine_name}: Avertissement stockage (${storagePercentage.toFixed(1)}%)`, 'warning');
+            }
+            if (device.ram >= 90) {
+                showNotification(`${device.machine_name}: Utilisation RAM critique (${device.ram}%)`, 'critical');
+            } else if (device.ram >= 80) {
+                showNotification(`${device.machine_name}: Avertissement utilisation RAM (${device.ram}%)`, 'warning');
+            }
+            if (device.cpu >= 90) {
+                showNotification(`${device.machine_name}: Utilisation CPU critique (${device.cpu}%)`, 'critical');
+            } else if (device.cpu >= 80) {
+                showNotification(`${device.machine_name}: Avertissement utilisation CPU (${device.cpu}%)`, 'warning');
+            }
+        });
+    }
 
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    notificationContainer.removeChild(notification);
-                }, 300);
-            }, 30000);
-        }
-
-        function checkDeviceNotifications(devices) {
-            devices.forEach(device => {
-                const storagePercentage = (device.storage / device.max_storage) * 100;
-                if (!device.ping) {
-                    showNotification(`${device.machine_name}: Ping échoué`, 'critical');
-                }
-                if (storagePercentage >= 90) {
-                    showNotification(`${device.machine_name}: Stockage critique (${storagePercentage.toFixed(1)}%)`, 'critical');
-                } else if (storagePercentage >= 85) {
-                    showNotification(`${device.machine_name}: Avertissement stockage (${storagePercentage.toFixed(1)}%)`, 'warning');
-                }
-                if (device.ram >= 90) {
-                    showNotification(`${device.machine_name}: Utilisation RAM critique (${device.ram}%)`, 'critical');
-                } else if (device.ram >= 80) {
-                    showNotification(`${device.machine_name}: Avertissement utilisation RAM (${device.ram}%)`, 'warning');
-                }
-                if (device.cpu >= 90) {
-                    showNotification(`${device.machine_name}: Utilisation CPU critique (${device.cpu}%)`, 'critical');
-                } else if (device.cpu >= 80) {
-                    showNotification(`${device.machine_name}: Avertissement utilisation CPU (${device.cpu}%)`, 'warning');
-                }
-            });
-        }
-
-        function fetchDevices() {
-            fetch('{{ route("getDevices") }}')
-                .then(response => response.json())
-                .then(data => {
-                    allDevices = data;
-                    checkDeviceNotifications(data);
+    function fetchDevices() {
+        fetch('{{ route("getDevices") }}')
+            .then(response => response.json())
+            .then(data => {
+                const sortedDevices = data.sort((a, b) => a.machine_name.localeCompare(b.machine_name)); // Reverse order here
+                if (JSON.stringify(sortedDevices) !== JSON.stringify(previousDevicesState)) {
+                    allDevices = sortedDevices;
+                    checkDeviceNotifications(allDevices);
                     filterAndSortDevices();
-                })
-                .catch(error => console.error("Erreur lors de la récupération des données :", error));
-        }
-
-        function updateTable(devices) {
-            const tableBody = document.querySelector("#deviceTableBody");
-            tableBody.innerHTML = "";
-            devices.forEach(device => {
-                const storagePercentage = (device.storage / device.max_storage) * 100;
-                const pingClass = device.ping ? "status-ok" : "status-error";
-                const storageClass = storagePercentage >= 90 ? "status-error" : (storagePercentage >= 85 ? "status-warning" : "");
-                const ramClass = device.ram >= 90 ? "status-error" : (device.ram >= 80 ? "status-warning" : "");
-                const cpuClass = device.cpu >= 90 ? "status-error" : (device.cpu >= 80 ? "status-warning" : "");
-                
-                tableBody.innerHTML += `
-                    <tr>
-                        <td class="titleTableau">${device.machine_name}</td>
-                        <td class="${pingClass}">${device.ping ? "oui" : "non"}</td>
-                        <td class="${storageClass}">${device.storage}/${device.max_storage}Go</td>
-                        <td class="${ramClass}">${device.ram}%</td>
-                        <td class="${cpuClass}">${device.cpu}%</td>
-                    </tr>
-                `;
-            });
-        }
-
-        function filterAndSortDevices() {
-            const query = document.getElementById("searchInput").value.toLowerCase();
-            const activeStatus = document.querySelector(".status-btn.active").id;
-            
-            let filteredByName = allDevices.filter(device => device.machine_name.toLowerCase().includes(query));
-            
-            if (activeStatus === "globalBtn") {
-                filteredDevices = filteredByName;
-            } else if (activeStatus === "criticalBtn") {
-                filteredDevices = filteredByName.filter(device => {
-                    const storagePercentage = (device.storage / device.max_storage) * 100;
-                    return !device.ping || storagePercentage >= 80 || device.ram >= 90 || device.cpu >= 90;
-                });
-            }
-            
-            if (currentSort.column) {
-                filteredDevices.sort((a, b) => {
-                    let valueA, valueB;
-                    switch (currentSort.column) {
-                        case 'machine_name':
-                            valueA = a.machine_name.toLowerCase();
-                            valueB = b.machine_name.toLowerCase();
-                            break;
-                        case 'ping':
-                            valueA = a.ping ? 1 : 0;
-                            valueB = b.ping ? 1 : 0;
-                            break;
-                        case 'storage':
-                            valueA = a.storage / a.max_storage;
-                            valueB = b.storage / b.max_storage;
-                            break;
-                        case 'ram':
-                            valueA = a.ram;
-                            valueB = b.ram;
-                            break;
-                        case 'cpu':
-                            valueA = a.cpu;
-                            valueB = b.cpu;
-                            break;
-                    }
-                    if (valueA < valueB) return currentSort.direction === 'asc' ? -1 : 1;
-                    if (valueA > valueB) return currentSort.direction === 'asc' ? 1 : -1;
-                    return 0;
-                });
-            }
-            
-            updateTable(filteredDevices);
-        }
-
-        document.getElementById("searchInput").addEventListener("input", filterAndSortDevices);
-
-        document.getElementById("globalBtn").addEventListener("click", () => {
-            document.querySelector(".status-btn.active").classList.remove("active");
-            document.getElementById("globalBtn").classList.add("active");
-            filterAndSortDevices();
-        });
-
-        document.getElementById("criticalBtn").addEventListener("click", () => {
-            document.querySelector(".status-btn.active").classList.remove("active");
-            document.getElementById("criticalBtn").classList.add("active");
-            filterAndSortDevices();
-        });
-
-        document.querySelectorAll("th").forEach(header => {
-            header.addEventListener("click", () => {
-                const column = header.dataset.sort;
-                if (currentSort.column === column) {
-                    currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-                } else {
-                    currentSort.column = column;
-                    currentSort.direction = 'asc';
+                    previousDevicesState = sortedDevices; // Update previous state
                 }
-                document.querySelectorAll("th").forEach(th => th.classList.remove("sort-asc", "sort-desc"));
-                header.classList.add(currentSort.direction === 'asc' ? "sort-asc" : "sort-desc");
-                filterAndSortDevices();
+            })
+            .catch(error => console.error("Erreur lors de la récupération des données :", error));
+    }
+
+    function updateTable(devices) {
+        const tableBody = document.querySelector("#deviceTableBody");
+        tableBody.innerHTML = "";
+        devices.forEach(device => {
+            const storagePercentage = (device.storage / device.max_storage) * 100;
+            const pingClass = device.ping ? "status-ok" : "status-error";
+            const storageClass = storagePercentage >= 90 ? "status-error" : (storagePercentage >= 85 ? "status-warning" : "");
+            const ramClass = device.ram >= 90 ? "status-error" : (device.ram >= 80 ? "status-warning" : "");
+            const cpuClass = device.cpu >= 90 ? "status-error" : (device.cpu >= 80 ? "status-warning" : "");
+
+            tableBody.innerHTML += 
+                `<tr>
+                    <td class="titleTableau">${device.machine_name}</td>
+                    <td class="${pingClass}">${device.ping ? "oui" : "non"}</td>
+                    <td class="${storageClass}">${device.storage}/${device.max_storage}Go</td>
+                    <td class="${ramClass}">${device.ram}%</td>
+                    <td class="${cpuClass}">${device.cpu}%</td>
+                </tr>`;
+        });
+    }
+
+    function filterAndSortDevices() {
+        const query = document.getElementById("searchInput").value.toLowerCase();
+        const activeStatus = document.querySelector(".status-btn.active").id;
+
+        let filteredByName = allDevices.filter(device => device.machine_name.toLowerCase().includes(query));
+
+        if (activeStatus === "globalBtn") {
+            filteredDevices = filteredByName;
+        } else if (activeStatus === "criticalBtn") {
+            filteredDevices = filteredByName.filter(device => {
+                const storagePercentage = (device.storage / device.max_storage) * 100;
+                return !device.ping || storagePercentage >= 85 || device.ram >= 80 || device.cpu >= 80;
             });
-        });
+        }
 
-        // Bouton statistique - Redirection
-        document.getElementById("statsBtn").addEventListener("click", () => {
-            window.location.href = "http://localhost:9090/graphique";
-        });
+        if (currentSort.column) {
+            filteredDevices.sort((a, b) => {
+                let valueA, valueB;
+                switch (currentSort.column) {
+                    case 'machine_name':
+                        valueA = a.machine_name.toLowerCase();
+                        valueB = b.machine_name.toLowerCase();
+                        break;
+                    case 'ping':
+                        valueA = a.ping ? 1 : 0;
+                        valueB = b.ping ? 1 : 0;
+                        break;
+                    case 'storage':
+                        valueA = a.storage / a.max_storage;
+                        valueB = b.storage / b.max_storage;
+                        break;
+                    case 'ram':
+                        valueA = a.ram;
+                        valueB = b.ram;
+                        break;
+                    case 'cpu':
+                        valueA = a.cpu;
+                        valueB = b.cpu;
+                        break;
+                }
+                if (valueA < valueB) return currentSort.direction === 'asc' ? -1 : 1;
+                if (valueA > valueB) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
 
-        fetchDevices();
+        updateTable(filteredDevices);
+    }
+
+    document.getElementById("searchInput").addEventListener("input", filterAndSortDevices);
+
+    document.querySelectorAll(".status-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            document.querySelectorAll(".status-btn").forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+            filterAndSortDevices();
+        });
+    });
+
+    document.querySelectorAll("th").forEach(th => {
+        th.addEventListener("click", () => {
+            const column = th.getAttribute("data-sort");
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+            filterAndSortDevices();
+        });
+    });
+
+    setInterval(fetchDevices, 5000);
+    fetchDevices();
     </script>
 </body>
 </html>
