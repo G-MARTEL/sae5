@@ -43,8 +43,9 @@ class Autentification extends Controller
                 // Récupération de la fonction de l'employé
                 $function = Functions::where('function_id', $employee->FK_function_id)->first();
                 if ($function) {
-                    $role= $function->function_name;
-                    if ($role=='admin')
+
+                   $role= $function->function_name;
+                    if ($role=='Admin')
                     {
                         Session::put('role', 'admin');
                     }
@@ -60,6 +61,7 @@ class Autentification extends Controller
                 Session::put('id', $employee->FK_account_id);
                 
                 return redirect()->route('employee.accueil');
+
             }
 
             // Vérification s'il s'agit d'un client
