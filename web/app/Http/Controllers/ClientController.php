@@ -210,6 +210,7 @@ public function uploadDocument(Request $request)
     ]);
 
     return redirect()->back()->with('success', 'Document déposé avec succès !');
+}
 
 public function employee()
 {
