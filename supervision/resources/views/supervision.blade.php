@@ -220,21 +220,20 @@
         }
 
         updateTable(filteredDevices);
+
+        // Afficher la flèche du tri sur la colonne active
+        document.querySelectorAll("th").forEach(th => {
+            th.classList.remove("sort-asc", "sort-desc");
+            if (th.dataset.sort === currentSort.column) {
+                th.classList.add(currentSort.direction === 'asc' ? "sort-asc" : "sort-desc");
+            }
+        });
     }
 
-    document.getElementById("searchInput").addEventListener("input", filterAndSortDevices);
-
-    document.querySelectorAll(".status-btn").forEach(button => {
-        button.addEventListener("click", () => {
-            document.querySelectorAll(".status-btn").forEach(btn => btn.classList.remove("active"));
-            button.classList.add("active");
-            filterAndSortDevices();
-        });
-    });
-
+    // Gestion du double-clic pour réinitialiser le tri
     document.querySelectorAll("th").forEach(th => {
         th.addEventListener("click", () => {
-            const column = th.getAttribute("data-sort");
+            const column = th.dataset.sort;
             if (currentSort.column === column) {
                 currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
             } else {
@@ -243,10 +242,35 @@
             }
             filterAndSortDevices();
         });
+
+        th.addEventListener("dblclick", () => {
+            currentSort.column = null;
+            currentSort.direction = 'asc';
+            filterAndSortDevices();
+        });
     });
 
+    // Gestion des boutons de statut
+    document.getElementById("globalBtn").addEventListener("click", () => {
+        document.querySelector(".status-btn.active").classList.remove("active");
+        document.getElementById("globalBtn").classList.add("active");
+        filterAndSortDevices();
+    });
+
+    document.getElementById("criticalBtn").addEventListener("click", () => {
+        document.querySelector(".status-btn.active").classList.remove("active");
+        document.getElementById("criticalBtn").classList.add("active");
+        filterAndSortDevices();
+    });
+
+    // Gestion du bouton Statistique
+    document.getElementById("statsBtn").addEventListener("click", () => {
+        window.location.href = "http://localhost:9090/graphique";
+    });
+
+    // Rechercher les dispositifs toutes les 5 secondes
     setInterval(fetchDevices, 5000);
-    fetchDevices();
+    fetchDevices(); // Première récupération des données au chargement de la page
     </script>
 </body>
 </html>
