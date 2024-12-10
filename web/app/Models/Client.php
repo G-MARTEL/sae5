@@ -49,5 +49,10 @@ class Client extends Model
     return $this->hasMany(CreateDocuments::class, 'FK_client_id');
 }
 
+public function contentDocuments()
+{
+    return $this->hasMany(contentDocuments::class, 'FK_client_id');
+}
+
 
 }

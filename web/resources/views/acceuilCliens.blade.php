@@ -51,6 +51,43 @@
                         </form>
                     </ul>
                     
+                    {{-- <div class="documents-section">
+                        <h2>Documents associés</h2>
+                        @if ($documents->isEmpty())
+                            <p>Aucun document disponible.</p>
+                        @else
+                            @foreach ($documents as $document)
+                                <div class="document">
+                                    <h3>{{ $document->title }}</h3>
+                                    <p><strong>Créé le :</strong> {{ \Carbon\Carbon::parse($document->date)->format('d/m/Y') }}
+                                    @foreach ($document->contentDocuments as $content)
+                                        {{ $content->title }} </p>
+                                    @endforeach
+                                </div>
+                            @endforeach
+                        @endif
+                    </div> --}}
+                    
+                    {{-- <div class="documents-section">
+                        <h2>Documents associés</h2>
+                        @if($documents->isEmpty())
+                            <p>Aucun document associé.</p>
+                        @else
+                            @foreach ($documents as $document)
+                                <div class="document">
+                                    <h3>{{ $document->title }}</h3>
+                                    <p><strong>Créé le :</strong>{{ \Carbon\Carbon::parse($document->date)->format('d/m/Y') }}</p>
+                                    @foreach ($document->contentDocuments as $content)
+                                        <p><strong>{{ $content->title }} </p>
+                                    @endforeach
+                                    <a href="{{ route('documents.downloadClientDocument', $document->contentDocuments->first()->contentdocument_id) }}">Télécharger</a>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                     --}}
+
+
                     <ul>    
                         <button id="openModalBtn" class="btn btn-primary">Gérer mes informations</button> </li>
                     </ul>

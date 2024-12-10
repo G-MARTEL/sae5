@@ -11,6 +11,9 @@ use App\Models\Contract;
 use App\Models\Employee;
 use App\Models\Functions;
 use App\Models\Documents;
+use App\Models\Client;
+use App\Models\CreateDocuments;
+use App\Models\ContentDocuments;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -70,6 +73,9 @@ public function showClientDashboard()
 
     // Récupérer les contrats associés au client
     $contrats = Contract::where('FK_client_id', $client->client_id)->get(); 
+    $documents = CreateDocuments::where('FK_client_id', $client->client_id)
+    ->with('contentDocuments')
+    ->get();
 
     // Rechercher l'employé associé au client
     $associatedEmployee = DB::table('employees')
@@ -82,8 +88,12 @@ public function showClientDashboard()
     $clientData['employee'] = $associatedEmployee;
 
     // Retourner la vue avec les données du client et les contrats
-    return view('acceuilCliens', ['clientData' => $clientData, 'contrats' => $contrats]);
+    return view('acceuilCliens', ['clientData' => $clientData, 'contrats' => $contrats, 'documents' => $documents]);
+
 }
+
+
+
 
 
 public function updateClientInfo(Request $request)

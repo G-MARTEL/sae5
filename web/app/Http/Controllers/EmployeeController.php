@@ -31,19 +31,6 @@ class EmployeeController extends Controller
         ]);
     }
 
-    // public function showClient(Request $request)
-    // {
-    //     $id = $request->id;
-    //     // Récupérer le client avec son compte
-    //     $client = Client::where('client_id', $id)->first();
-
-    //     $services = Services::all();
-    //     // Passer les données à la vue
-    //     return view('clientDetails', [
-    //         'client' => $client,
-    //         'services' => $services,
-    //     ]);
-    // }
 
     public function showClient(Request $request)
     {
