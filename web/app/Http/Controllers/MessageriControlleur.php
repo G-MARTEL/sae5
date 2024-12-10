@@ -11,6 +11,22 @@ use App\Models\MessageContents;
 
 class MessageriControlleur extends Controller
 {
+
+    public function getMessages(Request $request)
+    {
+        $clientId = session('id');
+
+        // Récupération des messages avec les relations nécessaires
+        $messages = Message::where('FK_sender_id', $clientId)
+            ->orWhere('FK_recipient_id', $clientId)
+            ->with(['Sender', 'Recipient', 'MessageContent']) // Charger les relations
+            ->get();
+
+        // Retourne les messages au format JSON
+        return response()->json($messages);
+    }
+
+
     public function showMessagerie(Request $request)
     {
         if (session('role') != 'client')
@@ -19,10 +35,15 @@ class MessageriControlleur extends Controller
         }
 
         $client = session('id');
-
+        $clientdate=Client::where('FK_account_id', $client)->first();
+        if ($clientdate->FK_employee_id==null)
+        {
+            return redirect()->back(); //
+        }
         $messages = Message::where('FK_sender_id', $client)
             ->orWhere('FK_recipient_id', $client)
             ->get();
+        
         return view('messagerieClient', ['messages' => $messages]);
     }
 
