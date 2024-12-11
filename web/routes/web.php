@@ -8,6 +8,7 @@ use App\Http\Controllers\CreationCompte;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DevisController;
+use App\Http\Controllers\DocumentController;
 
 use App\Http\Controllers\MessageriControlleur;
 
@@ -56,7 +57,7 @@ Route::post('/devis', [DevisController::class, 'store']);
 Route::get('/prestations', [PrestationsController::class, 'showPrestations'])->name('prestations');
 Route::get('/prestation/{id}', [PrestationsController::class,'show'])->name('prestation.show');
 
-Route::get('/prestation', [PrestationsController::class, 'showPrestations'])->name('prestations');
+//Route::get('/prestation', [PrestationsController::class, 'showPrestations'])->name('prestations');
 
 
 Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
@@ -118,3 +119,11 @@ Route::post('/simulateur-pret', [PretImmobilierController::class, 'simulate'])->
 
 
 Route::post('/client/upload-document', [ClientController::class, 'uploadDocument'])->name('client.upload.document');
+Route::get('/documents/download/{id}', [EmployeeController::class, 'download'])->name('download.document');
+Route::post('/documents/store', [EmployeeController::class, 'store'])->name('documents.store');
+
+Route::get('/documents/downloadDocument/{id}', [DocumentController::class, 'downloadDocument'])->name('documents.downloadDocument');
+
+
+
+Route::get('/client/download-document/{id}', [DocumentController::class, 'downloadDocumentClient'])->name('download.document.client');

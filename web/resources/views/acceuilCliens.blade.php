@@ -51,6 +51,32 @@
                         </form>
                     </ul>
                     
+                    <div class="documents-section">
+                        <h2>Documents associés</h2>
+                        @if($documents->isEmpty())
+                            <p>Aucun document associé.</p>
+                        @else
+                            @foreach ($documents as $document)
+                                <div class="document">
+                                    <h3>
+                                        @if($document->facture)
+                                            Facture
+                                        @else
+                                            Autre
+                                        @endif
+                                    </h3>
+                                    @foreach ($document->contentDocuments as $content)
+                                        <p><strong>Créé le :</strong> {{ \Carbon\Carbon::parse($content->date)->format('d/m/Y') }}</p>
+                                        <p><strong>{{ $content->title }} :</strong> {{ $content->contenu }}</p>
+                                    @endforeach
+                                    <a href="{{ route('download.document.client', ['id' => $document->createdocument_id]) }}" class="btn btn-primary">Télécharger</a>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                    
+
+
                     <ul>    
                         <button id="openModalBtn" class="btn btn-primary">Gérer mes informations</button> </li>
                     </ul>

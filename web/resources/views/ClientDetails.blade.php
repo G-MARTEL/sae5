@@ -28,7 +28,7 @@
             @foreach($client->contracts as $contract)
                 <tr>
                     <td>{{ $contract->numero_contract }}</td>
-                    <td>{{ $contract->service->title }}</td> <!-- Assurez-vous que le service est chargé si vous avez besoin de plus d'informations -->
+                    <td>{{ $contract->service->title }}</td> 
                     <td>{{ $contract->creation_date }}</td>
                     <td>{{ $contract->is_active ? 'Actif' : 'Inactif' }}</td>
                 </tr>
@@ -51,8 +51,92 @@
     <button type="submit">Créer contrat</button>
 </form>
 
+<h2>Documents déposés</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nom du fichier</th>
+            <th>Date de dépôt</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if($client->documents->isEmpty())
+            <tr>
+                <td colspan="3">Aucun document déposé.</td>
+            </tr>
+        @else
+            @foreach($client->documents as $document)
+                <tr>
+                    <td>Document #{{ $document->document_id }}</td>
+                    <td>{{ $document->date }}</td>
+                    <td>
+                        <a href="{{ route('download.document', $document->document_id) }}">Télécharger</a>
+                    </td>
+                </tr>
+            @endforeach
+        @endif
+    </tbody>
+</table>
+
+<h2>Créer un document</h2>
+<form action="{{ route('documents.store') }}" method="POST">
+    @csrf
+    <input type="hidden" name="client_id" value="{{ $client->client_id }}">
+    <input type="hidden" name="employee_id" value="{{ $client->FK_employee_id }}">
+
+    <label for="title">Titre du document :</label>
+    <input type="text" name="title" id="title" required>
+
+    <label for="contenu">Contenu :</label>
+    <textarea name="contenu" id="contenu" rows="5" required></textarea>
+
+    <label for="facture">Est-ce une facture ?</label>
+    <select name="facture" id="facture" required>
+        <option value="1">Oui</option>
+        <option value="0">Non</option>
+    </select>
+
+    <button type="submit">Créer le document</button>
+</form>
+
+<h2>Documents créés</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Contenu</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if ($client->createDocuments !== null && $client->createDocuments->isNotEmpty())
+            @foreach ($client->createDocuments as $createDocument)
+                @foreach ($createDocument->contentDocuments as $content)
+                    <tr>
+                        <td>{{ $content->title }}</td>
+                        <td>{{ $content->contenu }}</td>
+                        <td>{{ $createDocument->facture ? 'Facture' : 'Autre' }}</td>
+                        <td>{{ $content->date }}</td>
+                        <td>
+                            <form action="{{ route('documents.downloadDocument', $content->contentdocument_id) }}" method="GET">
+                                <button type="submit" class="btn btn-primary">Télécharger</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            @endforeach
+        @else
+            <tr>
+                <td colspan="5">Aucun document n'a été créé pour ce client.</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
 
 
-{{-- <a href="/employees/listeClientAttitres">Retour à la liste des clients</a> --}}
+
 
 <a href="{{ route('employees.listeClientAttitres') }}">Retour à la liste des clients</a>
