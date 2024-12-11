@@ -12,6 +12,17 @@ use App\Models\MessageContents;
 class MessageriControlleur extends Controller
 {
 
+    public function getmessageEmployee($id)
+    {
+        // Charger les messages liés à la conversation avec les relations nécessaires
+        $messages = Message::where('FK_conversation_id', $id)
+            ->with(['Sender', 'Recipient', 'MessageContent'])
+            ->get();
+        // Retourner la réponse sous forme de JSON
+        return response()->json($messages);
+    }
+
+
     public function getMessages(Request $request)
     {
         $clientId = session('id');
@@ -88,7 +99,7 @@ class MessageriControlleur extends Controller
         $employee = session('id');
         $employee = Employee::where('FK_account_id', $employee)->first();
         $conversation = Conversation::where('FK_employee_id', $employee->employee_id)->get();
-        return view('listeConv', ['conversations' => $conversation]);
+        return view('listeConv', ['conversations' => $conversation,]);
     }
 
     public function showConversation(Request $request)
@@ -105,7 +116,7 @@ class MessageriControlleur extends Controller
         $messages= Message::where('FK_conversation_id', $id)->get();
 
     
-        return view('conversationEmployes', ['messages' => $messages]);
+        return view('conversationEmployes', ['messages' => $messages,'id' => $id]);
     }
     
 

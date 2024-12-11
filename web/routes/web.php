@@ -28,9 +28,6 @@ Route::get('/', function () {
     return view('accueil'); // Si aucun rôle n'est défini, afficher la vue d'accueil par défaut
 })->name('accueil');
 
-Route::fallback(function () {
-    return redirect()->route('accueil'); // Redirige vers la route 'home' en cas de 404
-});
 
 
 Route::get('acceuil', function () {return view('accueil');});
@@ -89,7 +86,7 @@ Route::prefix('employees')->name('employees.')->group(function() {
     Route::post('/creationContrat', [EmployeeController::class, 'creationContrat'])->name('creationContrat');
     Route::get('listeClientAttitres', [EmployeeController::class, 'listeClientAttitres'])->name('listeClientAttitres');
     Route::get('clients/{id}', [EmployeeController::class, 'showClient'])->name('clients.show');
-    Route::get('/getmessage{id}', [MessageriControlleur::class, 'getMessages'])->name('getMessages');
+    Route::get('getmessageEmployee/{id}', [MessageriControlleur::class, 'getmessageEmployee']);
 
 });
 
