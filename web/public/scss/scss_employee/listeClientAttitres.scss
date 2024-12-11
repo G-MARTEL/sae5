@@ -1,0 +1,60 @@
+@use 'sass:color';
+@import "../scss_base/variables.scss";
+
+
+.employee-clients {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    background-color: #f9f9f9;
+
+    h1 {
+        text-align: center;
+        color: #444;
+        margin-bottom: 20px;
+    }
+
+    .clients-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        thead {
+            background: $vert;
+            color: white;
+
+            th {
+                padding: 10px;
+                text-align: left;
+                font-weight: bold;
+                border-bottom: 2px solid $vert;
+            }
+        }
+
+        tbody {
+            tr {
+                &:nth-child(odd) {
+                    background-color: #f1f1f1;
+                }
+
+                &:hover {
+                    background-color: $vert-clair;
+                }
+
+                td {
+                    padding: 10px;
+                    border-bottom: 1px solid #ddd;
+
+                    .client-link {
+                        text-decoration: none;
+                        &:hover {
+                            text-decoration: none;
+                            color: $vert;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

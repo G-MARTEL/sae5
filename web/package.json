@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build-css": "sass --watch public/scss/scss_base/main.scss:public/css/styles.css --watch public/scss/scss_pages:public/css --watch public/scss/scss_documents:public/css/documents"    
+    "build-css": "sass --watch public/scss/scss_base/main.scss:public/css/styles.css --watch public/scss/scss_pages:public/css --watch public/scss/scss_documents:public/css/documents --watch public/scss/scss_employee:public/css/employee"    
   },
   "devDependencies": {
     "axios": "^1.7.4",
