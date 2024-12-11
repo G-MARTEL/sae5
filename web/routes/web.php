@@ -28,7 +28,9 @@ Route::get('/', function () {
     return view('accueil'); // Si aucun rôle n'est défini, afficher la vue d'accueil par défaut
 })->name('accueil');
 
-
+Route::fallback(function () {
+    return redirect('/');
+});
 
 Route::get('acceuil', function () {return view('accueil');});
 
