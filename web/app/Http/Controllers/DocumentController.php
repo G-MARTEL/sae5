@@ -15,6 +15,7 @@ use App\Models\ContentDocuments;
 use App\Models\Employee;
 use App\Models\Client;
 
+
 class DocumentController extends Controller
 {
 
@@ -40,40 +41,6 @@ class DocumentController extends Controller
         return $pdf->download('document.pdf');
     }
 
- 
-    public function downloadClientDocument($id)
-{
-    // Récupérer le client à partir de l'ID de session
-    $clientId = session('clientData')['account']->account_id; // ID du client connecté
-
-    // Récupérer le contenu du document à partir de son ID
-    $content = ContentDocuments::with('createDocuments.client.account')
-        ->whereHas('createDocuments', function ($query) use ($clientId) {
-            $query->where('FK_client_id', $clientId);
-        })
-        ->findOrFail($id);
-
-    $createDocument = $content->createDocuments;
-
-    // Passer les données au template PDF
-    $pdf = Pdf::loadView('pdf/documentPdf', [
-        'title' => $content->title,
-        'content' => $content->contenu,
-        'type' => $createDocument->facture ? 'Facture' : 'Autre',
-        'date' => $content->date,
-        'client_name' => $createDocument->client->account->first_name . ' ' . $createDocument->client->account->last_name,
-        'client_email' => $createDocument->client->account->email,
-        'client_phone' => $createDocument->client->account->phone,
-        // Pour les informations de l'employé, si nécessaire, tu peux les charger comme pour l'employé
-        'employee_name' => $employee->account->first_name . ' ' . $employee->account->last_name,
-        'employee_email' => $employee->account->email,
-        'employee_phone' => $employee->account->phone,
-        'employee_function' => $employee->functions->function_name ?? 'Non spécifiée',
-    ]);
-
-    // Télécharger le fichier PDF
-    return $pdf->download($content->title . '.pdf');
-}
 
 
     public function downloadDocument($id)
@@ -108,5 +75,46 @@ class DocumentController extends Controller
     // Télécharger le fichier PDF
     return $pdf->download($content->title . '.pdf');
 }
+
+
+public function downloadDocumentClient($id)
+{
+    // Récupérer le document avec son contenu
+    $document = CreateDocuments::with('contentDocuments')->find($id);
+
+    if (!$document) {
+        return redirect()->back()->with('error', 'Document non trouvé.');
+    }
+
+    // Récupérer les informations du client et de l'employé associés
+    $client = Client::with('account')->find($document->FK_client_id);
+    $employee = Employee::with(['account', 'functions'])->find($document->FK_employee_id);
+
+    if (!$client || !$employee) {
+        return redirect()->back()->with('error', 'Données manquantes pour générer le PDF.');
+    }
+
+    // Préparer les données pour le PDF
+    $data = [
+        'title' => $document->facture ?? 'Document',
+        'client_name' => $client->account->first_name . ' ' . $client->account->last_name,
+        'client_email' => $client->account->email,
+        'client_phone' => $client->account->phone,
+        'employee_name' => $employee->account->first_name . ' ' . $employee->account->last_name,
+        'employee_function' => $employee->functions->function_name ?? 'N/A',
+        'employee_email' => $employee->account->email,
+        'employee_phone' => $employee->account->phone,
+        'type' => $document->facture ? 'Facture' : 'Autre',
+        'date' => $document->contentDocuments->first()?->date ? \Carbon\Carbon::parse($document->contentDocuments->first()->date)->format('d/m/Y') : 'N/A',
+        'content' => $document->contentDocuments->pluck('contenu')->implode("\n"),
+    ];
+
+    // Générer le PDF
+    $pdf = PDF::loadView('pdf/documentPdf', $data);
+
+    // Télécharger le fichier PDF
+    return $pdf->download('document_client_' . $document->createdocument_id . '.pdf');
+}
+
 
 }

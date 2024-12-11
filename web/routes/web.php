@@ -57,7 +57,7 @@ Route::post('/devis', [DevisController::class, 'store']);
 Route::get('/prestations', [PrestationsController::class, 'showPrestations'])->name('prestations');
 Route::get('/prestation/{id}', [PrestationsController::class,'show'])->name('prestation.show');
 
-Route::get('/prestation', [PrestationsController::class, 'showPrestations'])->name('prestations');
+//Route::get('/prestation', [PrestationsController::class, 'showPrestations'])->name('prestations');
 
 
 Route::get('/connexion', [Autentification::class, 'showLoginFormUser'])->name('login');
@@ -124,4 +124,6 @@ Route::post('/documents/store', [EmployeeController::class, 'store'])->name('doc
 
 Route::get('/documents/downloadDocument/{id}', [DocumentController::class, 'downloadDocument'])->name('documents.downloadDocument');
 
-Route::get('documents/downloadClientDocument/{id}', [DocumentController::class, 'downloadClientDocument'])->name('documents.downloadClientDocument');
+
+
+Route::get('/client/download-document/{id}', [DocumentController::class, 'downloadDocumentClient'])->name('download.document.client');
