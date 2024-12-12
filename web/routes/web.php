@@ -30,9 +30,8 @@ Route::get('/', function () {
 })->name('accueil');
 
 Route::fallback(function () {
-    return redirect()->route('accueil'); // Redirige vers la route 'home' en cas de 404
+    return redirect('/');
 });
-
 
 Route::get('acceuil', function () {return view('accueil');});
 
@@ -71,6 +70,7 @@ Route::prefix('client')->name('client.')->group(function() {
     Route::post('/update', [ClientController::class, 'updateClientInfo'])->name('update');
     Route::get('/messagerie', [MessageriControlleur::class, 'showMessagerie'])->name('messagerie');
     Route::post('/sendMessage', [MessageriControlleur::class, 'sendMessageClient']);
+    Route::get('/getmessage', [MessageriControlleur::class, 'getMessages'])->name('getMessages');
     
 });
 Route::get('/download-contract/{contractId}', [ClientController::class, 'downloadContract'])->name('download.contract');
@@ -89,6 +89,7 @@ Route::prefix('employees')->name('employees.')->group(function() {
     Route::post('/creationContrat', [EmployeeController::class, 'creationContrat'])->name('creationContrat');
     Route::get('listeClientAttitres', [EmployeeController::class, 'listeClientAttitres'])->name('listeClientAttitres');
     Route::get('clients/{id}', [EmployeeController::class, 'showClient'])->name('clients.show');
+    Route::get('getmessageEmployee/{id}', [MessageriControlleur::class, 'getmessageEmployee']);
 
 });
 
