@@ -17,30 +17,46 @@
         </header>
 
         <section class="list-section">
-            @foreach ($listeEmployees as $employee)
-                <div class="list-item">
-                    <p>
-                        <strong>Nom :</strong> {{ $employee->Account->last_name }},
-                        <strong>Prénom :</strong> {{ $employee->Account->first_name }}
-                    </p>
-                    <form action="modifEmployee" method="post" class="form-inline">
-                        @csrf
-                        <input type="hidden" name="employee_id" value="{{ $employee->employee_id }}">
-                        <select name="Functions_id" id="Functions" class="form-select">
-                            @if (!$employee->FK_function_id)
-                                <option value="">Aucun fonction associé</option>
-                            @endif
-                            @foreach ($listeFunction as $Functions)
-                                <option value="{{ $Functions->function_id }}" 
-                                    {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
-                                    {{ $Functions->function_name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="btn-secondary">Envoyer</button>
-                    </form>
-                </div>
-            @endforeach
+            <div class="grid-container">
+                @foreach ($listeEmployees as $employee)
+                    <div class="grid-item">
+                        <div class="content">
+                            <div class="details">
+                                <p>
+                                    <strong>Nom :</strong> {{ $employee->Account->last_name }},
+                                    <strong>Prénom :</strong> {{ $employee->Account->first_name }}
+                                </p>
+                                <form action="modifEmployee" method="post" class="form-inline">
+                                @csrf
+                                <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
+                                <select name="Funtions_id" id="Functions">
+                                    @php
+                                    if ($employee->FK_function_id == null)
+                                    {
+                                        echo '<option value="">Aucun fonction associé</option>';
+                                    }
+                                    @endphp
+                                @foreach($listeFunction as $Functions)
+                                    <option value="{{ $Functions->function_id}}" 
+                                        {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
+                                        {{ $Functions->function_name }}
+                                    </option>
+                                @endforeach
+                                </select>
+                                <button type="submit" class="envoyee">Envoyer</button>
+                                </form>
+                            </div>
+                            <div class="image">
+                                @if ($employee->Account->picture)  
+                                    <img src="{{ asset($employee->Account->picture) }}" alt="{{ $employee->Account->first_name }}" class="prestation-image">
+                                @else
+                                    <p>Aucune photo</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </section>
 
         <!-- Popup -->
@@ -48,7 +64,7 @@
             <div class="popup-content small">
                 <span id="close-popup-btn" class="close-btn">&times;</span>
                 <h2>Créer un nouvel employé</h2>
-                <form id="creationEmployee" action="creationEmployee" method="POST" class="form">
+                <form id="creationEmployee" action="creationEmployee" method="POST" class="form" enctype="multipart/form-data">
                     @csrf
                         <label for="first_name">Prénom :</label>
                         <input type="text" id="first_name" name="first_name" required>
@@ -73,6 +89,9 @@
                         <label for="password">Mot de passe :</label>
                         <input type="password" id="password" name="password" required>
                     
+                        <label for="image">Photo :</label>
+                        <input type="file" id="image" name="image" accept="image/*" >
+
                         <label for="function">Fonction :</label>
                         <select name="function_id" id="Functions" class="form-select">
                             @foreach ($listeFunction as $Functions)
@@ -82,10 +101,7 @@
                                 </option>
                             @endforeach
                         </select>
-
-                        <label for="image">Image :</label>
-                        <input type="file" id="image" name="image" accept="image/*" >
-                    
+            
                     <button type="submit" class="btn-submit">Créer</button>
                 </form>
             </div>

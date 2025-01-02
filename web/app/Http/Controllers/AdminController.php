@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client;
@@ -103,6 +104,16 @@ class AdminController extends Controller
         $password = $request->input('password');
         $function_id = $request->input('function_id');
 
+        $imagePath = null;
+         if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        // Utilisez simplement le nom de fichier sans le chemin
+        $imageName = $request->file('image')->getClientOriginalName();
+        $imagePath = 'assets/employees/' . $imageName;
+
+        // Déplacez l'image dans le dossier public
+        $request->file('image')->move(public_path('assets/employees'), $imageName);
+    }
+
         // Créer un nouveau compte pour l'employé
         $account = new Account();
         $account->first_name = $first_name;
@@ -114,6 +125,7 @@ class AdminController extends Controller
         $account->email = $email;
         $account->phone = $phone;
         $account->password =  Hash::make($password);
+        $account->picture = $imagePath;
         $account->save();
 
         // Créer un nouvel employé avec le compte créé
@@ -185,4 +197,53 @@ class AdminController extends Controller
         return redirect()->back();
 
     }
+
+
+
+//     public function supprimerPrestation($id)  
+// {
+//     if (session('role') != 'admin') {
+//         return redirect('/');
+//     }
+
+//     $prestation = Services::find($id);
+
+//     if ($prestation) {
+//         // Si vous voulez supprimer l'image du système de fichiers, décommentez les lignes ci-dessous
+//         if ($prestation->picture) {
+//             Storage::delete($prestation->picture);
+//         }
+
+//         $prestation->delete();
+//     }
+
+//     return redirect()->back()->with('success', 'Prestation supprimée avec succès.');
+// }
+
+public function updatePrestation(Request $request)
+{
+    if (session('role') != 'admin') {
+        return redirect('/');
+    }
+
+    $prestation = Services::findOrFail($request->input('service_id'));
+    $prestation->title = $request->input('titre');
+    $prestation->description = $request->input('description');
+    $prestation->advantage = $request->input('advantage');
+    $prestation->situations = $request->input('situation');
+
+    if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        $imagePath = 'assets/services/' . $request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path('assets/services'), $imagePath);
+        $prestation->picture = $imagePath;
+    }
+
+    $prestation->save();
+
+    return redirect()->back()->with('success', 'Prestation modifiée avec succès.');
+}
+
+
+
+
 }
