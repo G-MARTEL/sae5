@@ -4,13 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ asset('css/listeClient.css') }}"/>
-        <title>Liste-client</title>
+        <title>Gestion des clients</title>
      </head>
 <body>
     
 <div class="containeur">
     <div class="container-inner">
-        <h1>liste clients</h1>
+        <h1>Nos clients</h1>
     </div>
     
 </div>
@@ -25,7 +25,7 @@
             @csrf
             <input type="hidden" name="client_id" value="{{ $clientData['clientAccounts']->client_id }}">
 
-            <Strong> Employer Associer :</Strong>
+            <Strong> Son conseiller :</Strong>
 
             <select name="employee_id" id="employee">
                 @php
@@ -43,7 +43,7 @@
                 @endforeach
 
             </select>
-            <button type="submit">Envoyer</button>
+            <button type="submit">Associer</button>
 
         </form>
         <br>

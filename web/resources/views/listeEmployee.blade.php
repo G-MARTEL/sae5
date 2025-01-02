@@ -2,86 +2,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un utilisateur</title>
+    <title>Gestion des employés</title>
     <!-- Lien vers le fichier CSS -->
-    <link rel="stylesheet" href="{{ asset('css/listeEmployee.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/pages.css') }}">
 
 
     <script src="{{asset('./js/pop-up.js')}}"></script>
 </head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Liste des employés</h1>
+            <button id="open-popup-btn" class="btn-primary">Créer un profil d'employé</button>
+        </header>
 
+        <section class="list-section">
+            @foreach ($listeEmployees as $employee)
+                <div class="list-item">
+                    <p>
+                        <strong>Nom :</strong> {{ $employee->Account->last_name }},
+                        <strong>Prénom :</strong> {{ $employee->Account->first_name }}
+                    </p>
+                    <form action="modifEmployee" method="post" class="form-inline">
+                        @csrf
+                        <input type="hidden" name="employee_id" value="{{ $employee->employee_id }}">
+                        <select name="Functions_id" id="Functions" class="form-select">
+                            @if (!$employee->FK_function_id)
+                                <option value="">Aucun fonction associé</option>
+                            @endif
+                            @foreach ($listeFunction as $Functions)
+                                <option value="{{ $Functions->function_id }}" 
+                                    {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
+                                    {{ $Functions->function_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn-secondary">Envoyer</button>
+                    </form>
+                </div>
+            @endforeach
+        </section>
 
-<button id="open-popup-btn">Créer un nouvel utilisateur</button>
+        <!-- Popup -->
+        <div id="pop-up" class="popup">
+            <div class="popup-content small">
+                <span id="close-popup-btn" class="close-btn">&times;</span>
+                <h2>Créer un nouvel employé</h2>
+                <form id="creationEmployee" action="creationEmployee" method="POST" class="form">
+                    @csrf
+                        <label for="first_name">Prénom :</label>
+                        <input type="text" id="first_name" name="first_name" required>
+                        <label for="last_name">Nom :</label>
+                        <input type="text" id="last_name" name="last_name" required>
+                    
+                        <label for="phone">Téléphone :</label>
+                        <input type="number" id="phone" name="phone" required>
+                 
+                        <label for="postal_address">Adresse postale :</label>
+                        <input type="text" id="postal_address" name="postal_address" required>
+                    
+                        <label for="code_address">Code postal :</label>
+                        <input type="text" id="code_address" name="code_address" required>
+                    
+                        <label for="city">Ville :</label>
+                        <input type="text" id="city" name="city" required>
+                    
+                        <label for="email">Email :</label>
+                        <input type="email" id="email" name="email" required>
+                    
+                        <label for="password">Mot de passe :</label>
+                        <input type="password" id="password" name="password" required>
+                    
+                        <label for="function">Fonction :</label>
+                        <select name="function_id" id="Functions" class="form-select">
+                            @foreach ($listeFunction as $Functions)
+                                <option value="{{ $Functions->function_id }}" 
+                                    {{ $Functions->function_id ? 'selected' : '' }}>
+                                    {{ $Functions->function_name }}
+                                </option>
+                            @endforeach
+                        </select>
 
-<!-- Popup -->
-<div id="pop-up" class="popup">
-    <div class="popup-content">
-        <span id="close-popup-btn" class="close-btn">&times;</span>
-        <h2>Créer un nouvel Employee</h2>
-        <form id="creationEmployee" action="creationEmployee" method="POST">
-            @csrf 
-            <label for="first_name">Prénom:</label>
-            <input type="text" id="first_name" name="first_name" required>
-            
-            <label for="last_name">Nom:</label>
-            <input type="text" id="last_name" name="last_name" required>
-
-            <label for="phone">phone:</label>
-            <input type="number" id="phone" name="phone" required>
-
-            <label for="postal_address">postal_address:</label>
-            <input type="postal_address" id="postal_address" name="postal_address" required>
-
-            <label for="code_address">code_address:</label>
-            <input type="code_address" id="code_address" name="code_address" required>
-
-            <label for="city">city:</label>
-            <input type="city" id="city" name="city" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="password">Mot de passe:</label>
-            <input type="password" id="password" name="password" required>
-
-
-            <label for="function">Fonction de l'employe:</label>
-            <select name="function_id" id="Functions">
-                @foreach($listeFunction as $Functions)
-                    <option value="{{ $Functions->function_id}}" 
-                        {{ $Functions->function_id ? 'selected' : '' }}>
-                        {{ $Functions->function_name }}
-                    </option>
-                @endforeach
-            </select>
-            
-            <button type="submit">Créer</button>
-        </form>
+                        <label for="image">Image :</label>
+                        <input type="file" id="image" name="image" accept="image/*" >
+                    
+                    <button type="submit" class="btn-submit">Créer</button>
+                </form>
+            </div>
+        </div>
     </div>
-</div>
+</body>
 
-@foreach ($listeEmployees as $employee)
 
-    <p> Nom : {{$employee->Account->last_name}} ,
-        Prenom : {{$employee->Account->first_name}}, 
-        <form action="modifEmployee" method="post">
-        @csrf
-        <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
-        <select name="Funtions_id" id="Functions">
-            @php
-            if ($employee->FK_function_id == null)
-            {
-                echo '<option value="">Aucun fonction associé</option>';
+<script>
+    document.getElementById('creationPrestation').addEventListener('submit', function(event) {
+        const fileInput = document.getElementById('image');
+        const maxSize = 2 * 1024 * 1024; // Taille maximale autorisée : 2 Mo
+    
+        if (fileInput.files.length > 0) {
+            const fileSize = fileInput.files[0].size;
+            if (fileSize > maxSize) {
+                event.preventDefault(); // Bloque l'envoi du formulaire
+                alert('Le fichier est trop lourd. La taille maximale autorisée est de 2 Mo.');
             }
-            @endphp
-        @foreach($listeFunction as $Functions)
-            <option value="{{ $Functions->function_id}}" 
-                {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
-                {{ $Functions->function_name }}
-            </option>
-        @endforeach
-        </select>
-        <button type="submit" class="envoyee">Envoyer</button>
-    </form>
-    </p>
-@endforeach
+        }
+    });
+    </script>

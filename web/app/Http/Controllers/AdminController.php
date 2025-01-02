@@ -166,11 +166,20 @@ class AdminController extends Controller
         $situation = $request->input('situation');
         $advantage = $request->input('advantage');
 
+
+        $imagePath = null;
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagePath = 'assets/services/' . $request->file('image')->getClientOriginalName();
+            
+            $request->file('image')->move(public_path('assets/services'), $imagePath);
+        }
+        
         $prestation = new Services();
         $prestation->title = $titre;
         $prestation->description = $description;
         $prestation->advantage = $advantage;
         $prestation->situations = $situation;
+        $prestation->picture = $imagePath;
         $prestation->save();
 
         return redirect()->back();
