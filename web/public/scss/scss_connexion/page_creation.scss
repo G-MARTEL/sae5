@@ -6,41 +6,46 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    //height: 100vh;
 
     .container {
         background: #fff;
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         width: 100%;
-        max-width: 400px;
+        max-width: 600px; 
         padding: 20px;
         box-sizing: border-box;
 
-        h1 {
+        h2 {
             text-align: center;
             color: #333;
             margin-bottom: 20px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-            width: 100%;
+        .form-row {
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 15px; 
+            .form-group {
+                width: 48%; 
+                padding: 0 1%; 
 
-            label {
-                display: block;
-                color: #555;
-                font-size: 14px;
-                margin-bottom: 5px;
-            }
+                label {
+                    display: block;
+                    color: #555;
+                    font-size: 14px;
+                    margin-bottom: 5px; 
+                }
 
-            input {
-                width: 100%;
-                padding: 12px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                font-size: 14px;
-                box-sizing: border-box;
+                input {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    box-sizing: border-box;
+                }
             }
         }
 
@@ -55,22 +60,10 @@ body {
             cursor: pointer;
             transition: background-color 0.3s;
             box-sizing: border-box;
+            margin-top: 20px; 
 
             &:hover {
-                background-color: rgb(30.7218934911, 87.2781065089, 85.8816568047);
-            }
-        }
-
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #2c7d7b;
-            text-decoration: none;
-            font-size: 14px;
-
-            &:hover {
-                text-decoration: underline;
+                background-color: rgb(30, 87, 85);
             }
         }
 

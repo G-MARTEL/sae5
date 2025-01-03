@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Création de compte</title>
     <!-- Lien vers le fichier CSS -->
-    <link rel="stylesheet" href="./css/connexion/pages.css"/>
+    <link rel="stylesheet" href="./css/connexion/page_creation.css"/>
 
 
     <script src="{{asset('./js/pop-up.js')}}"></script>
@@ -12,61 +12,72 @@
 <body>
 
 
-    <div class="container">
-        <h2>Création de compte</h2>
-        <form action="creationCompte" method="post">
-            @csrf
-            <div class="form-group">
-                <label for="first_name">Prénom :</label>
-                <input type="text" id="first_name" name="first_name" required>
-            </div>
-            <div class="form-group">
-                <label for="last_name">Nom :</label>
-                <input type="text" id="last_name" name="last_name" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Téléphone :</label>
-                <input type="tel" id="phone" name="phone" required>
-            </div>
-            <div class="form-group">
-                <label for="postal_address">Adresse postale :</label>
-                <input type="text" id="postal_address" name="postal_address" required>
-            </div>
-            <div class="form-group">
-                <label for="code_address">Code postal :</label>
-                <input type="text" id="code_address" name="code_address" required>
-            </div>
-            <div class="form-group">
-                <label for="city">Ville :</label>
-                <input type="text" id="city" name="city" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email :</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
-                <small id="password-hint" style="color: red;">
-                    Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre, et un caractère spécial.
-                </small>            
-            </div>
-
-            <div class="form-group">
-                <label for="password_confirmation">Confirmer le mot de passe :</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required>
-                <span id="password-error" style="color: red; display: none;">
-                    Les mots de passe ne correspondent pas.
-                </span>
-            </div>
-
-            <div class="form-group">
-                <label for="creation_date">Date de création :</label>
-                <input type="date" id="creation_date" name="creation_date" required>
-            </div>
-            <button type="submit" id="submit-btn" disabled> Créer le compte</button>
-        </form>
-    </div>
+    <body>
+        <div class="container">
+            <h2>Création de compte</h2>
+            <form action="creationCompte" method="post">
+                @csrf
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first_name">Prénom :</label>
+                        <input type="text" id="first_name" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Nom :</label>
+                        <input type="text" id="last_name" name="last_name" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Téléphone :</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postal_address">Adresse postale :</label>
+                        <input type="text" id="postal_address" name="postal_address" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="code_address">Code postal :</label>
+                        <input type="text" id="code_address" name="code_address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Ville :</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email :</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="creation_date">Date de création :</label>
+                        <input type="date" id="creation_date" name="creation_date" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Mot de passe :</label>
+                        <input type="password" id="password" name="password" required>
+                        <small id="password-hint" style="color: red;">
+                            Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre, et un caractère spécial.
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirmer le mot de passe :</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required>
+                        <span id="password-error" style="color: red; display: none;">
+                            Les mots de passe ne correspondent pas.
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" id="submit-btn" disabled>Créer le compte</button>
+            </form>
+        </div>
+    </body>
+    
     
 </body>
 
