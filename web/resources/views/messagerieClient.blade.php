@@ -10,9 +10,11 @@
 
 
 <body>
+    
     <div class="messaging-container">
-        <h1 class="messaging-title">Votre conversation</h1>
-
+        <a href="{{ route('client.accueil') }}">Retourner sur mon profil</a>
+        {{-- <h1 class="messaging-title">Votre conversation</h1> --}}
+        
         <!-- Fenêtre défilante pour les messages -->
         <div class="messages-scrollable">
             @foreach ($messages as $message)
@@ -31,7 +33,14 @@
         </div>
 
         <!-- Formulaire d'envoi de message -->
-        <form class="message-form" action="sendMessage" method="post">
+        {{-- <form class="message-form" action="sendMessage" method="post">
+            @csrf
+            <label class="form-label" for="message">Écrire un message :</label>
+            <textarea class="form-textarea" name="message" id="message" placeholder="Votre message..."></textarea>
+            <button class="form-button" type="submit">Envoyer</button>
+        </form> --}}
+
+        <form class="message-form">
             @csrf
             <label class="form-label" for="message">Écrire un message :</label>
             <textarea class="form-textarea" name="message" id="message" placeholder="Votre message..."></textarea>
@@ -71,6 +80,49 @@
             console.error('Erreur:', error);
         }
     }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//rajouts 
+document.addEventListener('DOMContentLoaded', () => {
+    // Écouteur d'événements pour le formulaire d'envoi de message
+    document.querySelector('.message-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
+
+        const messageContent = document.querySelector('#message').value;
+
+        // Vérifiez si le message n'est pas vide
+        if (messageContent.trim() !== '') {
+            sendMessage(messageContent).then(() => {
+                document.querySelector('#message').value = ''; // Réinitialise le champ de message
+                refreshMessages(); // Rafraîchit les messages après l'envoi
+                scrollToBottom(); // Scrolle vers le bas après l'envoi
+            });
+        }
+    });
+});
+
+// Fonction pour envoyer le message via fetch ou AJAX
+async function sendMessage(message) {
+    try {
+        const response = await fetch('sendMessage', { // Assurez-vous que la route est correcte
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('input[name="_token"]').value // Si vous utilisez CSRF
+            },
+            body: JSON.stringify({ message }) // Envoi du message
+        });
+        if (!response.ok) {
+            throw new Error('Erreur lors de l\'envoi du message.');
+        }
+        const result = await response.json(); // Récupère la réponse JSON
+        console.log(result); // Optionnel : affiche la réponse
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}
+
+
 
     // Rafraîchir les messages toutes les 10 secondes
     setInterval(refreshMessages, 100); // Intervalle de 10 secondes pour éviter une surcharge du serveur
