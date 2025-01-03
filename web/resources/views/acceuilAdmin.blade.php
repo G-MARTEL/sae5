@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrateur</title>
+    <title>Accueil Admin</title>
     <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="{{ asset('css/Admin/AdminAccueil.css') }}">
 </head>
@@ -10,13 +10,14 @@
 
 <body>
     <a href="{{ route('logout') }}"><button class="logout-btn">Déconnexion</button></a>
-    <div class="containneur">
+    
+    <div class="container">
         <div class="container-inner">
             <strong>Bienvenue sur votre espace d'administation</strong>
         </div>
     </div>
 
-    <div class="containneur">
+    <div class="container">
         <div class="container-inner">
             <h2>Gestion des clients</h2>
             <a href="listeClients">Acceder a la liste des clients</a>
