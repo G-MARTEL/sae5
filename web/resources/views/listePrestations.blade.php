@@ -128,35 +128,44 @@
 
 
     // Ouvrir le popup de modification
-document.querySelectorAll('.open-modif-popup').forEach(button => {
+    document.querySelectorAll('.open-modif-popup').forEach(button => {
     button.addEventListener('click', function() {
         const popup = document.getElementById('modif-pop-up');
 
         // Préremplir les champs du formulaire
-        document.getElementById('modif-service-id').value = this.dataset.id;
-        document.getElementById('modif-titre').value = this.dataset.title;
-        document.getElementById('modif-description').value = this.dataset.description;
-        document.getElementById('modif-advantage').value = this.dataset.advantage;
-        document.getElementById('modif-situation').value = this.dataset.situation;
+        document.getElementById('modif-service-id').value = this.dataset.id || '';
+        document.getElementById('modif-titre').value = this.dataset.title || '';
+        document.getElementById('modif-description').value = this.dataset.description || '';
+        document.getElementById('modif-advantage').value = this.dataset.advantage || '';
+        document.getElementById('modif-situation').value = this.dataset.situation || '';
 
         // Afficher l'image actuelle
         const preview = document.getElementById('modif-preview');
         preview.innerHTML = '';
         if (this.dataset.image) {
             const img = document.createElement('img');
-            img.src = `{{ asset('') }}${this.dataset.image}`;
+            img.src = `${this.dataset.image}`; // Assurez-vous que `this.dataset.image` contient un chemin complet
             img.style.maxWidth = '100px';
             img.style.maxHeight = '100px';
             preview.appendChild(img);
         }
 
-        popup.style.display = 'block';
+        // Ajouter la classe active pour afficher le popup
+        popup.classList.add('active');
     });
 });
 
 // Fermer le popup de modification
 document.getElementById('close-modif-popup-btn').addEventListener('click', function() {
-    document.getElementById('modif-pop-up').style.display = 'none';
+    const popup = document.getElementById('modif-pop-up');
+    popup.classList.remove('active');
+});
+
+// Fermer le popup en cliquant en dehors du contenu
+document.getElementById('modif-pop-up').addEventListener('click', function(event) {
+    if (event.target === this) {
+        this.classList.remove('active');
+    }
 });
 
 

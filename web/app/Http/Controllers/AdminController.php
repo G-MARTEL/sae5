@@ -199,27 +199,6 @@ class AdminController extends Controller
     }
 
 
-
-//     public function supprimerPrestation($id)  
-// {
-//     if (session('role') != 'admin') {
-//         return redirect('/');
-//     }
-
-//     $prestation = Services::find($id);
-
-//     if ($prestation) {
-//         // Si vous voulez supprimer l'image du système de fichiers, décommentez les lignes ci-dessous
-//         if ($prestation->picture) {
-//             Storage::delete($prestation->picture);
-//         }
-
-//         $prestation->delete();
-//     }
-
-//     return redirect()->back()->with('success', 'Prestation supprimée avec succès.');
-// }
-
 public function updatePrestation(Request $request)
 {
     if (session('role') != 'admin') {

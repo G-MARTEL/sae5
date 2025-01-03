@@ -1,0 +1,82 @@
+@use 'sass:color';
+@import "../scss_base/variables.scss";
+
+
+// Variables pour les couleurs et les styles réutilisables
+$primary-color: $vert;
+$secondary-color: #ffffff;
+$background-color: #f7f7f7;
+$text-color: #333333;
+$input-border-color: #cccccc;
+
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: $secondary-color;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h1, h2 {
+    text-align: center;
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    .form-group {
+      margin-bottom: 15px;
+
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+        color: $text-color;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid $input-border-color;
+        border-radius: 5px;
+        font-size: 14px;
+
+        &:focus {
+          border-color: $primary-color;
+          outline: none;
+          box-shadow: 0 0 5px $vert;
+        }
+      }
+    }
+
+    button {
+      background-color: $primary-color;
+      color: $secondary-color;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $vert-fonce;
+      }
+    }
+
+    a {
+      display: block;
+      margin-top: 15px;
+      text-align: center;
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
