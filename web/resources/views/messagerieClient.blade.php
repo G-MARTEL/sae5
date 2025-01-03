@@ -18,14 +18,11 @@
         <!-- Fenêtre défilante pour les messages -->
         <div class="messages-scrollable">
             @foreach ($messages as $message)
-            <div class="message">
+            <div class="message my_message">
                 <p class="message-sender">
                     <span>De :</span> {{ $message->Sender->first_name }} {{ $message->Sender->last_name }} 
                     {{-- <span> À :</span> {{ $message->Recipient->first_name }} {{ $message->Recipient->last_name }} --}}
                 </p>
-                {{-- <p class="message-recipient">
-                    <span>À :</span> {{ $message->Recipient->first_name }} {{ $message->Recipient->last_name }}
-                </p> --}}
                 <time class="message-time">{{ $message->creation_date }}</time>
                 <p class="message-content">{{ $message->MessageContent->content }}</p>
             </div>
@@ -42,7 +39,7 @@
 
         <form class="message-form">
             @csrf
-            <label class="form-label" for="message">Écrire un message :</label>
+            {{-- <label class="form-label" for="message">Écrire un message :</label> --}}
             <textarea class="form-textarea" name="message" id="message" placeholder="Votre message..."></textarea>
             <button class="form-button" type="submit">Envoyer</button>
         </form>
@@ -52,6 +49,10 @@
 
 
 <script>
+    const currentUserId = {{ session('id') }};
+    console.log(currentUserId);
+    let previousMessagesLength = 0; 
+
    async function refreshMessages() {
     try {
         const response = await fetch('getmessage'); // Assurez-vous que la route 'getmessage' est correcte
@@ -63,9 +64,15 @@
         const messageContainer = document.querySelector('.messages-scrollable');
         messageContainer.innerHTML = ''; // Efface les messages existants
 
+
         messages.forEach(message => {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message');
+
+            if (message.FK_sender_id === currentUserId) {
+                messageDiv.classList.add('my-message'); 
+            }
+
             messageDiv.innerHTML = `
                 <p class="message-sender">
                 <span>De :</span> ${message.sender.first_name} ${message.sender.last_name}
@@ -76,6 +83,14 @@
                 `;
             messageContainer.appendChild(messageDiv);
         });
+
+        if (messages.length > previousMessagesLength) {
+            scrollToBottom(); // Faites défiler vers le bas seulement si de nouveaux messages ont été ajoutés
+        }
+
+        // Mettez à jour la longueur précédente des messages
+        previousMessagesLength = messages.length;
+
         } catch (error) {
             console.error('Erreur:', error);
         }
@@ -95,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sendMessage(messageContent).then(() => {
                 document.querySelector('#message').value = ''; // Réinitialise le champ de message
                 refreshMessages(); // Rafraîchit les messages après l'envoi
-                scrollToBottom(); // Scrolle vers le bas après l'envoi
+                //scrollToBottom(); // Scrolle vers le bas après l'envoi
             });
         }
     });
@@ -116,16 +131,20 @@ async function sendMessage(message) {
             throw new Error('Erreur lors de l\'envoi du message.');
         }
         const result = await response.json(); // Récupère la réponse JSON
-        console.log(result); // Optionnel : affiche la réponse
     } catch (error) {
         console.error('Erreur:', error);
     }
+
+}
+
+function scrollToBottom() {
+    const messageContainer = document.querySelector('.messages-scrollable');
+    messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
 
-
-    // Rafraîchir les messages toutes les 10 secondes
-    setInterval(refreshMessages, 100); // Intervalle de 10 secondes pour éviter une surcharge du serveur
+    // Rafraîchir les messages toutes les 1 secondes
+    setInterval(refreshMessages, 1000); // Intervalle de 1 secondes pour éviter une surcharge du serveur
 
 </script>
 </html>

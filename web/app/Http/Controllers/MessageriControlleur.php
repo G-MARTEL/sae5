@@ -159,29 +159,63 @@ class MessageriControlleur extends Controller
     }
     
 
+    // public function sendMessageEmployee(Request $request)
+    // {
+    //     $id=$request->get('id');
+    //     $employee = session('id');
+    //     $ContentMessage =$request->message;
+    //     $Message = new MessageContents();
+    //     $Message->content =$ContentMessage;
+    //     $Message->save();
+    //     $accoutEmployees = Employee::where('employee_id',$employee)->first();
+    //     $conversation= Conversation::where('conversation_id',$id)->first();
+
+    //     $client= Client::where('client_id',$conversation->FK_client_id)->first();
+
+    //     $Mess = new Message();
+
+    //     $Mess->FK_sender_id=$employee;
+    //     $Mess->FK_recipient_id=$client->FK_account_id;
+    //     $Mess->FK_conversation_id=$conversation->conversation_id;
+    //     $Mess->FK_message_content_id=$Message->message_content_id;
+    //     $Mess->creation_date=date('Y-m-d');
+    //     $Mess->save();
+
+    //     return redirect('/employees/conversation/' . $id);
+    // }
+
+
     public function sendMessageEmployee(Request $request)
-    {
-        $id=$request->get('id');
-        $employee = session('id');
-        $ContentMessage =$request->message;
-        $Message = new MessageContents();
-        $Message->content =$ContentMessage;
-        $Message->save();
-        $accoutEmployees = Employee::where('employee_id',$employee)->first();
-        $conversation= Conversation::where('conversation_id',$id)->first();
+{
+    $request->validate([
+        'message' => 'required|string',
+        'id' => 'required|integer', // Assurez-vous que l'ID est fourni
+    ]);
 
-        $client= Client::where('client_id',$conversation->FK_client_id)->first();
+    $id = $request->get('id');
+    $employee = session('id');
+    $ContentMessage = $request->message;
+    
+    $Message = new MessageContents();
+    $Message->content = $ContentMessage;
+    $Message->save();
+    
+    $accoutEmployees = Employee::where('employee_id', $employee)->first();
+    $conversation = Conversation::where('conversation_id', $id)->first();
+    
+    $client = Client::where('client_id', $conversation->FK_client_id)->first();
+    
+    $Mess = new Message();
+    $Mess->FK_sender_id = $employee;
+    $Mess->FK_recipient_id = $client->FK_account_id;
+    $Mess->FK_conversation_id = $conversation->conversation_id;
+    $Mess->FK_message_content_id = $Message->message_content_id;
+    $Mess->creation_date = date('Y-m-d');
+    $Mess->save();
+    
+    // Retournez une réponse JSON
+    return response()->json(['success' => true, 'message' => $Message]);
+}
 
-        $Mess = new Message();
-
-        $Mess->FK_sender_id=$employee;
-        $Mess->FK_recipient_id=$client->FK_account_id;
-        $Mess->FK_conversation_id=$conversation->conversation_id;
-        $Mess->FK_message_content_id=$Message->message_content_id;
-        $Mess->creation_date=date('Y-m-d');
-        $Mess->save();
-
-        return redirect('/employees/conversation/' . $id);
-    }
 
 }
