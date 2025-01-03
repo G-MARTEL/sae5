@@ -7,6 +7,7 @@ $width-medium: 100%;
 $width-small: 100%; 
 
 $vert : #2c7d7b;
+$vert-fonce: color.adjust($vert, $lightness: -3%);
 $orange : #da4837;
 $blanc-casse : #f9fafb;
 $blanc : white;
