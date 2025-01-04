@@ -20,7 +20,7 @@
             @foreach ($messages as $message)
             <div class="message my_message">
                 <p class="message-sender">
-                    <span>De :</span> {{ $message->Sender->first_name }} {{ $message->Sender->last_name }} 
+                    {{ $message->Sender->first_name }} {{ $message->Sender->last_name }} 
                     {{-- <span> À :</span> {{ $message->Recipient->first_name }} {{ $message->Recipient->last_name }} --}}
                 </p>
                 <time class="message-time">{{ $message->creation_date }}</time>
@@ -72,10 +72,13 @@
             if (message.FK_sender_id === currentUserId) {
                 messageDiv.classList.add('my-message'); 
             }
+            else{
+                messageDiv.classList.add('received-message');
+            }
 
             messageDiv.innerHTML = `
                 <p class="message-sender">
-                <span>De :</span> ${message.sender.first_name} ${message.sender.last_name}
+                ${message.sender.first_name} ${message.sender.last_name}
                 
                 </p>
                 <time class="message-time">${message.creation_date}</time>

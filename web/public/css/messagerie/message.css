@@ -38,12 +38,17 @@ a {
   overflow-y: auto;
   padding: 10px;
   border: 1px solid #eaeaea;
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
 }
 
 .message {
-  padding: 15px;
+  max-width: 70%;
+  width: fit-content;
+  position: relative;
+  padding: 6px;
   margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 5px;
@@ -51,7 +56,7 @@ a {
 }
 .message .message-sender,
 .message .message-recipient {
-  margin: 5px 0;
+  margin: 5px 5px;
   font-weight: bold;
   color: #2c7d7b;
 }
@@ -63,11 +68,40 @@ a {
 .message .message-time {
   font-size: 0.85rem;
   color: #999;
+  margin-left: 5px;
 }
 .message .message-content {
-  margin-top: 10px;
+  margin: 5px 5px 0px 5px;
   font-size: 1rem;
   color: #555;
+}
+
+.message.my-message {
+  background-color: #d4ebeb !important;
+  align-self: flex-end;
+}
+.message.my-message::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent #d4ebeb;
+  top: 10px;
+  right: -10px;
+}
+
+.message.received-message::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent #ffffff transparent transparent;
+  top: 10px;
+  left: -10px;
 }
 
 .message-form {
@@ -114,10 +148,6 @@ a {
 .message-form .form-button:focus {
   outline: none;
   box-shadow: 0 0 3px rgba(53, 122, 184, 0.5);
-}
-
-.message.my-message {
-  background-color: #d4ebeb !important;
 }
 
 /*# sourceMappingURL=message.css.map */
