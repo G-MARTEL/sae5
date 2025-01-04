@@ -8,7 +8,6 @@ body {
 
 .tab-container {
   max-width: 1200px;
-  height: 90vh;
   margin: 0 auto;
   padding: 20px;
   background: #fff;
@@ -55,6 +54,7 @@ body {
 .tab-container .tab-content .tab-pane .simulator-container {
   display: flex;
   justify-content: space-between;
+  height: 500px;
 }
 .tab-container .tab-content .tab-pane .simulator-container .simulator-form {
   flex: 1;

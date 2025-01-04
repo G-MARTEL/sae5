@@ -8,8 +8,22 @@
 @section('content')
 
 <div class="container"style="padding-top:85px; padding-bottom:85px">
+    
+
+
 <div class="tab-container" >
     <!-- Onglets -->
+    <div>
+        <h2 style="color:#2c7d7b; margin-top:15px">Besoin de faire des calculs ?</h2>
+        <p><strong style="color:#2c7d7b">AvyCompta</strong> est votre partenaire de confiance en matière de comptabilité, 
+            offrant une gamme de services adaptée tant aux particuliers qu'aux professionnels.
+             Que vous soyez un indépendant, une grande ou petite entreprise, ou un particulier, 
+             notre équipe d'experts s'engage à vous fournir un accompagnement personnalisé 
+             pour répondre à vos besoins spécifiques. 
+             Ces différents simulateurs vous proposent un aperçu des nouveaux services proposés par <strong style="color:#2c7d7b">AvyCompta</strong>. 
+        </p>
+    </div>
+    <h3>Vous êtes un particulier ?</h3>
     <div class="tabs">
       <button class="tab-button active" data-tab="simulator1">Emprunt</button>
       <button class="tab-button" data-tab="simulator2">Epargne</button>
@@ -128,10 +142,177 @@
       </div>
     </div>
   </div>
+  <h3>Vous êtes un professionnel ?</h3>
+  <div class="tabs">
+    <button class="tab-button active" data-tab="simulator4">Charges sociales</button>
+    <button class="tab-button" data-tab="simulator5">TVA</button>
+    <button class="tab-button" data-tab="simulator6">Résultat Fiscal</button>
+  </div>
 
+  <div class="tab-content">
+    <div class="tab-pane" id="simulator4">
+        <h2>Simulateur de Charges Sociales</h2>
+        <p>Calculez les charges sociales associées à un salaire brut mensuel et le nombre d'employés.</p>
+        <div class="simulator-container">
+            <form id="chargesForm" class="simulator-form">
+                <div class="form-group">
+                    <label for="salaireBrut">Salaire brut mensuel (€)</label>
+                    <input type="number" id="salaireBrut" name="salaireBrut" required>
+                </div>
+                <div class="form-group">
+                    <label for="typeContrat">Type de contrat</label>
+                    <select id="typeContrat" name="typeContrat" required>
+                        <option value="CDI">CDI</option>
+                        <option value="CDD">CDD</option>
+                        <option value="Freelance">Freelance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nombreEmployes">Nombre d'employés</label>
+                    <input type="number" id="nombreEmployes" name="nombreEmployes" value="1" required>
+                </div>
+                <button type="button" id="simulateChargesBtn" class="submit-btn">Calculer les charges</button>
+            </form>
+    
+            <div id="resultContainer4" class="result-container" style="display: none;">
+                <h2>Résultat de la simulation</h2>
+                <ul class="result-list">
+                    <li>Charges sociales totales : <strong id="chargesTotales"></strong> €</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="simulator5">
+        <h2>Simulateur de TVA</h2>
+        <p>Calculez le montant de la TVA collectée et déductible, ainsi que la TVA à reverser.</p>
+        <div class="simulator-container">
+            <form id="simulateurTvaForm" class="simulator-form">
+                <div class="form-group">
+                    <label for="ventesHt">Ventes HT (€)</label>
+                    <input type="number" id="ventesHt" name="ventesHt" required>
+                </div>
+                <div class="form-group">
+                    <label for="achatsHt">Achats HT (€)</label>
+                    <input type="number" id="achatsHt" name="achatsHt" required>
+                </div>
+                <div class="form-group">
+                    <label for="tauxTva">Taux de TVA (%)</label>
+                    <input type="number" step="0.01" id="tauxTva" name="tauxTva" value="20" required>
+                </div>
+                <button type="button" id="simulateTvaBtn" class="submit-btn">Calculer</button>
+            </form>
+    
+            <div id="resultContainerTva" class="result-container" style="display: none;">
+                <h2>Résultat de la simulation</h2>
+                <ul class="result-list">
+                    <li>TVA collectée : <strong id="tvaCollectee"></strong> €</li>
+                    <li>TVA déductible : <strong id="tvaDeductible"></strong> €</li>
+                    <li>TVA à reverser : <strong id="tvaAReverser"></strong> €</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane" id="simulator6">
+        <h2>Simulateur de Résultat Fiscal</h2>
+        <p>Calculez votre résultat fiscal en prenant en compte les produits et charges de votre activité.</p>
+        <div class="simulator-container">
+            <form id="simulateurResultatForm" class="simulator-form">
+                <div class="form-group">
+                    <label for="produits">Produits d'exploitation (€)</label>
+                    <input type="number" id="produits" name="produits" required>
+                </div>
+                <div class="form-group">
+                    <label for="chargesExploitation">Charges d'exploitation (€)</label>
+                    <input type="number" id="chargesExploitation" name="chargesExploitation" required>
+                </div>
+                <div class="form-group">
+                    <label for="amortissements">Amortissements (€)</label>
+                    <input type="number" id="amortissements" name="amortissements" required>
+                </div>
+                <div class="form-group">
+                    <label for="produitsFinanciers">Produits financiers (€)</label>
+                    <input type="number" id="produitsFinanciers" name="produitsFinanciers" required>
+                </div>
+                <div class="form-group">
+                    <label for="chargesFinancieres">Charges financières (€)</label>
+                    <input type="number" id="chargesFinancieres" name="chargesFinancieres" required>
+                </div>
+                <button type="button" id="simulateResultatBtn" class="submit-btn">Calculer</button>
+            </form>
+    
+            <div id="resultContainerResultat" class="result-container" style="display: none;">
+                <h2>Résultat de la simulation</h2>
+                <ul class="result-list">
+                    <li>Résultat fiscal : <strong id="resultatFiscal"></strong> €</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div>
 </div>
 
+
 <script>
+    document.getElementById('simulateResultatBtn').addEventListener('click', function() {
+        const produits = parseFloat(document.getElementById('produits').value);
+        const chargesExploitation = parseFloat(document.getElementById('chargesExploitation').value);
+        const amortissements = parseFloat(document.getElementById('amortissements').value);
+        const produitsFinanciers = parseFloat(document.getElementById('produitsFinanciers').value);
+        const chargesFinancieres = parseFloat(document.getElementById('chargesFinancieres').value);
+
+
+        if (isNaN(produits) || isNaN(chargesExploitation) || isNaN(amortissements) || isNaN(produitsFinanciers) || isNaN(chargesFinancieres)) {
+            console.error("Une ou plusieurs valeurs d'entrée sont invalides.");
+            return;
+        }
+        const resultatFiscal = produits - chargesExploitation - amortissements + produitsFinanciers - chargesFinancieres;
+
+        document.getElementById('resultContainerResultat').style.display = 'block';
+        document.getElementById('resultatFiscal').textContent = resultatFiscal.toFixed(2);
+    });
+
+document.getElementById('simulateTvaBtn').addEventListener('click', function() {
+        const ventesHt = parseFloat(document.getElementById('ventesHt').value);
+        const achatsHt = parseFloat(document.getElementById('achatsHt').value);
+        const tauxTva = parseFloat(document.getElementById('tauxTva').value) / 100;
+        if (isNaN(ventesHt) || isNaN(achatsHt) || isNaN(tauxTva)) {
+            console.error("Une ou plusieurs valeurs d'entrée sont invalides.");
+            return;
+        }
+
+        const tvaCollectee = ventesHt * tauxTva;
+        const tvaDeductible = achatsHt * tauxTva;
+        const tvaAReverser = tvaCollectee - tvaDeductible;
+        document.getElementById('resultContainerTva').style.display = 'block';
+        document.getElementById('tvaCollectee').textContent = tvaCollectee.toFixed(2);
+        document.getElementById('tvaDeductible').textContent = tvaDeductible.toFixed(2);
+        document.getElementById('tvaAReverser').textContent = tvaAReverser.toFixed(2);
+    });
+
+    document.getElementById('simulateChargesBtn').addEventListener('click', function() {
+        console.log("simulate");
+        const salaireBrut = parseFloat(document.getElementById('salaireBrut').value);
+        const typeContrat = document.getElementById('typeContrat').value;
+        const nombreEmployes = parseInt(document.getElementById('nombreEmployes').value);
+
+        let tauxCharges;
+        if (typeContrat === 'CDI') {
+            tauxCharges = 0.25;
+        } else if (typeContrat === 'CDD') {
+            tauxCharges = 0.30;
+        } else if (typeContrat === 'Freelance') {
+            tauxCharges = 0.15;
+        }
+
+        const chargesMensuelles = salaireBrut * tauxCharges;
+        const chargesTotales = chargesMensuelles * nombreEmployes;
+
+        document.getElementById('chargesTotales').textContent = chargesTotales.toFixed(2);
+        document.getElementById('resultContainer4').style.display = 'block';
+    });
+
+
     document.getElementById('simulateImmoBtn').addEventListener('click', function () {
         const capital = parseFloat(document.getElementById('capital').value);
         const taux = parseFloat(document.getElementById('taux').value) / 100 / 12;
@@ -139,7 +320,6 @@
         const apport = parseFloat(document.getElementById('apport').value) || 0;
         const assurance = parseFloat(document.getElementById('assurance').value) / 100 || 0;
 
-        // Calculs
         const capitalEmprunte = capital - apport;
         const mensualite = (capitalEmprunte * taux * Math.pow(1 + taux, duree)) / 
                           (Math.pow(1 + taux, duree) - 1);
@@ -147,13 +327,11 @@
         const assuranceMensuelle = (capitalEmprunte * assurance) / 12;
         const mensualiteTotale = mensualite + assuranceMensuelle;
 
-        // Afficher les résultats
-        document.getElementById('capitalEmprunte').textContent = capitalEmprunte.toFixed(2);
-        document.getElementById('mensualite').textContent = mensualite.toFixed(2);
-        document.getElementById('totalInterets').textContent = totalInterets.toFixed(2);
-        document.getElementById('mensualiteTotale').textContent = mensualiteTotale;
+        document.getElementById('capitalEmprunte').textContent = Math.round(capitalEmprunte);
+        document.getElementById('mensualite').textContent = Math.round(mensualite);
+        document.getElementById('totalInterets').textContent = Math.round(totalInterets);
+        document.getElementById('mensualiteTotale').textContent = Math.round(mensualiteTotale);
 
-        // Afficher la section des résultats
         document.getElementById('resultContainer').style.display = 'block';
     });
 
@@ -222,7 +400,6 @@
     // Formule pour la capacité d'emprunt
     const capaciteEmprunt = mensualiteMaximale / (tauxMensuel * Math.pow(1 + tauxMensuel, N) / (Math.pow(1 + tauxMensuel, N) - 1));
     console.log(capaciteEmprunt); 
-    // Afficher les résultats
     document.getElementById('resultContainer2').style.display = 'block';
 
     document.getElementById('capaciteEmprunt').textContent = capaciteEmprunt.toFixed(2);
@@ -245,6 +422,7 @@
 
         button.classList.add('active');
         document.getElementById(targetTab).classList.add('active');
+        
         });
     });
     });
