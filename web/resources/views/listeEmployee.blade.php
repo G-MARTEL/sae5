@@ -15,9 +15,10 @@
             <h1>Liste des employés</h1>
             <button id="open-popup-btn" class="btn-primary">Créer un profil d'employé</button>
         </header>
-
         <section class="list-section">
+            <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
             <div class="grid-container">
+                
                 @foreach ($listeEmployees as $employee)
                     <div class="grid-item">
                         <div class="content">

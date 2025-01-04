@@ -19,6 +19,7 @@
         </header>
 
         <section class="list-section">
+            <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
             <div class="grid-container">
                 @foreach ($listePresta as $presta)
                     <div class="grid-item">

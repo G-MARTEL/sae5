@@ -6,10 +6,25 @@ body {
   padding: 0;
 }
 
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 6px;
+  font-size: 16px;
+  color: #333;
+  object-fit: contain;
+  cursor: pointer;
+}
+
 h1, h2 {
   text-align: center;
   color: rgb(40.0165680473, 113.6834319527, 111.8644970414);
   margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 button {
@@ -17,7 +32,7 @@ button {
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 10px 15px;
+  padding: 6px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
@@ -136,8 +151,12 @@ button:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 .list-section .grid-item strong {
-  display: block;
   margin-bottom: 5px;
+}
+
+header button {
+  padding: 15px !important;
+  font-size: 18px;
 }
 
 form {
@@ -154,6 +173,19 @@ form .envoyee:hover {
 #open-popup-btn {
   display: block;
   margin: 2rem auto;
+}
+
+a {
+  color: #2c7d7b;
+  text-decoration: none;
+}
+
+.back-link {
+  padding-left: 1em;
+  color: #2c7d7b;
+}
+.back-link:hover {
+  color: rgb(40.0165680473, 113.6834319527, 111.8644970414);
 }
 
 @media (max-width: 768px) {

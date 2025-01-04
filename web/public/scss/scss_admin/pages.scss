@@ -15,10 +15,28 @@ body {
   padding: 0;
 }
 
+select {
+  appearance: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 6px;
+  font-size: 16px;
+  color: #333;
+  //width: 200px;
+  object-fit: contain ;
+  cursor: pointer;
+}
+
+
+
 h1, h2 {
   text-align: center;
   color: $vert-fonce;
   margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 button {
@@ -26,7 +44,7 @@ button {
   color: #fff;
   border: none;
   border-radius: $border-radius;
-  padding: 10px 15px;
+  padding: 6px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
@@ -157,22 +175,26 @@ button {
       padding: 15px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s, box-shadow 0.3s;
-
+      //max-width: 33%;
       display: flex;
       align-items: center;
   
-      &:hover {
+      &:hover { 
         transform: scale(1.03);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       }
   
       strong {
-        display: block;
+       // display: block;
         margin-bottom: 5px;
       }
     }
   }
-  
+
+  header button {
+    padding: 15px !important;
+    font-size: 18px;
+  }
 
 // Formulaires
 form {
@@ -193,6 +215,21 @@ form {
   display: block;
   margin: 2rem auto;
 }
+
+a {
+  color : $vert;
+  text-decoration: none;
+}
+
+
+.back-link {
+  padding-left: 1em;
+  color: $vert;
+  &:hover {
+      color: $vert-fonce; 
+  }
+}
+
 
 // Responsive design
 @media (max-width: 768px) {
