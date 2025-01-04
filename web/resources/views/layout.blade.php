@@ -24,10 +24,10 @@
             @if (Session::has('role'))
                 @if (Session::get('role') === 'client')
                     <a href="{{ route('client.accueil') }}"><button>Profil</button></a>
-                    <a href="{{ route('client.messagerie') }}"><button>messagerie</button></a>
+                    <a href="{{ route('client.messagerie') }}"><button>Messagerie</button></a>
                 @elseif (Session::get('role') === 'employee')
                     <a href="{{ route('employees.accueil') }}"><button>Espace Employé</button></a>
-                    <a href="{{ route('admin.accueil') }}"><button>messagerie</button></a>
+                    <a href="{{ route('admin.accueil') }}"><button>Messagerie</button></a>
                 @elseif (Session::get('role') === 'admin')
                     <a href="{{ route('admin.accueil') }}"><button>Espace Admin</button></a>
                 @endif
