@@ -1,0 +1,293 @@
+@use 'sass:color';
+@import "../scss_base/variables.scss";
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  .tab-container {
+    max-width: 1200px;
+    height: 90vh;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+  
+      .tab-button {
+        flex: 1;
+        padding: 10px 20px;
+        background: #e9ecef;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: #495057;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s, color 0.3s;
+  
+        &.active {
+          background: #fff;
+          border-bottom: 2px solid $orange;
+          color: $vert;
+        }
+  
+        &:hover {
+          background: #dee2e6;
+        }
+      }
+    }
+  
+    .tab-content {
+      .tab-pane {
+        display: none;
+        p {
+            margin-bottom: 0;
+        }
+  
+        &.active {
+          display: block;
+        }
+  
+        h2 {
+          font-size: 1.5em;
+          margin-bottom: 20px;
+          color: $vert;
+        }
+  
+        .simulator-container {
+          display: flex;
+          justify-content: space-between;
+  
+          .simulator-form {
+            flex: 1;
+            max-width: 45%;
+            padding: 20px;
+            border-right: 1px solid #e9ecef;
+  
+            .form-group {
+              margin-bottom: 15px;
+  
+              label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #495057;
+              }
+  
+              input {
+                width: 70%;
+                padding: 10px;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+                font-size: 1em;
+                color: #495057;
+  
+                &:focus {
+                  border-color: $vert;
+                  outline: none;
+                }
+              }
+            }
+  
+            .submit-btn {
+              display: inline-block;
+              padding: 10px 20px;
+              background: $vert;
+              color: #fff;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 1em;
+              transition: background-color 0.3s;
+  
+              &:hover {
+                background: $vert-fonce;
+              }
+            }
+          }
+  
+          .result-container {
+            flex: 1;
+            max-width: 45%;
+            padding: 20px;
+  
+            h2 {
+              font-size: 1.5em;
+              margin-bottom: 20px;
+              color: #212529;
+            }
+  
+            .result-list {
+              list-style: none;
+              padding: 0;
+  
+              li {
+                margin-bottom: 10px;
+                font-size: 1em;
+                color: #495057;
+  
+                strong {
+                  color: #212529;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+
+
+// .tab-container {
+//     .tabs {
+//       display: flex;
+//       margin-bottom: 10px;
+  
+//       .tab-button {
+//         padding: 10px 20px;
+//         background-color: #f0f0f0;
+//         border: 1px solid #ccc;
+//         cursor: pointer;
+//         flex: 1; // Les boutons d'onglets occupent un espace équitable
+//         text-align: center;
+//         transition: background-color 0.3s ease;
+  
+//         &.active {
+//           background-color: #ddd;
+//           font-weight: bold;
+//           border-bottom: 2px solid #007BFF; // Style distinct pour l'onglet actif
+//         }
+  
+//         &:hover {
+//           background-color: #e0e0e0;
+//         }
+//       }
+//     }
+  
+//     .tab-content {
+//       border: 1px solid #ccc;
+//       padding: 20px;
+  
+//       .tab-pane {
+//         display: none; // Masque les onglets par défaut
+//       }
+  
+//       .tab-pane.active {
+//         display: block; // Affiche uniquement l'onglet actif
+//       }
+//     }
+//   }
+  
+
+
+
+
+// // $primary-color: #007bff;
+// // $secondary-color: #f8f9fa;
+// // $background-color: #ffffff;
+// // $text-color: #343a40;
+
+// // body {
+// //     background-color: $secondary-color;
+// //     font-family: Arial, sans-serif;
+// // }
+
+// // .simulator-container {
+    
+// //    // max-width: 600px; 
+// //     //margin: 50px auto; 
+// //     margin-bottom: 50px;
+// //     padding: 20px; 
+// //     padding-top: 75px;
+// //     background-color: $background-color; 
+// //     border-radius: 8px; 
+// //     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+// //     h1 {
+// //         text-align: center; 
+// //         color: $text-color; 
+// //         margin-bottom: 20px; 
+// //     }
+
+// //     .simulator-form {
+// //         .form-group {
+// //             margin-bottom: 15px; 
+
+// //             label {
+// //                 display: block; 
+// //                 margin-bottom: 5px; 
+// //                 color: $text-color; 
+// //             }
+
+// //             input {
+// //                 width: 100%; 
+// //                 padding: 10px; 
+// //                 border: 1px solid #ccc; 
+// //                 border-radius: 4px; 
+// //                 transition: border-color 0.3s;
+
+// //                 &:focus {
+// //                     border-color: $primary-color; 
+// //                     outline: none; 
+// //                 }
+// //             }
+// //         }
+
+// //         .submit-btn {
+// //             display: block; 
+// //             width: 100%; 
+// //             padding: 10px; 
+// //             background-color: $primary-color; 
+// //             color: #ffffff; 
+// //             border: none; 
+// //             border-radius: 4px; 
+// //             cursor: pointer; 
+// //             transition: background-color 0.3s;
+
+// //             &:hover {
+// //                 //background-color: darken($primary-color, 10%); 
+// //             }
+// //         }
+// //     }
+
+// //     .result-container {
+// //         margin-top: 20px; 
+// //         padding: 15px; 
+// //         background-color: #e9ecef; 
+// //         border-radius: 8px; 
+// //         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+
+// //         h2 {
+// //             text-align: center; 
+// //             color: $text-color; 
+// //             margin-bottom: 15px; 
+// //         }
+
+// //         .result-list {
+// //             list-style-type: none; 
+// //             padding: 0; 
+
+// //             li {
+// //                 padding: 10px; 
+// //                 border-bottom: 1px solid #ccc; 
+                
+// //                 &:last-child {
+// //                     border-bottom: none; 
+// //                 }
+
+// //                 strong {
+// //                     color: $primary-color; 
+// //                 }
+// //             }
+// //         }
+// //     }
+// // }
