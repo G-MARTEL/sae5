@@ -1,0 +1,82 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+body .container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+body .container .form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+body .container .form-row .form-group {
+  width: 48%;
+  padding: 0 1%;
+}
+body .container .form-row .form-group label {
+  display: block;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+body .container .form-row .form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+body .container button[type=submit] {
+  width: 100%;
+  padding: 12px;
+  background-color: #2c7d7b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+body .container button[type=submit]:hover {
+  background-color: rgb(30, 87, 85);
+}
+body .container .error-message,
+body .container .alert-danger {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+}
+body .container .error-message.error-message,
+body .container .alert-danger.error-message {
+  background-color: #fdecea;
+  color: #d32f2f;
+}
+body .container .error-message.alert-danger,
+body .container .alert-danger.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/*# sourceMappingURL=page_creation.css.map */
