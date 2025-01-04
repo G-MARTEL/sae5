@@ -13,5 +13,6 @@ $blanc-casse : #f9fafb;
 $blanc : white;
 $vert-clair: #d4ebeb;
 $gris : color.adjust($blanc-casse, $lightness: -3%);
+$vert-fonce: color.adjust($vert, $lightness: -3%);
 
 $ombre :  0px 4px 6px rgba(0, 0, 0, 0.3);

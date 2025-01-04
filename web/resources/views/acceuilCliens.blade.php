@@ -86,7 +86,7 @@
             @if (isset($clientData['employee']))
             <div class="colonne">
                     <h3>Mon conseiller</h3>
-                    <img src="{{ asset($clientData['employee']->picture) }}" alt="Photo de l'équipe">
+                    <img src="{{ asset($clientData['employee']->picture) }}" alt="{{$clientData['employee']->first_name}} {{ $clientData['employee']->last_name }} ">
                     <ul>
                         <li>{{ $clientData['employee']->first_name }}</li>
                         <li>{{ $clientData['employee']->last_name }}</li>
