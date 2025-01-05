@@ -1,5 +1,5 @@
 @extends('layout')
-
+<title>{{$prestation->title}}</title>
 @section('styles')
 <link rel="stylesheet" href="{{ asset('/css/prestation.css') }}"/>
 @endsection
