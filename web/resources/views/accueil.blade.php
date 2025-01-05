@@ -1,5 +1,5 @@
 @extends('layout')
-
+<title>Accueil</title>
 @section('styles')
 @endsection
 

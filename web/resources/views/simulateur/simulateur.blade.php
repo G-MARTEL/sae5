@@ -1,5 +1,6 @@
 @extends('layout')
 
+<title>Simulateurs</title>
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/simulateur/pages.css') }}">

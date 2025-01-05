@@ -1,5 +1,5 @@
 @extends('layout')
-
+<title>Faire un devis</title>
 @section('styles')
 @endsection
 

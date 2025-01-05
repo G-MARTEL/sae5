@@ -1,5 +1,5 @@
 @extends('layout')
-
+<title>Votre profil</title>
 @section('styles')
 <link rel="stylesheet" href="{{ asset('/css/espace_client.css') }}"/>
 @endsection

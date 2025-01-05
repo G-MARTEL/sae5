@@ -1,5 +1,5 @@
 @extends('layout')
-
+<title>Nos prestations</title>
 @section('styles')
 <link rel="stylesheet" href="./css/prestations.css"/>
 @endsection
