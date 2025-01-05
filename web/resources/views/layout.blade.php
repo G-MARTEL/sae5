@@ -31,7 +31,7 @@
                 @elseif (Session::get('role') === 'admin')
                     <a href="{{ route('admin.accueil') }}"><button>Espace Admin</button></a>
                 @endif
-                <a href="{{ route('logout') }}"><button>Déconnexion</button></a>
+                <a href="{{ route('logout') }}"><button style="background-color: #da4837; hover:">Déconnexion</button></a>
             @else
                 <a href="{{ route('login') }}"><button>Connexion</button></a>
             @endif
