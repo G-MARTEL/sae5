@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
 
-    "build-css": "sass --watch public/scss/scss_base/main.scss:public/css/styles.css --watch public/scss/scss_pages:public/css --watch public/scss/scss_admin:public/css/admin --watch public/scss/scss_employee:public/css/employee --watch public/scss/scss_connexion:public/css/connexion --watch public/scss/scss_documents:public/css/documents --watch public/scss/scss_messagerie:public/css/messagerie"    
+    "build-css": "sass --watch public/scss/scss_base/main.scss:public/css/styles.css --watch public/scss/scss_pages:public/css --watch public/scss/scss_admin:public/css/admin --watch public/scss/scss_employee:public/css/employee --watch public/scss/scss_connexion:public/css/connexion --watch public/scss/scss_documents:public/css/documents --watch public/scss/scss_messagerie:public/css/messagerie --watch public/scss/scss_simulateur:public/css/simulateur"    
   },
   "devDependencies": {
     "axios": "^1.7.4",

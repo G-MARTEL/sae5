@@ -117,7 +117,7 @@ Route::get('/logout', function () {
 
 
 Route::get('/simulateur-pret', [PretImmobilierController::class, 'index'])->name('simulateur-pret-form');
-Route::post('/simulateur-pret', [PretImmobilierController::class, 'simulate'])->name('simulateur-pret');
+Route::post('/simulateur-pret', [PretImmobilierController::class, 'simulateImmo'])->name('simulateImmo');
 
 
 Route::post('/client/upload-document', [ClientController::class, 'uploadDocument'])->name('client.upload.document');
