@@ -5,6 +5,8 @@
     <title>Gestion des employés</title>
     <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="{{ asset('css/admin/pages.css') }}">
+    <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
+
 
 
     <script src="{{asset('./js/pop-up.js')}}"></script>

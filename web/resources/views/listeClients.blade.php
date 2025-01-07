@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ asset('css/admin/pages.css') }}"/>
+        <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
+
         <title>Gestion des clients</title>
      </head>
 <body>

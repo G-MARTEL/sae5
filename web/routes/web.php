@@ -33,6 +33,10 @@ Route::fallback(function () {
     return redirect('/');
 });
 
+Route::get('/accueil2', function () {
+    return view('accueil');
+})->name('accueil2');
+
 Route::get('acceuil', function () {return view('accueil');});
 
 Route::get('qui-sommes-nous', function () {
