@@ -103,11 +103,13 @@
 //rajouts 
 document.addEventListener('DOMContentLoaded', () => {
     // Écouteur d'événements pour le formulaire d'envoi de message
+    refreshMessages();
+    scrollToBottom();
     document.querySelector('.message-form').addEventListener('submit', function(event) {
         event.preventDefault(); // Empêche le rechargement de la page
 
         const messageContent = document.querySelector('#message').value;
-
+       
         // Vérifiez si le message n'est pas vide
         if (messageContent.trim() !== '') {
             sendMessage(messageContent).then(() => {
