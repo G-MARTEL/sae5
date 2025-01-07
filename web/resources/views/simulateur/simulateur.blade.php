@@ -26,14 +26,14 @@
     </div>
     <h3>Vous êtes un particulier ?</h3>
     <div class="tabs">
-      <button class="tab-button active" data-tab="simulator1">Emprunt</button>
+      <button class="tab-button active" data-tab="simulator1">Impôt sur le revenu</button>
       <button class="tab-button" data-tab="simulator2">Epargne</button>
       <button class="tab-button" data-tab="simulator3">Capacité d'emprunt</button>
     </div>
   
     <!-- Contenus des simulateurs -->
     <div class="tab-content">
-      <div class="tab-pane active" id="simulator1">
+      {{-- <div class="tab-pane active" id="simulator1">
         <h2>Simulateur d'emprunt immobilier</h2>
         <p>Obtenez toutes les informations souhaitées sur les montants de votre prêt : mensualités, coût d'assurance, somme totale...</p>
         <div class="simulator-container">
@@ -71,7 +71,45 @@
                 </ul>
             </div>
         </div>
-      </div>
+      </div> --}}
+      <div class="tab-pane active" id="simulator1">
+        <h2>Simulateur d'impôt sur le revenu</h2>
+        <p>Estimez le montant de votre impôt sur le revenu en fonction de votre situation personnelle.</p>
+        <div class="simulator-container">
+            <form id="simulateurImpotsForm" class="simulator-form">
+                <div class="form-group">
+                    <label for="revenuAnnuel">Revenu annuel imposable (€)</label>
+                    <input type="number" id="revenuAnnuel" name="revenuAnnuel" required>
+                </div>
+                <div class="form-group">
+                    <label for="situationFamiliale">Situation familiale</label>
+                    <select id="situationFamiliale" name="situationFamiliale" required>
+                        <option value="1">Célibataire</option>
+                        <option value="2">Marié/Pacsé</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nombreEnfants">Nombre d'enfants à charge</label>
+                    <input type="number" id="nombreEnfants" name="nombreEnfants" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="deductions">Déductions fiscales (€)</label>
+                    <input type="number" id="deductions" name="deductions" value="0">
+                </div>
+                <button type="button" id="simulateImpotsBtn" class="submit-btn">Calculer</button>
+            </form>
+    
+            <div id="resultImpotsContainer" class="result-container" style="display: none;">
+                <h2>Résultat de la simulation</h2>
+                <ul class="result-list">
+                    <li>Revenu imposable : <strong id="revenuImposable"></strong> €</li>
+                    <li>Nombre de parts fiscales : <strong id="partsFiscales"></strong></li>
+                    <li>Impôt brut : <strong id="impotBrut"></strong> €</li>
+                    <li>Impôt net après déductions : <strong id="impotNet"></strong> €</li>
+                </ul>
+            </div>
+        </div>
+    </div>
       <div class="tab-pane" id="simulator2">
         <h2>Simulateur d'épargne</h2>
         <p>Calculez ce que vous rapporterai un placement avec capitalisation composée.</p>
@@ -214,7 +252,7 @@
         </div>
     </div>
 
-    {{-- <div class="tab-pane" id="simulator6">
+    <div class="tab-pane" id="simulator6">
         <h2>Simulateur de Résultat Fiscal</h2>
         <p>Calculez votre résultat fiscal en prenant en compte les produits et charges de votre activité.</p>
         <div class="simulator-container">
@@ -249,46 +287,7 @@
                 </ul>
             </div>
         </div>
-    </div> --}}
-    <div class="tab-pane" id="simulator6">
-        <h2>Simulateur d'impôt sur le revenu</h2>
-        <p>Estimez le montant de votre impôt sur le revenu en fonction de votre situation personnelle.</p>
-        <div class="simulator-container">
-            <form id="simulateurImpotsForm" class="simulator-form">
-                <div class="form-group">
-                    <label for="revenuAnnuel">Revenu annuel imposable (€)</label>
-                    <input type="number" id="revenuAnnuel" name="revenuAnnuel" required>
-                </div>
-                <div class="form-group">
-                    <label for="situationFamiliale">Situation familiale</label>
-                    <select id="situationFamiliale" name="situationFamiliale" required>
-                        <option value="1">Célibataire</option>
-                        <option value="2">Marié/Pacsé</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="nombreEnfants">Nombre d'enfants à charge</label>
-                    <input type="number" id="nombreEnfants" name="nombreEnfants" value="0" required>
-                </div>
-                <div class="form-group">
-                    <label for="deductions">Déductions fiscales (€)</label>
-                    <input type="number" id="deductions" name="deductions" value="0">
-                </div>
-                <button type="button" id="simulateImpotsBtn" class="submit-btn">Calculer</button>
-            </form>
-    
-            <div id="resultImpotsContainer" class="result-container" style="display: none;">
-                <h2>Résultat de la simulation</h2>
-                <ul class="result-list">
-                    <li>Revenu imposable : <strong id="revenuImposable"></strong> €</li>
-                    <li>Nombre de parts fiscales : <strong id="partsFiscales"></strong></li>
-                    <li>Impôt brut : <strong id="impotBrut"></strong> €</li>
-                    <li>Impôt net après déductions : <strong id="impotNet"></strong> €</li>
-                </ul>
-            </div>
-        </div>
     </div>
-
 
   </div>
 </div>
@@ -322,14 +321,12 @@
     let trancheInf = 0; // Plafond inférieur (initialement 0)
 
     for (const tranche of bareme) {
-        if (revenuRestant <= 0) break;
-
-        const montantTranche = Math.min(revenuRestant, tranche.plafond - trancheInf);
-        impotParPart += montantTranche * tranche.taux;
-        revenuRestant -= montantTranche;
-
-        trancheInf = tranche.plafond; // Mettre à jour le plafond inférieur
-    }
+    if (revenuRestant <= 0) break;
+    const montantTranche = Math.min(revenuRestant, tranche.plafond - trancheInf);
+    impotParPart += montantTranche * tranche.taux;
+    revenuRestant -= montantTranche;
+    trancheInf = tranche.plafond;
+}
 
     // Calcul de l'impôt brut total
     const impotBrut = impotParPart * partsFiscales;
@@ -389,27 +386,27 @@ document.getElementById('simulateTvaBtn').addEventListener('click', function() {
     });
 
 
-    document.getElementById('simulateImmoBtn').addEventListener('click', function () {
-        const capital = parseFloat(document.getElementById('capital').value);
-        const taux = parseFloat(document.getElementById('taux').value) / 100 / 12;
-        const duree = parseInt(document.getElementById('duree').value) * 12;
-        const apport = parseFloat(document.getElementById('apport').value) || 0;
-        const assurance = parseFloat(document.getElementById('assurance').value) / 100 || 0;
+    // document.getElementById('simulateImmoBtn').addEventListener('click', function () {
+    //     const capital = parseFloat(document.getElementById('capital').value);
+    //     const taux = parseFloat(document.getElementById('taux').value) / 100 / 12;
+    //     const duree = parseInt(document.getElementById('duree').value) * 12;
+    //     const apport = parseFloat(document.getElementById('apport').value) || 0;
+    //     const assurance = parseFloat(document.getElementById('assurance').value) / 100 || 0;
 
-        const capitalEmprunte = capital - apport;
-        const mensualite = (capitalEmprunte * taux * Math.pow(1 + taux, duree)) / 
-                          (Math.pow(1 + taux, duree) - 1);
-        const totalInterets = (mensualite * duree) - capitalEmprunte;
-        const assuranceMensuelle = (capitalEmprunte * assurance) / 12;
-        const mensualiteTotale = mensualite + assuranceMensuelle;
+    //     const capitalEmprunte = capital - apport;
+    //     const mensualite = (capitalEmprunte * taux * Math.pow(1 + taux, duree)) / 
+    //                       (Math.pow(1 + taux, duree) - 1);
+    //     const totalInterets = (mensualite * duree) - capitalEmprunte;
+    //     const assuranceMensuelle = (capitalEmprunte * assurance) / 12;
+    //     const mensualiteTotale = mensualite + assuranceMensuelle;
 
-        document.getElementById('capitalEmprunte').textContent = Math.round(capitalEmprunte);
-        document.getElementById('mensualite').textContent = Math.round(mensualite);
-        document.getElementById('totalInterets').textContent = Math.round(totalInterets);
-        document.getElementById('mensualiteTotale').textContent = Math.round(mensualiteTotale);
+    //     document.getElementById('capitalEmprunte').textContent = Math.round(capitalEmprunte);
+    //     document.getElementById('mensualite').textContent = Math.round(mensualite);
+    //     document.getElementById('totalInterets').textContent = Math.round(totalInterets);
+    //     document.getElementById('mensualiteTotale').textContent = Math.round(mensualiteTotale);
 
-        document.getElementById('resultContainer').style.display = 'block';
-    });
+    //     document.getElementById('resultContainer').style.display = 'block';
+    // });
 
     document.getElementById("calculateSavingsBtn").addEventListener("click", function () {
     const initialCapital = parseFloat(document.getElementById("initialCapital").value);
@@ -502,6 +499,21 @@ document.getElementById('simulateTvaBtn').addEventListener('click', function() {
         });
     });
     });
+
+    const tabButtons = document.querySelectorAll('.tab-button');
+tabButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    const tabId = this.getAttribute('data-tab');
+    const tabPane = document.getElementById(tabId);
+    
+    if (tabPane) {
+      tabPane.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
 
 
 
