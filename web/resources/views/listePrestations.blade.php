@@ -18,11 +18,13 @@
             <button id="open-popup-btn" class="btn-primary">Ajouter une nouvelle prestation</button>
         </header>
 
+     
         <section class="list-section">
+            <input type="text" id="search-input" placeholder="Rechercher une prestation..." class="search-bar">
             <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
             <div class="grid-container">
                 @foreach ($listePresta as $presta)
-                    <div class="grid-item">
+                    <div class="grid-item" data-title="{{ $presta->title }}">
                         <div class="content">
                             <div class="details">
                                 <strong>ID :</strong> {{ $presta->service_id }}<br>
@@ -110,10 +112,12 @@
                 </form>
             </div>
         </div>
-  
+        <script src="{{asset('./js/recherche.js')}}"></script>
+
 </body>
 
 <script>
+
     document.getElementById('creationPrestation').addEventListener('submit', function(event) {
         const fileInput = document.getElementById('image');
         const maxSize = 2 * 1024 * 1024; // Taille maximale autorisée : 2 Mo

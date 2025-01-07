@@ -16,10 +16,11 @@
     </header>
 
     <section class="list-section">
+        <input type="text" id="search-input" placeholder="Rechercher un client..." class="search-bar">
         <a href="{{ route('employees.accueil') }}" class="back-link">Retourner vers le menu</a> 
         <div class="grid-container">
             @foreach ($clients as $client)
-                <div class="grid-item">
+                <div class="grid-item" data-title="{{ $client->account->last_name }}-{{ $client->account->first_name }}">
                     <div class="content">
                         <div class="details">
                             <strong>Prénom: </strong>{{ $client->account->last_name }}</br>
@@ -33,6 +34,7 @@
             @endforeach
         </div>
     </section>
+    <script src="{{asset('./js/recherche.js')}}"></script>
 </body>
 
 {{-- <div class="employee-clients">
