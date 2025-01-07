@@ -17,46 +17,103 @@
         </header>
         <section class="list-section">
             <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
+            <h1>Comptes actifs </h1>
             <div class="grid-container">
-                
                 @foreach ($listeEmployees as $employee)
-                    <div class="grid-item">
-                        <div class="content">
-                            <div class="details">
-                                <p>
-                                    <strong>Nom :</strong> {{ $employee->Account->last_name }},
-                                    <strong>Prénom :</strong> {{ $employee->Account->first_name }}
-                                </p>
-                                <form action="modifEmployee" method="post" class="form-inline">
-                                @csrf
-                                <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
-                                <select name="Funtions_id" id="Functions">
-                                    @php
-                                    if ($employee->FK_function_id == null)
-                                    {
-                                        echo '<option value="">Aucun fonction associé</option>';
-                                    }
-                                    @endphp
-                                @foreach($listeFunction as $Functions)
-                                    <option value="{{ $Functions->function_id}}" 
-                                        {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
-                                        {{ $Functions->function_name }}
-                                    </option>
-                                @endforeach
-                                </select>
-                                <button type="submit" class="envoyee">Envoyer</button>
+                    @if ($employee->isActif)
+                        <div class="grid-item">
+                            <div class="content">
+                                <div class="details">
+                                    
+                                    <p>
+                                        <strong>Nom :</strong> {{ $employee->Account->last_name }},
+                                        <strong>Prénom :</strong> {{ $employee->Account->first_name }}
+                                    </p>
+                                    <form action="modifEmployee" method="post" class="form-inline">
+                                        @csrf
+                                        <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
+                                        <select name="Funtions_id" id="Functions">
+                                            @php
+                                            if ($employee->FK_function_id == null)
+                                            {
+                                                echo '<option value="">Aucun fonction associé</option>';
+                                            }
+                                            @endphp
+                                        @foreach($listeFunction as $Functions)
+                                            <option value="{{ $Functions->function_id}}" 
+                                                {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
+                                                {{ $Functions->function_name }}
+                                            </option>
+                                        @endforeach
+                                        </select>
+                                        <button type="submit" class="envoyee">Envoyer</button>
+                                    </form>
+                                </div>
+                                <div class="image">
+                                    @if ($employee->Account->picture)  
+                                        <img src="{{ asset($employee->Account->picture) }}" alt="{{ $employee->Account->first_name }}" class="prestation-image">
+                                    @else
+                                        <p>Aucune photo</p>
+                                    @endif
+                                </div>
+
+                                <form action="disableEmployees" method="post">
+                                    @csrf
+                                    <input type="hidden"  name="idEmployees" value="{{ $employee->employee_id }}">
+                                    <button type="submit">désactivé cette employee</button>
                                 </form>
-                            </div>
-                            <div class="image">
-                                @if ($employee->Account->picture)  
-                                    <img src="{{ asset($employee->Account->picture) }}" alt="{{ $employee->Account->first_name }}" class="prestation-image">
-                                @else
-                                    <p>Aucune photo</p>
-                                @endif
+                                
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
+                
+            </div>
+            <h1>Comptes désactivés  </h1>
+            <div class="grid-container">
+            
+                @foreach ($listeEmployees as $employee)
+                    @if (!$employee->isActif)
+                        <div class="grid-item">
+                            <div class="content">
+                                <div class="details">
+                                    
+                                    <p>
+                                        <strong>Nom :</strong> {{ $employee->Account->last_name }},
+                                        <strong>Prénom :</strong> {{ $employee->Account->first_name }}
+                                    </p>
+                                    <form action="modifEmployee" method="post" class="form-inline">
+                                        @csrf
+                                        <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
+                                        <select name="Funtions_id" id="Functions">
+                                            @php
+                                            if ($employee->FK_function_id == null)
+                                            {
+                                                echo '<option value="">Aucun fonction associé</option>';
+                                            }
+                                            @endphp
+                                        @foreach($listeFunction as $Functions)
+                                            <option value="{{ $Functions->function_id}}" 
+                                                {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
+                                                {{ $Functions->function_name }}
+                                            </option>
+                                        @endforeach
+                                        </select>
+                                        <button type="submit" class="envoyee">Envoyer</button>
+                                    </form>
+                                </div>
+                                <div class="image">
+                                    @if ($employee->Account->picture)  
+                                        <img src="{{ asset($employee->Account->picture) }}" alt="{{ $employee->Account->first_name }}" class="prestation-image">
+                                    @else
+                                        <p>Aucune photo</p>
+                                    @endif
+                                </div>                          
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+                
             </div>
         </section>
 

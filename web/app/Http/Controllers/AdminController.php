@@ -199,28 +199,41 @@ class AdminController extends Controller
     }
 
 
-public function updatePrestation(Request $request)
-{
-    if (session('role') != 'admin') {
-        return redirect('/');
+    public function updatePrestation(Request $request)
+    {
+        if (session('role') != 'admin') {
+            return redirect('/');
+        }
+
+        $prestation = Services::findOrFail($request->input('service_id'));
+        $prestation->title = $request->input('titre');
+        $prestation->description = $request->input('description');
+        $prestation->advantage = $request->input('advantage');
+        $prestation->situations = $request->input('situation');
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagePath = 'assets/services/' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('assets/services'), $imagePath);
+            $prestation->picture = $imagePath;
+        }
+
+        $prestation->save();
+
+        return redirect()->back()->with('success', 'Prestation modifiée avec succès.');
     }
 
-    $prestation = Services::findOrFail($request->input('service_id'));
-    $prestation->title = $request->input('titre');
-    $prestation->description = $request->input('description');
-    $prestation->advantage = $request->input('advantage');
-    $prestation->situations = $request->input('situation');
+    function disableEmployees(Request $request)
+    {
+        $idEmployes = $request->idEmployees;
+        $employee = Employee::where('employee_id', $idEmployes)->first();
+        $employee->isActif = false;
+        $employee->save();
+        
+        Client::where('FK_employee_id', $idEmployes)->update(['FK_employee_id' => NULL]);
 
-    if ($request->hasFile('image') && $request->file('image')->isValid()) {
-        $imagePath = 'assets/services/' . $request->file('image')->getClientOriginalName();
-        $request->file('image')->move(public_path('assets/services'), $imagePath);
-        $prestation->picture = $imagePath;
+        return redirect()->back();
     }
 
-    $prestation->save();
-
-    return redirect()->back()->with('success', 'Prestation modifiée avec succès.');
-}
 
 
 
