@@ -17,10 +17,11 @@
     </header>
 
     <section class="list-section">
+        <input type="text" id="search-input" placeholder="Rechercher une conversation..." class="search-bar">
         <a href="{{ route('employees.accueil') }}" class="back-link">Retourner vers le menu</a> 
         <div class="grid-container">
             @foreach ($conversations as $conversation)
-                <div class="grid-item">
+                <div class="grid-item" data-title="{{ $conversation->client->Account->first_name}}-{{ $conversation->client->Account->last_name}}">
                     <div class="content">
                         <div class="details">
                             <p>
@@ -40,6 +41,8 @@
     </section>
 
 </div>
+<script src="{{asset('./js/recherche.js')}}"></script>
+
 
 
 

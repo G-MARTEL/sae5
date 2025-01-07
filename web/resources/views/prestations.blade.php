@@ -15,6 +15,8 @@
     <h1>Nos prestations</h1>
 </div>
 
+
+
 @foreach ($prestations as $prestation)
 
 <?php $texte = "{$prestation->description}" ;

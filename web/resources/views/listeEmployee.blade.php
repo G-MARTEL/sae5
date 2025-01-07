@@ -16,12 +16,13 @@
             <button id="open-popup-btn" class="btn-primary">Créer un profil d'employé</button>
         </header>
         <section class="list-section">
+            <input type="text" id="search-input" placeholder="Rechercher un employé..." class="search-bar">
             <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
             <h1>Comptes actifs </h1>
             <div class="grid-container">
                 @foreach ($listeEmployees as $employee)
                     @if ($employee->isActif)
-                        <div class="grid-item">
+                        <div class="grid-item" data-title="{{ $employee->Account->last_name}}-{{$employee->Account->first_name }}">
                             <div class="content">
                                 <div class="details">
                                     
@@ -48,6 +49,11 @@
                                         </select>
                                         <button type="submit" class="envoyee">Envoyer</button>
                                     </form>
+                                    <form action="disableEmployees" method="post">
+                                        @csrf
+                                        <input type="hidden"  name="idEmployees" value="{{ $employee->employee_id }}">
+                                        <button type="submit">Suspendre le compte</button>
+                                    </form>
                                 </div>
                                 <div class="image">
                                     @if ($employee->Account->picture)  
@@ -55,14 +61,7 @@
                                     @else
                                         <p>Aucune photo</p>
                                     @endif
-                                </div>
-
-                                <form action="disableEmployees" method="post">
-                                    @csrf
-                                    <input type="hidden"  name="idEmployees" value="{{ $employee->employee_id }}">
-                                    <button type="submit">désactivé cette employee</button>
-                                </form>
-                                
+                                </div> 
                             </div>
                         </div>
                     @endif
@@ -74,7 +73,7 @@
             
                 @foreach ($listeEmployees as $employee)
                     @if (!$employee->isActif)
-                        <div class="grid-item">
+                        <div class="grid-item" data-title="{{ $employee->Account->last_name}}-{{$employee->Account->first_name }}">
                             <div class="content">
                                 <div class="details">
                                     
@@ -165,6 +164,8 @@
             </div>
         </div>
     </div>
+
+    <script src="{{asset('./js/recherche.js')}}"></script>
 </body>
 
 
