@@ -126,5 +126,4 @@ class EmployeeController extends Controller
         // Redirection avec message de succès
         return redirect()->back()->with('success', 'Document créé avec succès !');
     }
-
 } 

@@ -40,8 +40,9 @@ class Autentification extends Controller
             // Vérification s'il s'agit d'un employé
             $employee = DB::table('employees')->where('FK_account_id', $account->account_id)->first();
             if ($employee) {
-                // Récupération de la fonction de l'employé
-                $function = Functions::where('function_id', $employee->FK_function_id)->first();
+                if ($employee->isActif)
+                {
+                    $function = Functions::where('function_id', $employee->FK_function_id)->first();
                 if ($function) {
 
                    $role= $function->function_name;
@@ -62,7 +63,9 @@ class Autentification extends Controller
                 
                 return redirect()->route('employee.accueil');
 
+                }
             }
+                
 
             // Vérification s'il s'agit d'un client
             $client = DB::table('clients')->where('FK_account_id', $account->account_id)->first();
