@@ -482,38 +482,44 @@ document.getElementById('simulateTvaBtn').addEventListener('click', function() {
 
 
 
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-        const targetTab = button.getAttribute('data-tab');
+            const targetTab = button.getAttribute('data-tab');
 
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabPanes.forEach(pane => pane.classList.remove('active'));
+            // Désactiver les onglets et sections actifs
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
 
-        button.classList.add('active');
-        document.getElementById(targetTab).classList.add('active');
-        
+            // Activer l'onglet et la section sélectionnés
+            button.classList.add('active');
+            const activePane = document.getElementById(targetTab);
+            activePane.classList.add('active');
+
+            // Faire défiler jusqu'à la section cible
+            activePane.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
-    });
-
-    const tabButtons = document.querySelectorAll('.tab-button');
-tabButtons.forEach(button => {
-  button.addEventListener('click', function() {
-    const tabId = this.getAttribute('data-tab');
-    const tabPane = document.getElementById(tabId);
-    
-    if (tabPane) {
-      tabPane.scrollIntoView({ behavior: 'smooth' });
-    }
-    
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    this.classList.add('active');
-  });
 });
+
+
+//     const tabButtons = document.querySelectorAll('.tab-button');
+// tabButtons.forEach(button => {
+//   button.addEventListener('click', function() {
+//     const tabId = this.getAttribute('data-tab');
+//     const tabPane = document.getElementById(tabId);
+    
+//     if (tabPane) {
+//       tabPane.scrollIntoView({ behavior: 'smooth' });
+//     }
+    
+//     tabButtons.forEach(btn => btn.classList.remove('active'));
+//     this.classList.add('active');
+//   });
+// });
 
 
 
