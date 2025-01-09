@@ -10,6 +10,7 @@ use App\Models\Account;
 use App\Models\Employee;
 use App\Models\Functions;
 use App\Models\Services;
+use App\Models\TeamServices;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -158,14 +159,58 @@ class AdminController extends Controller
 
     public function showListePrestations()
     {
-        if (session('role') != 'admin')
-        {
+        if (session('role') != 'admin') {
             Session::flush(); 
             return redirect('/');
         }
-        $listePresta= Services::all();
-        return view('listePrestations', ['listePresta' => $listePresta]);
+        $listePresta = Services::all();
+        $listeEmployees = Employee::all();
+        return view('listePrestations', ['listePresta' => $listePresta, 'listeEmployees' => $listeEmployees]);
     }
+    
+    public function getEmployeesForService($service_id)
+    {
+        // Charger les employés et leurs comptes associés
+        $employees = Employee::with('account')
+            ->get();
+    
+        // Récupérer les employés assignés
+        $assignedEmployees = TeamServices::where('FK_service_id', $service_id)
+            ->pluck('FK_employee_id')
+            ->toArray();
+        
+        return response()->json([
+            'assignedEmployees' => $assignedEmployees,
+            'employees' => $employees,  // Vous renvoyez les employés avec la relation 'account'
+        ]);
+    }
+    
+
+    ////a modif 
+    public function updateEmployees(Request $request)
+    {
+        $serviceId = $request->input('service_id');
+        $employeeIds = $request->input('employee_ids', []);  // Cela récupérera correctement les employés sélectionnés
+
+        
+        // Supprimer les anciens employés affectés
+        TeamServices::where('FK_service_id', $serviceId)->delete();
+        
+        // Vérifier si des employés ont été sélectionnés
+        if (!empty($employeeIds)) {
+            // Ajouter les nouveaux employés affectés
+            foreach ($employeeIds as $employeeId) {
+                TeamServices::create([
+                    'FK_service_id' => $serviceId,
+                    'FK_employee_id' => $employeeId
+                ]);
+            }
+        }
+    
+        return redirect()->back()->with('success', 'Les employés ont été mis à jour.');
+    }
+    
+    
 
     public function creationPrestation(Request $request)  
     {

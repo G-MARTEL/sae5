@@ -25,32 +25,38 @@
             <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
             <div class="grid-container">
                 @foreach ($listePresta as $presta)
-                    <div class="grid-item" data-title="{{ $presta->title }}">
-                        <div class="content">
-                            <div class="details">
-                                <strong>ID :</strong> {{ $presta->service_id }}<br>
-                                <strong>Nom :</strong> {{ $presta->title }}<br>
-                                <strong>Description :</strong> {{ $presta->description }}<br>
-                                <strong>Avantage :</strong> {{ $presta->advantage }}<br>
-                                <strong>Situation :</strong> {{ $presta->situations }}<br>
-                                <button class="btn-secondary open-modif-popup" data-id="{{ $presta->service_id }}" 
-                                    data-title="{{ $presta->title }}" 
-                                    data-description="{{ $presta->description }}" 
-                                    data-advantage="{{ $presta->advantage }}" 
-                                    data-situation="{{ $presta->situations }}" 
-                                    data-image="{{ $presta->picture }}">
-                                Modifier
+                <div class="grid-item">
+                    <div class="content">
+                        <div class="details">
+                            <!-- Détails de la prestation -->
+                            <strong>ID :</strong> {{ $presta->service_id }}<br>
+                            <strong>Nom :</strong> {{ $presta->title }}<br>
+                            <strong>Description :</strong> {{ $presta->description }}<br>
+                            <strong>Avantage :</strong> {{ $presta->advantage }}<br>
+                            <strong>Situation :</strong> {{ $presta->situations }}<br>
+                            <button class="btn-secondary open-modif-popup" data-id="{{ $presta->service_id }}" 
+                                data-title="{{ $presta->title }}" 
+                                data-description="{{ $presta->description }}" 
+                                data-advantage="{{ $presta->advantage }}" 
+                                data-situation="{{ $presta->situations }}" 
+                                data-image="{{ $presta->picture }}">
+                            Modifier
                             </button>
-                            </div>
-                            <div class="image">
-                                @if ($presta->picture)
-                                    <img src="{{ asset($presta->picture) }}" alt="{{ $presta->title }}" style="max-width: 90px; max-height: 90px;">
-                                    @else
-                                    <p>Aucune image</p>
-                                @endif
-                            </div>
-                        </div>                                
-                    </div>
+                            <!-- Nouveau bouton pour gérer les employés -->
+                            <button class="btn-secondary open-employee-popup" data-id="{{ $presta->service_id }}">
+                                Gérer les employés
+                            </button>
+                        </div>
+                        <div class="image">
+                            @if ($presta->picture)
+                                <img src="{{ asset($presta->picture) }}" alt="{{ $presta->title }}" style="max-width: 90px; max-height: 90px;">
+                            @else
+                                <p>Aucune image</p>
+                            @endif
+                        </div>
+                    </div>                                
+                </div>
+                
                 @endforeach
             </div>
         </section>
@@ -113,7 +119,25 @@
                 </form>
             </div>
         </div>
+
+
+
+        <div id="employee-pop-up" class="popup">
+            <div class="popup-content small">
+                <span id="close-employee-popup-btn" class="close-btn">&times;</span>
+                <h2>Gérer les employés</h2>
+                <form id="employeeForm" action="updateEmployees" method="POST">
+                    @csrf
+                    <input type="hidden" id="service-id" name="service_id">
+                    <div id="employee-list">
+                        <!-- La liste des employés sera injectée ici via JavaScript -->
+                    </div>
+                    <button type="submit" class="btn-submit">Enregistrer</button>
+                </form>
+            </div>
+        </div>
         <script src="{{asset('./js/recherche.js')}}"></script>
+
 
 </body>
 
@@ -172,6 +196,73 @@ document.getElementById('modif-pop-up').addEventListener('click', function(event
     if (event.target === this) {
         this.classList.remove('active');
     }
+});
+
+document.querySelectorAll('.open-employee-popup').forEach(button => {
+    button.addEventListener('click', async function () {  // Ajoutez 'async' ici
+        const serviceId = this.getAttribute('data-id');
+        document.getElementById('service-id').value = serviceId;
+
+        try {
+            // Charger la liste des employés avec await
+            const response = await fetch(`/admin/getEmployeesForService/${serviceId}`);
+            console.log("Réponse brute :", response);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();  // Attendez la réponse JSON
+            console.log('Réponse JSON :', data);  // Affiche la réponse JSON dans la console
+
+            // Vérifier si 'employees' et 'assignedEmployees' existent
+            if (Array.isArray(data.employees) && Array.isArray(data.assignedEmployees)) {
+                const employeeListContainer = document.getElementById('employee-list');
+                employeeListContainer.innerHTML = ''; // Clear the list before adding new employees
+
+                // Afficher les employés assignés (cases cochées)
+                data.employees.forEach(employee => {
+                    const employeeItem = document.createElement('div');
+                    employeeItem.classList.add('employee-item');
+
+                    // Créer une case à cocher
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = 'employee_ids[]'; // Changez ici
+                    checkbox.value = employee.employee_id; // L'ID de l'employé
+
+                    // Ajouter l'état de la case à cocher (cochez les employés assignés)
+                    checkbox.checked = data.assignedEmployees.includes(employee.employee_id); // Si l'employé est assigné
+
+                    // Créer une étiquette pour afficher le nom de l'employé
+                    const label = document.createElement('label');
+                    if (employee.account && employee.account.first_name && employee.account.last_name) {
+                        label.textContent = `${employee.account.first_name} ${employee.account.last_name}`;
+                    } else {
+                        label.textContent = 'Nom inconnu';  // Afficher un message par défaut si les infos sont manquantes
+                    }
+
+                    // Ajouter l'élément à la liste
+                    employeeItem.appendChild(checkbox);
+                    employeeItem.appendChild(label);
+                    employeeListContainer.appendChild(employeeItem);
+                });
+            }
+
+            // Afficher la popup
+            document.getElementById('employee-pop-up').style.display = 'block';
+
+        } catch (error) {
+            console.error('Erreur lors du chargement des employés :', error);
+            alert('Une erreur est survenue. Vérifiez que la route renvoie une réponse valide.');
+        }
+    });
+});
+
+
+// Fermer la popup
+document.getElementById('close-employee-popup-btn').addEventListener('click', function () {
+    document.getElementById('employee-pop-up').style.display = 'none';
 });
 
 

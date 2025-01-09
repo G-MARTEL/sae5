@@ -109,6 +109,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/listePrestations', [AdminController::class, 'showlistePrestations']);
     Route::post('/creationPrestation', [AdminController::class, 'creationPrestation']); 
     Route::post('/modifPrestation', [AdminController::class, 'updatePrestation'])->name('modifPrestation');
+    Route::get('/getEmployeesForService/{service_id}', [AdminController::class, 'getEmployeesForService']);
+    Route::post('/updateEmployees', [AdminController::class, 'updateEmployees']);
     Route::post('/disableEmployees', [AdminController::class, 'disableEmployees']);
 
 });
