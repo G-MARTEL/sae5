@@ -25,7 +25,6 @@
             <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
             <div class="grid-container">
                 @foreach ($listePresta as $presta)
-<<<<<<< HEAD
                 <div class="grid-item">
                     <div class="content">
                         <div class="details">
@@ -42,23 +41,6 @@
                                 data-situation="{{ $presta->situations }}" 
                                 data-image="{{ $presta->picture }}">
                             Modifier
-=======
-                    <div class="grid-item" data-title="{{ $presta->title }}">
-                        <div class="content">
-                            <div class="details">
-                                <strong>ID :</strong> {{ $presta->service_id }}<br>
-                                <strong>Nom :</strong> {{ $presta->title }}<br>
-                                <strong>Description :</strong> {{ $presta->description }}<br>
-                                <strong>Avantage :</strong> {{ $presta->advantage }}<br>
-                                <strong>Situation :</strong> {{ $presta->situations }}<br>
-                                <button class="btn-secondary open-modif-popup" data-id="{{ $presta->service_id }}" 
-                                    data-title="{{ $presta->title }}" 
-                                    data-description="{{ $presta->description }}" 
-                                    data-advantage="{{ $presta->advantage }}" 
-                                    data-situation="{{ $presta->situations }}" 
-                                    data-image="{{ $presta->picture }}">
-                                Modifier
->>>>>>> 0aa30a69bea6b84f55eba8ba9da5f5fb3503c514
                             </button>
                             <!-- Nouveau bouton pour gérer les employés -->
                             <button class="btn-secondary open-employee-popup" data-id="{{ $presta->service_id }}">
@@ -137,7 +119,6 @@
                 </form>
             </div>
         </div>
-<<<<<<< HEAD
 
 
 
@@ -155,13 +136,9 @@
                 </form>
             </div>
         </div>
-        
-        
-  
-=======
         <script src="{{asset('./js/recherche.js')}}"></script>
 
->>>>>>> 0aa30a69bea6b84f55eba8ba9da5f5fb3503c514
+
 </body>
 
 <script>
