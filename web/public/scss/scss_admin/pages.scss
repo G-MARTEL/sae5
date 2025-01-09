@@ -47,8 +47,8 @@ select {
 h1, h2 {
   text-align: center;
   color: $vert-fonce;
-  margin-bottom: 1.5rem;
-  margin-top: 1.5rem;
+  margin-bottom: 1.5rem !important;
+  margin-top: 1.5rem !important;
 }
 
 button {

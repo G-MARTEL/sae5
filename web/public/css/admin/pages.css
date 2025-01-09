@@ -34,8 +34,8 @@ select {
 h1, h2 {
   text-align: center;
   color: rgb(40.0165680473, 113.6834319527, 111.8644970414);
-  margin-bottom: 1.5rem;
-  margin-top: 1.5rem;
+  margin-bottom: 1.5rem !important;
+  margin-top: 1.5rem !important;
 }
 
 button {
