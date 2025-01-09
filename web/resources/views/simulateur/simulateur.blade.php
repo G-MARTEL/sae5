@@ -500,28 +500,11 @@ document.addEventListener('DOMContentLoaded', () => {
             activePane.classList.add('active');
 
             // Faire défiler jusqu'à la section cible
-            activePane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const targetPosition = activePane.getBoundingClientRect().top + window.scrollY - 200; // 100px de décalage
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
         });
     });
 });
-
-
-//     const tabButtons = document.querySelectorAll('.tab-button');
-// tabButtons.forEach(button => {
-//   button.addEventListener('click', function() {
-//     const tabId = this.getAttribute('data-tab');
-//     const tabPane = document.getElementById(tabId);
-    
-//     if (tabPane) {
-//       tabPane.scrollIntoView({ behavior: 'smooth' });
-//     }
-    
-//     tabButtons.forEach(btn => btn.classList.remove('active'));
-//     this.classList.add('active');
-//   });
-// });
-
-
 
 </script>
 

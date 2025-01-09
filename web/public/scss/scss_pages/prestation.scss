@@ -17,21 +17,23 @@
     &::after {
         content: '';
         position: absolute;
-        bottom: 0px; /* Ajustez cette valeur pour coller au bas de la section */
+        bottom: 0px; 
         left: 0;
         width: 100%;
-        height: 120px; /* Augmentez cette valeur pour ajuster l'inclinaison */
+        height: 120px; 
         background-color: #d4ebeb;
-        transform: skewY(+3deg); /* Ajustez l'angle de l'inclinaison */
+        transform: skewY(+3deg); 
         transform-origin: top left;
         z-index: -1;
     }
     .container-inner {
         padding-bottom: 0px;
+        padding-top: 20px;
         .colonnes {
             display: flex;
             flex-direction: row;
             align-items: flex-start;
+            justify-content: space-between;
             .colonne {
                 //flex: 1;
                 padding: 20px;
@@ -66,9 +68,14 @@
                         figure {
                             margin: 0;
                             img {
-                                width: auto;
-                                height: 150px;
+                                width: 120px;
+                                height: 120px;
                                 border-radius: 50%;
+                            }
+                            figcaption {
+                                margin-top: 6px;
+                                text-align: center;
+                                font-weight: bold;
                             }
                         }
                     }
@@ -83,6 +90,7 @@
     padding-bottom: 60px;
     text-align: center;
     .container-inner{
+        padding-top: 20px;
         .colonnes{
             display: flex;
             flex-direction: row;

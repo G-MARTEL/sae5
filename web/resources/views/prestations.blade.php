@@ -46,3 +46,20 @@ if (strlen($texte) > 150) {
 @endforeach
 
 @endsection
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const images = document.querySelectorAll("#prestations-2 .colonne:nth-child(2) img");
+
+    images.forEach(img => {
+        const r = Math.floor(Math.random() * 56) + 200; 
+        const g = Math.floor(Math.random() * 56) + 200; 
+        const b = Math.floor(Math.random() * 56) + 200; 
+
+        const pastelColor = `rgb(${r}, ${g}, ${b})`; 
+        img.style.backgroundColor = pastelColor; 
+    });
+});
+
+
+</script>

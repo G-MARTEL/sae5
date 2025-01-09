@@ -84,7 +84,7 @@ button {
 
   .popup-content {
     background-color: #fff;
-    padding: 2rem;
+    padding: 1rem;
     border-radius: $border-radius;
     width: 90%;
     max-width: 400px;
@@ -95,7 +95,7 @@ button {
 
     h2 { 
       color: $vert;
-      margin-bottom: 1.5rem;
+      //margin-bottom: 1.5rem;
     }
 
     form {
@@ -105,7 +105,7 @@ button {
 
       label {
         font-weight: bold;
-        margin-bottom: 0.5rem;
+        //margin-bottom: 0.5rem;
       }
 
       input, select {
@@ -113,7 +113,7 @@ button {
         border-radius: $border-radius;
         padding: 8px;
         font-size: 16px;
-        width: 100%;
+        //width: 100%;
       }
 
       button[type="submit"] {
@@ -138,8 +138,27 @@ button {
         color: $vert-fonce;
       }
     }
+
+    .employee-item {
+      display: flex;
+      align-items: center; 
+      gap: 0.5rem; 
+      margin-bottom: 0.5rem; 
+  
+      input[type="checkbox"] {
+        margin: 0; 
+      }
+  
+      label {
+        margin: 0; 
+        font-size: 1rem; 
+      }
+    }
+
+
   }
 }
+
 
 
 .list-section {

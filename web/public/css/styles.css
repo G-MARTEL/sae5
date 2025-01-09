@@ -28,7 +28,7 @@ body h2 {
 }
 .container > .container-inner {
   margin: 0 auto;
-  padding: 80px 60px;
+  padding: 30px 60px;
   box-sizing: border-box;
 }
 .container > .container-inner .container, .container > .container-inner .container-inner {
@@ -286,6 +286,9 @@ body h2 {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+#contact.container .container-inner {
+  padding: 100px 60px 20px;
 }
 #contact.container .container-inner .colonnes {
   width: 100%;

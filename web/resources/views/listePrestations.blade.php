@@ -25,7 +25,7 @@
             <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
             <div class="grid-container">
                 @foreach ($listePresta as $presta)
-                <div class="grid-item">
+                <div class="grid-item" data-title="{{ $presta->title }}">
                     <div class="content">
                         <div class="details">
                             <!-- Détails de la prestation -->
@@ -136,12 +136,15 @@
                 </form>
             </div>
         </div>
+
+
         <script src="{{asset('./js/recherche.js')}}"></script>
 
 
 </body>
 
 <script>
+
 
     document.getElementById('creationPrestation').addEventListener('submit', function(event) {
         const fileInput = document.getElementById('image');
