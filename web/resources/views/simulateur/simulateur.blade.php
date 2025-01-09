@@ -26,14 +26,14 @@
     </div>
     <h3>Vous êtes un particulier ?</h3>
     <div class="tabs">
-      <button class="tab-button active" data-tab="simulator1">Emprunt</button>
+      <button class="tab-button active" data-tab="simulator1">Impôt sur le revenu</button>
       <button class="tab-button" data-tab="simulator2">Epargne</button>
       <button class="tab-button" data-tab="simulator3">Capacité d'emprunt</button>
     </div>
   
     <!-- Contenus des simulateurs -->
     <div class="tab-content">
-      <div class="tab-pane active" id="simulator1">
+      {{-- <div class="tab-pane active" id="simulator1">
         <h2>Simulateur d'emprunt immobilier</h2>
         <p>Obtenez toutes les informations souhaitées sur les montants de votre prêt : mensualités, coût d'assurance, somme totale...</p>
         <div class="simulator-container">
@@ -71,7 +71,45 @@
                 </ul>
             </div>
         </div>
-      </div>
+      </div> --}}
+      <div class="tab-pane active" id="simulator1">
+        <h2>Simulateur d'impôt sur le revenu</h2>
+        <p>Estimez le montant de votre impôt sur le revenu en fonction de votre situation personnelle.</p>
+        <div class="simulator-container">
+            <form id="simulateurImpotsForm" class="simulator-form">
+                <div class="form-group">
+                    <label for="revenuAnnuel">Revenu annuel imposable (€)</label>
+                    <input type="number" id="revenuAnnuel" name="revenuAnnuel" required>
+                </div>
+                <div class="form-group">
+                    <label for="situationFamiliale">Situation familiale</label>
+                    <select id="situationFamiliale" name="situationFamiliale" required>
+                        <option value="1">Célibataire</option>
+                        <option value="2">Marié/Pacsé</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nombreEnfants">Nombre d'enfants à charge</label>
+                    <input type="number" id="nombreEnfants" name="nombreEnfants" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="deductions">Déductions fiscales (€)</label>
+                    <input type="number" id="deductions" name="deductions" value="0">
+                </div>
+                <button type="button" id="simulateImpotsBtn" class="submit-btn">Calculer</button>
+            </form>
+    
+            <div id="resultImpotsContainer" class="result-container" style="display: none;">
+                <h2>Résultat de la simulation</h2>
+                <ul class="result-list">
+                    <li>Revenu imposable : <strong id="revenuImposable"></strong> €</li>
+                    <li>Nombre de parts fiscales : <strong id="partsFiscales"></strong></li>
+                    <li>Impôt brut : <strong id="impotBrut"></strong> €</li>
+                    <li>Impôt net après déductions : <strong id="impotNet"></strong> €</li>
+                </ul>
+            </div>
+        </div>
+    </div>
       <div class="tab-pane" id="simulator2">
         <h2>Simulateur d'épargne</h2>
         <p>Calculez ce que vous rapporterai un placement avec capitalisation composée.</p>
@@ -250,28 +288,62 @@
             </div>
         </div>
     </div>
+
   </div>
 </div>
 
 
 <script>
-    document.getElementById('simulateResultatBtn').addEventListener('click', function() {
-        const produits = parseFloat(document.getElementById('produits').value);
-        const chargesExploitation = parseFloat(document.getElementById('chargesExploitation').value);
-        const amortissements = parseFloat(document.getElementById('amortissements').value);
-        const produitsFinanciers = parseFloat(document.getElementById('produitsFinanciers').value);
-        const chargesFinancieres = parseFloat(document.getElementById('chargesFinancieres').value);
+  document.getElementById('simulateImpotsBtn').addEventListener('click', function () {
+    // Inputs
+    const revenuAnnuel = parseFloat(document.getElementById('revenuAnnuel').value);
+    const situationFamiliale = parseInt(document.getElementById('situationFamiliale').value);
+    const nombreEnfants = parseInt(document.getElementById('nombreEnfants').value);
+    const deductions = parseFloat(document.getElementById('deductions').value) || 0;
 
+    // Barème d'imposition (France 2024, tranches en €)
+    const bareme = [
+        { plafond: 10777, taux: 0 },
+        { plafond: 27478, taux: 0.11 },
+        { plafond: 78570, taux: 0.30 },
+        { plafond: 168994, taux: 0.41 },
+        { plafond: Infinity, taux: 0.45 },
+    ];
 
-        if (isNaN(produits) || isNaN(chargesExploitation) || isNaN(amortissements) || isNaN(produitsFinanciers) || isNaN(chargesFinancieres)) {
-            console.error("Une ou plusieurs valeurs d'entrée sont invalides.");
-            return;
-        }
-        const resultatFiscal = produits - chargesExploitation - amortissements + produitsFinanciers - chargesFinancieres;
+    // Calcul du quotient familial
+    const partsFiscales = situationFamiliale + (nombreEnfants > 2 ? 2 + (nombreEnfants - 2) * 0.5 : nombreEnfants * 0.5);
+    const revenuImposableParPart = (revenuAnnuel - deductions) / partsFiscales;
 
-        document.getElementById('resultContainerResultat').style.display = 'block';
-        document.getElementById('resultatFiscal').textContent = resultatFiscal.toFixed(2);
-    });
+    // Calcul de l'impôt par tranche pour une part
+    let impotParPart = 0;
+    let revenuRestant = revenuImposableParPart;
+
+    let trancheInf = 0; // Plafond inférieur (initialement 0)
+
+    for (const tranche of bareme) {
+    if (revenuRestant <= 0) break;
+    const montantTranche = Math.min(revenuRestant, tranche.plafond - trancheInf);
+    impotParPart += montantTranche * tranche.taux;
+    revenuRestant -= montantTranche;
+    trancheInf = tranche.plafond;
+}
+
+    // Calcul de l'impôt brut total
+    const impotBrut = impotParPart * partsFiscales;
+
+    // Application d'un impôt minimum de 0 €
+    const impotNet = Math.max(0, Math.round(impotBrut));
+
+    // Afficher les résultats
+    document.getElementById('revenuImposable').textContent = (revenuAnnuel - deductions).toFixed(2);
+    document.getElementById('partsFiscales').textContent = partsFiscales.toFixed(1);
+    document.getElementById('impotBrut').textContent = Math.round(impotBrut);
+    document.getElementById('impotNet').textContent = Math.round(impotNet);
+
+    // Afficher la section des résultats
+    document.getElementById('resultImpotsContainer').style.display = 'block';
+});
+
 
 document.getElementById('simulateTvaBtn').addEventListener('click', function() {
         const ventesHt = parseFloat(document.getElementById('ventesHt').value);
@@ -314,27 +386,27 @@ document.getElementById('simulateTvaBtn').addEventListener('click', function() {
     });
 
 
-    document.getElementById('simulateImmoBtn').addEventListener('click', function () {
-        const capital = parseFloat(document.getElementById('capital').value);
-        const taux = parseFloat(document.getElementById('taux').value) / 100 / 12;
-        const duree = parseInt(document.getElementById('duree').value) * 12;
-        const apport = parseFloat(document.getElementById('apport').value) || 0;
-        const assurance = parseFloat(document.getElementById('assurance').value) / 100 || 0;
+    // document.getElementById('simulateImmoBtn').addEventListener('click', function () {
+    //     const capital = parseFloat(document.getElementById('capital').value);
+    //     const taux = parseFloat(document.getElementById('taux').value) / 100 / 12;
+    //     const duree = parseInt(document.getElementById('duree').value) * 12;
+    //     const apport = parseFloat(document.getElementById('apport').value) || 0;
+    //     const assurance = parseFloat(document.getElementById('assurance').value) / 100 || 0;
 
-        const capitalEmprunte = capital - apport;
-        const mensualite = (capitalEmprunte * taux * Math.pow(1 + taux, duree)) / 
-                          (Math.pow(1 + taux, duree) - 1);
-        const totalInterets = (mensualite * duree) - capitalEmprunte;
-        const assuranceMensuelle = (capitalEmprunte * assurance) / 12;
-        const mensualiteTotale = mensualite + assuranceMensuelle;
+    //     const capitalEmprunte = capital - apport;
+    //     const mensualite = (capitalEmprunte * taux * Math.pow(1 + taux, duree)) / 
+    //                       (Math.pow(1 + taux, duree) - 1);
+    //     const totalInterets = (mensualite * duree) - capitalEmprunte;
+    //     const assuranceMensuelle = (capitalEmprunte * assurance) / 12;
+    //     const mensualiteTotale = mensualite + assuranceMensuelle;
 
-        document.getElementById('capitalEmprunte').textContent = Math.round(capitalEmprunte);
-        document.getElementById('mensualite').textContent = Math.round(mensualite);
-        document.getElementById('totalInterets').textContent = Math.round(totalInterets);
-        document.getElementById('mensualiteTotale').textContent = Math.round(mensualiteTotale);
+    //     document.getElementById('capitalEmprunte').textContent = Math.round(capitalEmprunte);
+    //     document.getElementById('mensualite').textContent = Math.round(mensualite);
+    //     document.getElementById('totalInterets').textContent = Math.round(totalInterets);
+    //     document.getElementById('mensualiteTotale').textContent = Math.round(mensualiteTotale);
 
-        document.getElementById('resultContainer').style.display = 'block';
-    });
+    //     document.getElementById('resultContainer').style.display = 'block';
+    // });
 
     document.getElementById("calculateSavingsBtn").addEventListener("click", function () {
     const initialCapital = parseFloat(document.getElementById("initialCapital").value);
@@ -427,6 +499,21 @@ document.getElementById('simulateTvaBtn').addEventListener('click', function() {
         });
     });
     });
+
+    const tabButtons = document.querySelectorAll('.tab-button');
+tabButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    const tabId = this.getAttribute('data-tab');
+    const tabPane = document.getElementById(tabId);
+    
+    if (tabPane) {
+      tabPane.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
 
 
 

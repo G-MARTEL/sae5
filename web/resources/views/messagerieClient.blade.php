@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/messagerie/message.css') }}">
+    <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
+
     <title>Messagerie</title>
 
 </head>
@@ -103,11 +105,13 @@
 //rajouts 
 document.addEventListener('DOMContentLoaded', () => {
     // Écouteur d'événements pour le formulaire d'envoi de message
+    refreshMessages();
+    scrollToBottom();
     document.querySelector('.message-form').addEventListener('submit', function(event) {
         event.preventDefault(); // Empêche le rechargement de la page
 
         const messageContent = document.querySelector('#message').value;
-
+       
         // Vérifiez si le message n'est pas vide
         if (messageContent.trim() !== '') {
             sendMessage(messageContent).then(() => {

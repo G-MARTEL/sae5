@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ asset('css/admin/pages.css') }}"/>
+        <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
+
         <title>Gestion des clients</title>
      </head>
 <body>
@@ -15,11 +17,12 @@
     
 </div>
 
-<div class="list-section">
+<div class="list-section">            
+    <input type="text" id="search-input" placeholder="Rechercher un client..." class="search-bar">
     <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
     <div class="grid-container">
         @foreach ($clients as $clientData)
-            <div class="grid-item"> 
+            <div class="grid-item" data-title="{{$clientData['donneeClient']->first_name}}-{{$clientData['donneeClient']->last_name}}"> 
                 <div class="content">
                     <div class="details">
                         <p><strong>Nom et Prénom du client :</strong> {{$clientData['donneeClient']->first_name.' '.$clientData['donneeClient']->last_name}}</p>
@@ -52,5 +55,5 @@
         @endforeach
     </div>
 </div>
-
+<script src="{{asset('./js/recherche.js')}}"></script>
 </body>

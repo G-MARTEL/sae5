@@ -5,6 +5,8 @@
     <title>Gestion des employés</title>
     <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="{{ asset('css/admin/pages.css') }}">
+    <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
+
 
 
     <script src="{{asset('./js/pop-up.js')}}"></script>
@@ -16,47 +18,103 @@
             <button id="open-popup-btn" class="btn-primary">Créer un profil d'employé</button>
         </header>
         <section class="list-section">
+            <input type="text" id="search-input" placeholder="Rechercher un employé..." class="search-bar">
             <a href="{{ route('admin.accueil') }}" class="back-link">Retourner vers le menu</a> 
+            <h1>Comptes actifs </h1>
             <div class="grid-container">
-                
                 @foreach ($listeEmployees as $employee)
-                    <div class="grid-item">
-                        <div class="content">
-                            <div class="details">
-                                <p>
-                                    <strong>Nom :</strong> {{ $employee->Account->last_name }},
-                                    <strong>Prénom :</strong> {{ $employee->Account->first_name }}
-                                </p>
-                                <form action="modifEmployee" method="post" class="form-inline">
-                                @csrf
-                                <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
-                                <select name="Funtions_id" id="Functions">
-                                    @php
-                                    if ($employee->FK_function_id == null)
-                                    {
-                                        echo '<option value="">Aucun fonction associé</option>';
-                                    }
-                                    @endphp
-                                @foreach($listeFunction as $Functions)
-                                    <option value="{{ $Functions->function_id}}" 
-                                        {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
-                                        {{ $Functions->function_name }}
-                                    </option>
-                                @endforeach
-                                </select>
-                                <button type="submit" class="envoyee">Envoyer</button>
-                                </form>
-                            </div>
-                            <div class="image">
-                                @if ($employee->Account->picture)  
-                                    <img src="{{ asset($employee->Account->picture) }}" alt="{{ $employee->Account->first_name }}" class="prestation-image">
-                                @else
-                                    <p>Aucune photo</p>
-                                @endif
+                    @if ($employee->isActif)
+                        <div class="grid-item" data-title="{{ $employee->Account->last_name}}-{{$employee->Account->first_name }}">
+                            <div class="content">
+                                <div class="details">
+                                    
+                                    <p>
+                                        <strong>Nom :</strong> {{ $employee->Account->last_name }},
+                                        <strong>Prénom :</strong> {{ $employee->Account->first_name }}
+                                    </p>
+                                    <form action="modifEmployee" method="post" class="form-inline">
+                                        @csrf
+                                        <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
+                                        <select name="Funtions_id" id="Functions">
+                                            @php
+                                            if ($employee->FK_function_id == null)
+                                            {
+                                                echo '<option value="">Aucun fonction associé</option>';
+                                            }
+                                            @endphp
+                                        @foreach($listeFunction as $Functions)
+                                            <option value="{{ $Functions->function_id}}" 
+                                                {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
+                                                {{ $Functions->function_name }}
+                                            </option>
+                                        @endforeach
+                                        </select>
+                                        <button type="submit" class="envoyee">Envoyer</button>
+                                    </form>
+                                    <form action="disableEmployees" method="post">
+                                        @csrf
+                                        <input type="hidden"  name="idEmployees" value="{{ $employee->employee_id }}">
+                                        <button type="submit">Suspendre le compte</button>
+                                    </form>
+                                </div>
+                                <div class="image">
+                                    @if ($employee->Account->picture)  
+                                        <img src="{{ asset($employee->Account->picture) }}" alt="{{ $employee->Account->first_name }}" class="prestation-image">
+                                    @else
+                                        <p>Aucune photo</p>
+                                    @endif
+                                </div> 
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
+                
+            </div>
+            <h1>Comptes désactivés  </h1>
+            <div class="grid-container">
+            
+                @foreach ($listeEmployees as $employee)
+                    @if (!$employee->isActif)
+                        <div class="grid-item" data-title="{{ $employee->Account->last_name}}-{{$employee->Account->first_name }}">
+                            <div class="content">
+                                <div class="details">
+                                    
+                                    <p>
+                                        <strong>Nom :</strong> {{ $employee->Account->last_name }},
+                                        <strong>Prénom :</strong> {{ $employee->Account->first_name }}
+                                    </p>
+                                    <form action="modifEmployee" method="post" class="form-inline">
+                                        @csrf
+                                        <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
+                                        <select name="Funtions_id" id="Functions">
+                                            @php
+                                            if ($employee->FK_function_id == null)
+                                            {
+                                                echo '<option value="">Aucun fonction associé</option>';
+                                            }
+                                            @endphp
+                                        @foreach($listeFunction as $Functions)
+                                            <option value="{{ $Functions->function_id}}" 
+                                                {{ $employee->FK_function_id == $Functions->function_id ? 'selected' : '' }}>
+                                                {{ $Functions->function_name }}
+                                            </option>
+                                        @endforeach
+                                        </select>
+                                        <button type="submit" class="envoyee">Envoyer</button>
+                                    </form>
+                                </div>
+                                <div class="image">
+                                    @if ($employee->Account->picture)  
+                                        <img src="{{ asset($employee->Account->picture) }}" alt="{{ $employee->Account->first_name }}" class="prestation-image">
+                                    @else
+                                        <p>Aucune photo</p>
+                                    @endif
+                                </div>                          
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+                
             </div>
         </section>
 
@@ -108,6 +166,8 @@
             </div>
         </div>
     </div>
+
+    <script src="{{asset('./js/recherche.js')}}"></script>
 </body>
 
 

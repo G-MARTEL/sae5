@@ -33,6 +33,10 @@ Route::fallback(function () {
     return redirect('/');
 });
 
+Route::get('/accueil2', function () {
+    return view('accueil');
+})->name('accueil2');
+
 Route::get('acceuil', function () {return view('accueil');});
 
 Route::get('qui-sommes-nous', function () {
@@ -108,6 +112,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/getEmployeesForService/{service_id}', [AdminController::class, 'getEmployeesForService']);
     Route::post('/updateEmployees', [AdminController::class, 'updateEmployees']);
 
+    Route::post('/disableEmployees', [AdminController::class, 'disableEmployees']);
 
 });
 

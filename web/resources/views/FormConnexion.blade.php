@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
+    <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
 
     <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="./css/connexion/pages.css"/>

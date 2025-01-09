@@ -4,14 +4,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}"/>
+        <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
 
         @yield('styles')
     {{-- @yield('script') --}}
      </head>
     <body>
     <nav class="navbar">
-        <div class="logo">
-            <img src="logo.png" alt="Logo"> <!-- Insère ici ton logo -->
+        <div class="logo"><a href="{{ route('accueil2') }}"> <img src="{{ asset("assets\communs\logo_avycompta.png") }}" alt="Logo"></a>
+            
         </div>
         <ul class="nav-links">
             <li><a href="{{ route('presentation') }}">Qui sommes-nous ?</a></li>
@@ -57,9 +58,9 @@
         <div class="footer-section">
             <h4>Réseaux sociaux</h4>
             <ul class="social-icons">
-                <li><a href="#"><img src="linkedin-icon.png" alt="LinkedIn"></a></li>
-                <li><a href="#"><img src="facebook-icon.png" alt="Facebook"></a></li>
-                <li><a href="#"><img src="instagram-icon.png" alt="Instagram"></a></li>
+                <li><a href="#"><img src="{{ asset("assets\communs\logo_linkedin.png") }}" alt="LinkedIn"></a></li>
+                <li><a href="#"><img src="{{ asset("assets\communs\logo_facebook.png") }}" alt="Facebook"></a></li>
+                <li><a href="#"><img src="{{ asset("assets\communs\logo_instagram.png") }}" alt="Instagram"></a></li>
             </ul>
         </div>
     </footer>
