@@ -32,7 +32,9 @@ class CreationCompte extends Controller
                 'city' => $request->city,
                 'email' => $request->email,
                 'password' => $password, 
-                'creation_date' => $request->creation_date,
+                //'creation_date' => $request->creation_date,
+                'creation_date' => now(),
+
             ]);
 
             /*$idAccount = DB::table('accounts')

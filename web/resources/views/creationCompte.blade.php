@@ -54,10 +54,7 @@
                         <label for="email">Email :</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                    <div class="form-group">
-                        <label for="creation_date">Date de création :</label>
-                        <input type="date" id="creation_date" name="creation_date" required>
-                    </div>
+
                 </div>
                 <div class="form-row">
                     <div class="form-group">
