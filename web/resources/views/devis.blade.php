@@ -15,8 +15,7 @@
             <div class="colonnes">
                 <div class="colonne">
                     <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
-                    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore.
+                    Vous souhaitez avoir davantages d'informations ? Contactez-nous, posez vos questions ou encore prenez rendez-vous.
                     </p>
                 </div>   
                 <div class="colonne">

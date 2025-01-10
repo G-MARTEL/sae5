@@ -35,7 +35,9 @@ if (strlen($texte) > 150) {
                     ?></p>
             </div>
             <div class="colonne">
-                <img src="{{ asset($prestation->picture) }}" alt="{{$prestation->title}}">
+                <figure>
+                    <img src="{{ asset($prestation->picture) }}" alt="{{$prestation->title}}">
+                </figure>
             </div>
             <div class="colonne">
                 <a href="{{ route('prestation.show', $prestation->service_id)}}">Accéder à la prestation</a>
@@ -49,7 +51,7 @@ if (strlen($texte) > 150) {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const images = document.querySelectorAll("#prestations-2 .colonne:nth-child(2) img");
+    const images = document.querySelectorAll("#prestations-2 .colonne:nth-child(2) figure");
 
     images.forEach(img => {
         const r = Math.floor(Math.random() * 56) + 200; 
