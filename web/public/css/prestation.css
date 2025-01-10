@@ -3,6 +3,9 @@
   text-align: center;
   padding-top: 60px;
 }
+#prestation-1.container .container-inner {
+  padding: 70px 60px;
+}
 #prestation-1.container .container-inner h2 {
   margin-bottom: 0px;
 }
