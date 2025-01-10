@@ -62,10 +62,18 @@
                         <tbody>
                             @foreach ($documents as $document)
                                 @foreach ($document->contentDocuments as $content)
+
+                               <?php $texte = "$content->contenu" ;
+                                $texteLimite = substr($texte, 0, 200);
+
+                                if (strlen($texte) > 200) {
+                                    $texteLimite .= '...';
+                                } ?> 
                                     <tr>
                                         <td>{{ $document->facture ? 'Facture' : 'Autre' }}</td>
                                         <td>{{ \Carbon\Carbon::parse($content->date)->format('d/m/Y') }}</td>
-                                        <td>{{ $content->title }} : {{ $content->contenu }}</td>
+                                        <td><strong>{{ $content->title }} : </strong> <?php echo $texteLimite;
+                    ?></td>
                                         <td>
                                             <a href="{{ route('download.document.client', ['id' => $document->createdocument_id]) }}" class="btn btn-primary">Télécharger</a>
                                         </td>
