@@ -87,6 +87,7 @@
 }
 .container#prestation-3 .container-inner {
   padding-top: 20px;
+  padding-bottom: 85px;
 }
 .container#prestation-3 .container-inner .colonnes {
   display: flex;
@@ -108,8 +109,28 @@
 .container#prestation-3 .container-inner .colonnes .colonne h3 {
   text-align: center;
 }
-.container#prestation-3 .container-inner .colonnes .colonne ul {
-  list-style-type: none;
+.container#prestation-3 .container-inner .colonnes .colonne .styled-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.container#prestation-3 .container-inner .colonnes .colonne .styled-list li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+.container#prestation-3 .container-inner .colonnes .colonne .styled-list li:before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #2c7d7b;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%);
 }
 .container#prestation-3 a {
   background-color: #2c7d7b;

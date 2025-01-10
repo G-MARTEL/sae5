@@ -54,7 +54,7 @@ $listeSituations = explode(',', $situations)
         <div class="colonnes">
             <div class="colonne">
                 <h3>Avantages</h3>
-                    <ul>
+                    <ul class="styled-list">
                         @foreach ($listeAvantages as $avantage)
                         <li> <?php 
                         $avantage=ucfirst(trim($avantage));
@@ -64,7 +64,7 @@ $listeSituations = explode(',', $situations)
             </div>
             <div class="colonne">
                 <h3>Situations</h3>
-                <ul>
+                <ul class="styled-list">
                     @foreach ($listeSituations as $situation)
                     <li><?php 
                     $situation=ucfirst(trim($situation));

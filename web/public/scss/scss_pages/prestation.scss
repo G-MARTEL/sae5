@@ -93,6 +93,7 @@
     text-align: center;
     .container-inner{
         padding-top: 20px;
+        padding-bottom: 85px;
         .colonnes{
             display: flex;
             flex-direction: row;
@@ -112,8 +113,35 @@
                     text-align: center;
                 }
                 ul{
-                    list-style-type: none;
+                   // list-style-type: none;
                 }
+
+                .styled-list {
+                    list-style: none; 
+                    padding: 0; 
+                    margin: 0;
+                
+                    li {
+                        position: relative; 
+                        padding-left: 25px;
+                        margin-bottom: 10px; 
+                        font-size: 16px; 
+                        color: #333; 
+                
+                        &:before {
+                            content: ''; 
+                            position: absolute; 
+                            left: 9px; 
+                            top: 50%; 
+                            transform: translateY(-50%); 
+                            width: 10px; 
+                            height: 10px; 
+                            background-color: $vert; 
+                            clip-path: polygon(10% 0, 100% 0, 100% 100%); 
+                        }
+                    }
+                }
+                
             }
         }
         

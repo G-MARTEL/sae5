@@ -30,7 +30,7 @@
                                 <div class="details">
                                     
                                     <p>
-                                        <strong>Nom :</strong> {{ $employee->Account->last_name }},
+                                        <strong>Nom :</strong> {{ $employee->Account->last_name }}
                                         <strong>Prénom :</strong> {{ $employee->Account->first_name }}
                                     </p>
                                     <form action="modifEmployee" method="post" class="form-inline">
@@ -81,7 +81,7 @@
                                 <div class="details">
                                     
                                     <p>
-                                        <strong>Nom :</strong> {{ $employee->Account->last_name }},
+                                        <strong>Nom :</strong> {{ $employee->Account->last_name }}
                                         <strong>Prénom :</strong> {{ $employee->Account->first_name }}
                                     </p>
                                     <form action="modifEmployee" method="post" class="form-inline">
