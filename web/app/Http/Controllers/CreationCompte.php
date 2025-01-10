@@ -49,7 +49,7 @@ class CreationCompte extends Controller
             $idAccount = Account::orderBy('account_id', 'desc')->first()->account_id;
 
             Client::create(['FK_account_id' => $idAccount,]); // avec le model
-
+            
 
             return redirect('acceuil');
         } else {

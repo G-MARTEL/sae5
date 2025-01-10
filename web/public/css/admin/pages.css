@@ -173,6 +173,10 @@ button:hover {
 .list-section .grid-item strong {
   margin-bottom: 5px;
 }
+.list-section .grid-container:has(.grid-item:only-child) .grid-item {
+  grid-column: span 3;
+  max-width: 33%;
+}
 
 header button {
   padding: 15px !important;
