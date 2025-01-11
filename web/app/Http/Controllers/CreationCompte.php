@@ -32,7 +32,9 @@ class CreationCompte extends Controller
                 'city' => $request->city,
                 'email' => $request->email,
                 'password' => $password, 
-                'creation_date' => $request->creation_date,
+                //'creation_date' => $request->creation_date,
+                'creation_date' => now(),
+
             ]);
 
             /*$idAccount = DB::table('accounts')
@@ -47,7 +49,7 @@ class CreationCompte extends Controller
             $idAccount = Account::orderBy('account_id', 'desc')->first()->account_id;
 
             Client::create(['FK_account_id' => $idAccount,]); // avec le model
-
+            
 
             return redirect('acceuil');
         } else {

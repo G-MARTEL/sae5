@@ -1,5 +1,5 @@
 @extends('layout')
-
+<title>Nos prestations</title>
 @section('styles')
 <link rel="stylesheet" href="./css/prestations.css"/>
 @endsection
@@ -14,6 +14,8 @@
 <div class="container" id="prestations-1">
     <h1>Nos prestations</h1>
 </div>
+
+
 
 @foreach ($prestations as $prestation)
 
@@ -33,7 +35,9 @@ if (strlen($texte) > 150) {
                     ?></p>
             </div>
             <div class="colonne">
-                <img src="{{ asset($prestation->picture) }}" alt="">
+                <figure>
+                    <img src="{{ asset($prestation->picture) }}" alt="{{$prestation->title}}">
+                </figure>
             </div>
             <div class="colonne">
                 <a href="{{ route('prestation.show', $prestation->service_id)}}">Accéder à la prestation</a>
@@ -44,3 +48,20 @@ if (strlen($texte) > 150) {
 @endforeach
 
 @endsection
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const images = document.querySelectorAll("#prestations-2 .colonne:nth-child(2) figure");
+
+    images.forEach(img => {
+        const r = Math.floor(Math.random() * 56) + 200; 
+        const g = Math.floor(Math.random() * 56) + 200; 
+        const b = Math.floor(Math.random() * 56) + 200; 
+
+        const pastelColor = `rgb(${r}, ${g}, ${b})`; 
+        img.style.backgroundColor = pastelColor; 
+    });
+});
+
+
+</script>

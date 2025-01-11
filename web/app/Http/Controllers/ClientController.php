@@ -11,6 +11,9 @@ use App\Models\Contract;
 use App\Models\Employee;
 use App\Models\Functions;
 use App\Models\Documents;
+use App\Models\Client;
+use App\Models\CreateDocuments;
+use App\Models\ContentDocuments;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -18,32 +21,6 @@ use Dompdf\Options;
 
 class ClientController extends Controller
 {
-
-
-// public function showClientDashboard()
-// {
-//     $clientData = session('clientData');
-    
-//     // Vérifiez que les données existent avant de les utiliser
-//     if (!$clientData) {
-//         return redirect()->route('login')->with('error', 'Veuillez vous connecter d\'abord !');
-//     }
-
-//     // Recharger les informations de l'employé associé au client
-//     $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
-
-
-//     $associatedEmployee = DB::table('employees')
-//         ->join('accounts', 'employees.FK_account_id', '=', 'accounts.account_id')
-//         ->where('employee_id', $client->FK_employee_id)
-//         ->select('accounts.first_name', 'accounts.last_name', 'accounts.email','accounts.picture')
-//         ->first();
-
-//     $clientData['employee'] = $associatedEmployee;
-
-//     return view('acceuilCliens', ['clientData' => $clientData]);
-// }
-
 
 public function showClientDashboard()
 {
@@ -70,9 +47,9 @@ public function showClientDashboard()
 
     // Récupérer les contrats associés au client
     $contrats = Contract::where('FK_client_id', $client->client_id)->get(); 
-
-    // Déboguer pour vérifier les données
-    //dd($client, $contrats);
+    $documents = CreateDocuments::where('FK_client_id', $client->client_id)
+    ->with('contentDocuments')
+    ->get();
 
     // Rechercher l'employé associé au client
     $associatedEmployee = DB::table('employees')
@@ -85,7 +62,8 @@ public function showClientDashboard()
     $clientData['employee'] = $associatedEmployee;
 
     // Retourner la vue avec les données du client et les contrats
-    return view('acceuilCliens', ['clientData' => $clientData, 'contrats' => $contrats]);
+    return view('acceuilCliens', ['clientData' => $clientData, 'contrats' => $contrats, 'documents' => $documents]);
+
 }
 
 

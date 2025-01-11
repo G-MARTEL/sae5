@@ -1,5 +1,5 @@
 @extends('layout')
-
+<title>Qui sommes-nous</title>
 @section('styles')
 <link rel="stylesheet" href="./css/presentation.css"/>
 @endsection
@@ -53,10 +53,10 @@
                     <img src="{{ asset('assets/presentation/employe1.jpg') }}" alt="proximité">
                 </figure>
                 <p>
-                Morbi neque neque, dapibus ac consequat non, consectetur ut augue. Nullam volutpat nibh magna. Aliquam dapibus finibus 
-                commodo. Ut pretium felis et tincidunt faucibus. Vestibulum eget 
-                urna mollis odio rhoncus porttitor at sed mauris. 
-                Morbi pulvinar luctus ex, et luctus tortor pretium sagittis.
+                    Paul Lambert apporte au cabinet sa riche expérience en comptabilité et en gestion, acquise au fil de ses 12 années de carrière. Il est spécialisé dans l’accompagnement des startups et des jeunes entreprises, les 
+                    aidant à naviguer dans les défis financiers avec clarté et pragmatisme. Paul croit fermement à l’importance d’une relation de confiance avec les clients, qu’il considère comme le cœur de son métier. Sa capacité à vulgariser
+                     des concepts comptables complexes en fait un conseiller apprécié des entrepreneurs débutants. 
+                    Lorsqu’il n’est pas en rendez-vous client, Paul aime explorer de nouvelles solutions pour optimiser les processus internes et améliorer la qualité des services.                 
                 </p>
             </div>
 
@@ -64,11 +64,10 @@
                 <figure>
                     <img src="{{ asset('assets/presentation/employe2.jpg') }}" alt="proximité">
                 </figure>
-                <p>
-                Morbi neque neque, dapibus ac consequat non, consectetur ut augue. Nullam volutpat nibh magna. Aliquam dapibus finibus 
-                commodo. Ut pretium felis et tincidunt faucibus. Vestibulum eget 
-                urna mollis odio rhoncus porttitor at sed mauris. 
-                Morbi pulvinar luctus ex, et luctus tortor pretium sagittis.
+                <p>Marie Dupont est une experte-comptable diplômée, passionnée par la gestion d’entreprise et l’accompagnement 
+                    personnalisé des clients. Avec plus de 15 ans d’expérience dans des cabinets renommés, elle a décidé de fonder ce cabinet pour offrir des 
+                    services sur-mesure et accessibles. Marie est spécialisée dans la fiscalité des PME et la gestion de patrimoine, et son approche est toujours centrée sur la compréhension des besoins uniques de ses 
+                    clients. Animée par un fort esprit d’innovation, elle veille à ce que le cabinet reste à la pointe des nouvelles technologies pour simplifier la vie de ses clients.
                 </p>
             </div>
 
@@ -77,11 +76,10 @@
                     <img src="{{ asset('assets/presentation/employe3.jpg') }}" alt="proximité">
                 </figure>
                 <p>
-                Morbi neque neque, dapibus ac consequat non, consectetur ut augue. Nullam volutpat nibh magna. Aliquam dapibus finibus 
-                commodo. Ut pretium felis et tincidunt faucibus. Vestibulum eget 
-                urna mollis odio rhoncus porttitor at sed mauris. 
-                Morbi pulvinar luctus ex, et luctus tortor pretium sagittis.
-                </p>
+                    Antoine Morel est un passionné d’analyse financière et de stratégie d’entreprise, avec un parcours de 10 ans dans les grands groupes internationaux. Il excelle dans l’interprétation des données financières pour aider les clients à
+                     prendre des décisions éclairées. Antoine se distingue par sa capacité à transformer les chiffres en opportunités stratégiques, apportant ainsi une valeur ajoutée unique au cabinet. Sa spécialité inclut également les audits financiers et les conseils en restructuration, 
+                     domaines dans lesquels il a acquis une expertise reconnue. 
+                  </p>
             </div>
         </div>
     </div>

@@ -1,13 +1,37 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil Employé</title>
+    <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="{{ asset('css/Admin/AdminAccueil.css') }}">
+    <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
 
-<a href="{{ route('logout') }}"><button>Déconnexion</button></a>
-<h1>Page accueil employés</h1>
+</head>
 
 
 
-<div class="container-inner">
-    <a href="conversation">messagerie</a>
-</div>
+<body>
+    <a href="{{ route('logout') }}"><button class="logout-btn">Déconnexion</button></a>
 
-{{-- <a href="creerContrats">Accéder à la création de contrats</a> --}}
-<a href="listeClientAttitres">Accéder à la liste des clients</a>
+    <div class="container">
+        <div class="container-inner">
+            <strong>Bienvenue sur votre espace personnel</strong>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="container-inner">
+            <h2>Messagerie</h2>
+            <a href="conversation">Accéder à votre messagerie</a>
+        </div>
+    
+        <div class="container-inner">
+            <h2>Gestion des clients</h2>
+            <a href="listeClientAttitres">Accéder à la liste de vos clients</a>
+        </div>
+    </div>
+        
+</body>
+
 

@@ -1,7 +1,7 @@
 .container#prestations-1 {
   background-color: #d4ebeb;
   text-align: center;
-  padding-top: 75px;
+  padding-top: 95px;
 }
 .container#prestations-1 h1 {
   padding-bottom: 30px;
@@ -11,14 +11,21 @@
   background-color: rgb(239.82, 242.35, 244.88);
 }
 .container#prestations-2 .container-inner {
-  padding: 30px 60px;
+  padding: 20px 60px;
 }
 .container#prestations-2 .container-inner .colonnes {
   display: flex;
   flex-direction: row;
 }
+.container#prestations-2 .container-inner .colonnes .colonne h3 {
+  width: 33%;
+}
 .container#prestations-2 .container-inner .colonnes .colonne:first-child {
   flex: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
 }
 .container#prestations-2 .container-inner .colonnes .colonne:nth-child(2) {
   flex: 1;
@@ -26,10 +33,19 @@
   align-items: center;
   justify-content: center;
 }
-.container#prestations-2 .container-inner .colonnes .colonne:nth-child(2) img {
+.container#prestations-2 .container-inner .colonnes .colonne:nth-child(2) figure {
+  position: relative;
+  top: -15px;
   width: 85px;
   height: 85px;
   border-radius: 50%;
+}
+.container#prestations-2 .container-inner .colonnes .colonne:nth-child(2) figure img {
+  width: 65px;
+  height: 65px;
+  position: relative;
+  top: 11px;
+  right: -12px;
 }
 .container#prestations-2 .container-inner .colonnes .colonne:nth-child(3) {
   flex: 1;
@@ -45,6 +61,7 @@
   padding: 5px;
   padding-left: 10px;
   padding-right: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 /*# sourceMappingURL=prestations.css.map */

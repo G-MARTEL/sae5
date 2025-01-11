@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client;
@@ -9,6 +10,7 @@ use App\Models\Account;
 use App\Models\Employee;
 use App\Models\Functions;
 use App\Models\Services;
+use App\Models\TeamServices;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -103,6 +105,16 @@ class AdminController extends Controller
         $password = $request->input('password');
         $function_id = $request->input('function_id');
 
+        $imagePath = null;
+         if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        // Utilisez simplement le nom de fichier sans le chemin
+        $imageName = $request->file('image')->getClientOriginalName();
+        $imagePath = 'assets/employees/' . $imageName;
+
+        // Déplacez l'image dans le dossier public
+        $request->file('image')->move(public_path('assets/employees'), $imageName);
+    }
+
         // Créer un nouveau compte pour l'employé
         $account = new Account();
         $account->first_name = $first_name;
@@ -114,6 +126,7 @@ class AdminController extends Controller
         $account->email = $email;
         $account->phone = $phone;
         $account->password =  Hash::make($password);
+        $account->picture = $imagePath;
         $account->save();
 
         // Créer un nouvel employé avec le compte créé
@@ -146,14 +159,58 @@ class AdminController extends Controller
 
     public function showListePrestations()
     {
-        if (session('role') != 'admin')
-        {
+        if (session('role') != 'admin') {
             Session::flush(); 
             return redirect('/');
         }
-        $listePresta= Services::all();
-        return view('listePrestations', ['listePresta' => $listePresta]);
+        $listePresta = Services::all();
+        $listeEmployees = Employee::all();
+        return view('listePrestations', ['listePresta' => $listePresta, 'listeEmployees' => $listeEmployees]);
     }
+    
+    public function getEmployeesForService($service_id)
+    {
+        // Charger les employés et leurs comptes associés
+        $employees = Employee::with('account')
+            ->get();
+    
+        // Récupérer les employés assignés
+        $assignedEmployees = TeamServices::where('FK_service_id', $service_id)
+            ->pluck('FK_employee_id')
+            ->toArray();
+        
+        return response()->json([
+            'assignedEmployees' => $assignedEmployees,
+            'employees' => $employees,  // Vous renvoyez les employés avec la relation 'account'
+        ]);
+    }
+    
+
+    ////a modif 
+    public function updateEmployees(Request $request)
+    {
+        $serviceId = $request->input('service_id');
+        $employeeIds = $request->input('employee_ids', []);  // Cela récupérera correctement les employés sélectionnés
+
+        
+        // Supprimer les anciens employés affectés
+        TeamServices::where('FK_service_id', $serviceId)->delete();
+        
+        // Vérifier si des employés ont été sélectionnés
+        if (!empty($employeeIds)) {
+            // Ajouter les nouveaux employés affectés
+            foreach ($employeeIds as $employeeId) {
+                TeamServices::create([
+                    'FK_service_id' => $serviceId,
+                    'FK_employee_id' => $employeeId
+                ]);
+            }
+        }
+    
+        return redirect()->back()->with('success', 'Les employés ont été mis à jour.');
+    }
+    
+    
 
     public function creationPrestation(Request $request)  
     {
@@ -166,14 +223,64 @@ class AdminController extends Controller
         $situation = $request->input('situation');
         $advantage = $request->input('advantage');
 
+
+        $imagePath = null;
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagePath = 'assets/services/' . $request->file('image')->getClientOriginalName();
+            
+            $request->file('image')->move(public_path('assets/services'), $imagePath);
+        }
+        
         $prestation = new Services();
         $prestation->title = $titre;
         $prestation->description = $description;
         $prestation->advantage = $advantage;
         $prestation->situations = $situation;
+        $prestation->picture = $imagePath;
         $prestation->save();
 
         return redirect()->back();
 
     }
+
+
+    public function updatePrestation(Request $request)
+    {
+        if (session('role') != 'admin') {
+            return redirect('/');
+        }
+
+        $prestation = Services::findOrFail($request->input('service_id'));
+        $prestation->title = $request->input('titre');
+        $prestation->description = $request->input('description');
+        $prestation->advantage = $request->input('advantage');
+        $prestation->situations = $request->input('situation');
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagePath = 'assets/services/' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('assets/services'), $imagePath);
+            $prestation->picture = $imagePath;
+        }
+
+        $prestation->save();
+
+        return redirect()->back()->with('success', 'Prestation modifiée avec succès.');
+    }
+
+    function disableEmployees(Request $request)
+    {
+        $idEmployes = $request->idEmployees;
+        $employee = Employee::where('employee_id', $idEmployes)->first();
+        $employee->isActif = false;
+        $employee->save();
+        
+        Client::where('FK_employee_id', $idEmployes)->update(['FK_employee_id' => NULL]);
+
+        return redirect()->back();
+    }
+
+
+
+
+
 }

@@ -1,0 +1,46 @@
+.employee-clients {
+  font-family: Arial, sans-serif;
+  color: #333;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+.employee-clients h1 {
+  text-align: center;
+  color: #444;
+  margin-bottom: 20px;
+}
+.employee-clients .clients-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.employee-clients .clients-table thead {
+  background: #2c7d7b;
+  color: white;
+}
+.employee-clients .clients-table thead th {
+  padding: 10px;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid #2c7d7b;
+}
+.employee-clients .clients-table tbody tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+.employee-clients .clients-table tbody tr:hover {
+  background-color: #d4ebeb;
+}
+.employee-clients .clients-table tbody tr td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.employee-clients .clients-table tbody tr td .client-link {
+  text-decoration: none;
+}
+.employee-clients .clients-table tbody tr td .client-link:hover {
+  text-decoration: none;
+  color: #2c7d7b;
+}
+
+/*# sourceMappingURL=listeClientAttitres.css.map */

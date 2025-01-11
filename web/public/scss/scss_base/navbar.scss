@@ -7,12 +7,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px 15px;
-    background-color: $blanc-casse;  // Arrière-plan blanc léger
+    background-color: $blanc-casse;  
+    box-shadow: $ombre;
 
     .logo {
         margin-left: 20px;
         img {
-            width: 50px;  //  taille du logo a ajuster 
+            width: 50px;  
         }
     }
 
