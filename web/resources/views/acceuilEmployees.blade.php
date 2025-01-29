@@ -3,8 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil Employé</title>
-    <!-- Lien vers le fichier CSS -->
-    <link rel="stylesheet" href="{{ asset('css/Admin/AdminAccueil.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/AdminAccueil.css') }}">
     <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
 
 </head>
@@ -30,8 +29,17 @@
             <h2>Gestion des clients</h2>
             <a href="listeClientAttitres">Accéder à la liste de vos clients</a>
         </div>
+
+        <div class="container-inner">
+            <a href="{{ route('video-call', ['room' => uniqid()]) }}" class="btn btn-primary">
+                Démarrer un appel vidéo
+            </a>
+        </div>
+
+
     </div>
-        
+    
+
 </body>
 
 

@@ -57,12 +57,12 @@
 
    async function refreshMessages() {
     try {
-        const response = await fetch('getmessage'); // Assurez-vous que la route 'getmessage' est correcte
+        const response = await fetch('getmessage'); 
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des messages.');
         }
 
-        const messages = await response.json(); // Les messages renvoyés doivent être au format JSON
+        const messages = await response.json(); 
         const messageContainer = document.querySelector('.messages-scrollable');
         messageContainer.innerHTML = ''; // Efface les messages existants
 
@@ -90,10 +90,9 @@
         });
 
         if (messages.length > previousMessagesLength) {
-            scrollToBottom(); // Faites défiler vers le bas seulement si de nouveaux messages ont été ajoutés
+            scrollToBottom(); 
         }
 
-        // Mettez à jour la longueur précédente des messages
         previousMessagesLength = messages.length;
 
         } catch (error) {
@@ -104,7 +103,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //rajouts 
 document.addEventListener('DOMContentLoaded', () => {
-    // Écouteur d'événements pour le formulaire d'envoi de message
     refreshMessages();
     scrollToBottom();
     document.querySelector('.message-form').addEventListener('submit', function(event) {
@@ -112,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const messageContent = document.querySelector('#message').value;
        
-        // Vérifiez si le message n'est pas vide
         if (messageContent.trim() !== '') {
             sendMessage(messageContent).then(() => {
                 document.querySelector('#message').value = ''; // Réinitialise le champ de message
@@ -123,21 +120,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Fonction pour envoyer le message via fetch ou AJAX
+// Fonction pour envoyer le message via fetch 
 async function sendMessage(message) {
     try {
-        const response = await fetch('sendMessage', { // Assurez-vous que la route est correcte
+        const response = await fetch('sendMessage', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-Token': document.querySelector('input[name="_token"]').value // Si vous utilisez CSRF
+                'X-CSRF-Token': document.querySelector('input[name="_token"]').value 
             },
-            body: JSON.stringify({ message }) // Envoi du message
+            body: JSON.stringify({ message }) 
         });
         if (!response.ok) {
             throw new Error('Erreur lors de l\'envoi du message.');
         }
-        const result = await response.json(); // Récupère la réponse JSON
+        const result = await response.json(); 
     } catch (error) {
         console.error('Erreur:', error);
     }
@@ -151,7 +148,7 @@ function scrollToBottom() {
 
 
     // Rafraîchir les messages toutes les 1 secondes
-    setInterval(refreshMessages, 1000); // Intervalle de 1 secondes pour éviter une surcharge du serveur
+    setInterval(refreshMessages, 1000); 
 
 </script>
 </html>

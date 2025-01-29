@@ -32,7 +32,6 @@ public function showClientDashboard()
 
     $clientData = session('clientData');
 
-    // Vérifiez que les données existent avant de les utiliser
     if (!$clientData) {
         return redirect()->route('login')->with('error', 'Veuillez vous connecter d\'abord !');
     }
@@ -40,7 +39,6 @@ public function showClientDashboard()
     // Récupérer le client à partir de l'account_id
     $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
 
-    // Vérifiez que le client a été trouvé
     if (!$client) {
         return redirect()->route('login')->with('error', 'Client non trouvé !');
     }
@@ -132,7 +130,6 @@ public function downloadContract($contractId)
     $contract = Contract::with(['client', 'employee.account', 'service', 'employee.functions'])
         ->findOrFail($contractId);
 
-    // Vérifiez que le contrat appartient bien au client
     if ($contract->FK_client_id !== $client->client_id) {
         return redirect('/');
     }

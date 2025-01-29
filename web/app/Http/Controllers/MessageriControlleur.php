@@ -100,7 +100,6 @@ class MessageriControlleur extends Controller
     $clientdate = Client::where('FK_account_id', $client)->first();
     $conversation = DB::table('conversations')->where('FK_client_id', $clientdate->client_id)->first();
     
-    // Créez une nouvelle conversation si elle n'existe pas
     if ($conversation == null) {
         $conversation = new Conversation();
         $conversation->FK_employee_id = $clientdate->FK_employee_id;
@@ -124,7 +123,6 @@ class MessageriControlleur extends Controller
     $Mess->creation_date = date('Y-m-d');
     $Mess->save();
     
-    // Retournez une réponse JSON
     return response()->json(['success' => true, 'message' => $Message]);
 }
 
@@ -149,7 +147,7 @@ class MessageriControlleur extends Controller
         }
         $id = $request->id;
     
-        // Récupérer la conversation avec l'ID donné
+        // Récupérer la conversation avec l'ID 
         $conversation = Conversation::where('conversation_id', $id)->first();
     
         $messages= Message::where('FK_conversation_id', $id)->get();
@@ -189,7 +187,7 @@ class MessageriControlleur extends Controller
 {
     $request->validate([
         'message' => 'required|string',
-        'id' => 'required|integer', // Assurez-vous que l'ID est fourni
+        'id' => 'required|integer', 
     ]);
 
     $id = $request->get('id');
@@ -212,8 +210,7 @@ class MessageriControlleur extends Controller
     $Mess->FK_message_content_id = $Message->message_content_id;
     $Mess->creation_date = date('Y-m-d');
     $Mess->save();
-    
-    // Retournez une réponse JSON
+   
     return response()->json(['success' => true, 'message' => $Message]);
 }
 

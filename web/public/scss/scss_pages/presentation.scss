@@ -93,7 +93,7 @@
         .colonnes{
             display: flex;
             flex-direction: row;
-           // grid-template-columns: repeat(3, 1fr); /* Trois colonnes de largeur égale */
+           // grid-template-columns: repeat(3, 1fr); 
             gap: 30px;
             .colonne{
                 background-color: $gris;

@@ -172,19 +172,19 @@
     .container#prestation-2{
         .container-inner {
             .colonnes {
-                flex-direction: column; // Empile les colonnes l'une sous l'autre
+                flex-direction: column; 
             
                 .texte-colonne,
                 .images-colonne {
                     h3 {
-                        text-align: center; // Centre les titres sur petits écrans
+                        text-align: center; 
                     }
                 }
                 .images-colonne {
                     .colonnes {
-                        flex-direction: column; // Empile les images
+                        flex-direction: column; 
                         .colonne {
-                            margin-bottom: 20px; // Ajoute un espacement entre les images
+                            margin-bottom: 20px;
                         }
                     }
                 }

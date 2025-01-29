@@ -107,11 +107,9 @@ class AdminController extends Controller
 
         $imagePath = null;
          if ($request->hasFile('image') && $request->file('image')->isValid()) {
-        // Utilisez simplement le nom de fichier sans le chemin
         $imageName = $request->file('image')->getClientOriginalName();
         $imagePath = 'assets/employees/' . $imageName;
 
-        // Déplacez l'image dans le dossier public
         $request->file('image')->move(public_path('assets/employees'), $imageName);
     }
 
@@ -181,7 +179,7 @@ class AdminController extends Controller
         
         return response()->json([
             'assignedEmployees' => $assignedEmployees,
-            'employees' => $employees,  // Vous renvoyez les employés avec la relation 'account'
+            'employees' => $employees,  
         ]);
     }
     
