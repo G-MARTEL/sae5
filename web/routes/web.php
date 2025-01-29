@@ -33,6 +33,19 @@ Route::fallback(function () {
     return redirect('/');
 });
 
+
+Route::get('/video-call/{room}', function ($room) {
+    return view('call', ['room' => $room]);
+})->name('video-call');
+
+
+Route::get('/start-call', function () {
+    $room = uniqid();
+    Session::put("room_$room", true); // Stocke temporairement la salle
+    return redirect()->route('video-call', ['room' => $room]);
+});
+
+
 Route::get('/accueil2', function () {
     return view('accueil');
 })->name('accueil2');
