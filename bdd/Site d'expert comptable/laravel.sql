@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 10 déc. 2024 à 09:20
+-- Généré le : mer. 29 jan. 2025 à 12:39
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -66,6 +66,20 @@ CREATE TABLE `actions_type` (
 INSERT INTO `actions_type` (`action_type_id`, `action_name`) VALUES
 (0, 'UPDATE'),
 (1, 'DELETE');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `calendars`
+--
+
+CREATE TABLE `calendars` (
+  `calendar_id` int(11) NOT NULL,
+  `FK_employee_id` int(11) NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -286,6 +300,36 @@ CREATE TABLE `message_contents` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `notification_id` int(11) NOT NULL,
+  `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `FK_account_id_recipient` int(11) NOT NULL,
+  `FK_account_id_sender` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `plannings`
+--
+
+CREATE TABLE `plannings` (
+  `planning` int(11) NOT NULL,
+  `start_time_event` time NOT NULL,
+  `end_time_event` time NOT NULL,
+  `event_type` int(11) NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `FK_calendar_id` int(11) NOT NULL,
+  `FK_client_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `quotes_request`
 --
 
@@ -380,6 +424,13 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `actions_type`
   ADD PRIMARY KEY (`action_type_id`);
+
+--
+-- Index pour la table `calendars`
+--
+ALTER TABLE `calendars`
+  ADD PRIMARY KEY (`calendar_id`),
+  ADD KEY `FK_calendars_employees` (`FK_employee_id`);
 
 --
 -- Index pour la table `clients`
@@ -495,6 +546,22 @@ ALTER TABLE `message_contents`
   ADD PRIMARY KEY (`message_content_id`);
 
 --
+-- Index pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`notification_id`),
+  ADD KEY `FK_notification_account_sender` (`FK_account_id_sender`),
+  ADD KEY `FK_notification_account_receipent` (`FK_account_id_recipient`);
+
+--
+-- Index pour la table `plannings`
+--
+ALTER TABLE `plannings`
+  ADD PRIMARY KEY (`planning`),
+  ADD KEY `FK_plannings_calendars` (`FK_calendar_id`),
+  ADD KEY `FK_plannings_clients` (`FK_client_id`);
+
+--
 -- Index pour la table `quotes_request`
 --
 ALTER TABLE `quotes_request`
@@ -542,6 +609,12 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `actions_type`
   MODIFY `action_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `calendars`
+--
+ALTER TABLE `calendars`
+  MODIFY `calendar_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `clients`
@@ -628,6 +701,18 @@ ALTER TABLE `message_contents`
   MODIFY `message_content_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `plannings`
+--
+ALTER TABLE `plannings`
+  MODIFY `planning` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `quotes_request`
 --
 ALTER TABLE `quotes_request`
@@ -660,6 +745,12 @@ ALTER TABLE `team_services`
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `calendars`
+--
+ALTER TABLE `calendars`
+  ADD CONSTRAINT `FK_calendars_employees` FOREIGN KEY (`FK_employee_id`) REFERENCES `employees` (`employee_id`);
 
 --
 -- Contraintes pour la table `clients`
@@ -749,6 +840,20 @@ ALTER TABLE `messages`
   ADD CONSTRAINT `FK_message_account_sender` FOREIGN KEY (`FK_sender_id`) REFERENCES `accounts` (`account_id`),
   ADD CONSTRAINT `FK_message_conversation` FOREIGN KEY (`FK_conversation_id`) REFERENCES `conversations` (`conversation_id`),
   ADD CONSTRAINT `FK_message_message_content` FOREIGN KEY (`FK_message_content_id`) REFERENCES `message_contents` (`message_content_id`);
+
+--
+-- Contraintes pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `FK_notification_account_receipent` FOREIGN KEY (`FK_account_id_recipient`) REFERENCES `accounts` (`account_id`),
+  ADD CONSTRAINT `FK_notification_account_sender` FOREIGN KEY (`FK_account_id_sender`) REFERENCES `accounts` (`account_id`);
+
+--
+-- Contraintes pour la table `plannings`
+--
+ALTER TABLE `plannings`
+  ADD CONSTRAINT `FK_plannings_calendars` FOREIGN KEY (`FK_calendar_id`) REFERENCES `calendars` (`calendar_id`),
+  ADD CONSTRAINT `FK_plannings_clients` FOREIGN KEY (`FK_client_id`) REFERENCES `clients` (`client_id`);
 
 --
 -- Contraintes pour la table `reviews`
