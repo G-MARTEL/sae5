@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mer. 29 jan. 2025 à 12:39
+-- Généré le : mer. 29 jan. 2025 à 13:34
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -158,7 +158,7 @@ CREATE TABLE `documents` (
   `document_id` int(11) NOT NULL,
   `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `FK_client_id` int(11) NOT NULL,
-  `document` blob NOT NULL,
+  `document` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -308,6 +308,7 @@ CREATE TABLE `notifications` (
   `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `FK_account_id_recipient` int(11) NOT NULL,
   `FK_account_id_sender` int(11) NOT NULL,
+  `seen` tinyint(1) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
