@@ -30,8 +30,17 @@
             <h2>Gestion des clients</h2>
             <a href="listeClientAttitres">Accéder à la liste de vos clients</a>
         </div>
+
+        <div class="container-inner">
+            <a href="{{ route('video-call', ['room' => uniqid()]) }}" class="btn btn-primary">
+                Démarrer un appel vidéo
+            </a>
+        </div>
+
+
     </div>
-        
+    
+
 </body>
 
 
