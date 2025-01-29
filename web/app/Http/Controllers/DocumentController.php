@@ -72,14 +72,12 @@ class DocumentController extends Controller
         'employee_function' => $employee->functions->function_name ?? 'Non spécifiée',
     ]);
 
-    // Télécharger le fichier PDF
     return $pdf->download($content->title . '.pdf');
 }
 
 
 public function downloadDocumentClient($id)
 {
-    // Récupérer le document avec son contenu
     $document = CreateDocuments::with('contentDocuments')->find($id);
 
     if (!$document) {
@@ -109,10 +107,8 @@ public function downloadDocumentClient($id)
         'content' => $document->contentDocuments->pluck('contenu')->implode("\n"),
     ];
 
-    // Générer le PDF
     $pdf = PDF::loadView('pdf/documentPdf', $data);
 
-    // Télécharger le fichier PDF
     return $pdf->download('document_client_' . $document->createdocument_id . '.pdf');
 }
 

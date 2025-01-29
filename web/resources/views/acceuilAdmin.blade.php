@@ -5,7 +5,7 @@
     <title>Accueil Admin</title>
     <!-- Lien vers le fichier CSS -->
     <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
-    <link rel="stylesheet" href="{{ asset('css/Admin/AdminAccueil.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/AdminAccueil.css') }}">
 </head>
 
 

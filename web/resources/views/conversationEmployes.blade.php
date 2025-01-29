@@ -50,7 +50,7 @@
              if (!response.ok) {
                  throw new Error('Erreur lors de la récupération des messages.');
              }
-             const messages = await response.json(); // Les messages renvoyés doivent être au format JSON
+             const messages = await response.json(); 
              const messageContainer = document.querySelector('.messages-scrollable');
              messageContainer.innerHTML = ''; // Efface les messages existants
 
@@ -77,10 +77,9 @@
              });
 
              if (messages.length > previousMessagesLength) {
-                 scrollToBottom(); // Faites défiler vers le bas seulement si de nouveaux messages ont été ajoutés
+                 scrollToBottom(); 
             }
 
-            // Mettez à jour la longueur précédente des messages
             previousMessagesLength = messages.length;
 
 
@@ -100,15 +99,15 @@
         document.querySelector('.message-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Empêche le rechargement de la page
 
-            const messageContent = document.querySelector('.form-textarea').value; // Assurez-vous que la classe est correcte
-            const id = document.querySelector('input[name="id"]').value; // Récupérez l'ID de la conversation
+            const messageContent = document.querySelector('.form-textarea').value; 
+            const id = document.querySelector('input[name="id"]').value; 
 
             // Vérifiez si le message n'est pas vide
             if (messageContent.trim() !== '') {
                 sendMessage(id, messageContent).then(() => {
                     document.querySelector('.form-textarea').value = ''; // Réinitialise le champ de message
-                    refreshMessages(); // Rafraîchit les messages après l'envoi
-                    scrollToBottom(); // Scrolle vers le bas après l'envoi (si nécessaire)
+                    refreshMessages(); 
+                    scrollToBottom(); 
                 });
             }
         })
@@ -118,19 +117,19 @@
         // Fonction pour envoyer le message via fetch
         async function sendMessage(id, message) {
             try {
-                const response = await fetch('/employees/sendMessage', { // Assurez-vous que la route est correcte
+                const response = await fetch('/employees/sendMessage', { 
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-Token': document.querySelector('input[name="_token"]').value // Si vous utilisez CSRF
+                        'X-CSRF-Token': document.querySelector('input[name="_token"]').value 
                     },
-                    body: JSON.stringify({ id, message }) // Envoi de l'ID et du message
+                    body: JSON.stringify({ id, message }) 
                 });
                 if (!response.ok) {
                     throw new Error('Erreur lors de l\'envoi du message.');
                 }
-                const result = await response.json(); // Récupère la réponse JSON
-                console.log(result); // Optionnel : affiche la réponse
+                const result = await response.json(); 
+                console.log(result); 
             } catch (error) {
                 console.error('Erreur:', error);
             }
@@ -142,8 +141,7 @@
             messageContainer.scrollTop = messageContainer.scrollHeight;
         }
             
-         // Rafraîchir les messages toutes les 1 secondes
-         setInterval(refreshMessages, 1000); // Intervalle de 1 secondes pour éviter une surcharge du serveur
+         setInterval(refreshMessages, 1000); 
      
      </script>
 </body>

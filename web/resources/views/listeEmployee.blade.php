@@ -3,7 +3,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des employés</title>
-    <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="{{ asset('css/admin/pages.css') }}">
 
     <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
@@ -258,30 +257,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = passwordInput.value;
             const confirmPassword = passwordConfirm.value;
 
-            // Vérification des critères du mot de passe
             const isValidLength = password.length >= 8;
             const hasUpperCase = /[A-Z]/.test(password);
             const hasNumber = /\d/.test(password);
             const hasSpecialChar = /[@$!%*?.&]/.test(password);
 
-            // Vérification de la correspondance des mots de passe
             const passwordsMatch = password === confirmPassword;
 
-            // Mettre à jour le texte d'aide sur le mot de passe
             if (isValidLength && hasUpperCase && hasNumber && hasSpecialChar) {
                 passwordHint.style.color = 'green';
             } else {
                 passwordHint.style.color = 'red';
             }
 
-            // Afficher ou masquer l'erreur de confirmation
             if (confirmPassword && !passwordsMatch) {
                 passwordError.style.display = 'inline';
             } else {
                 passwordError.style.display = 'none';
             }
 
-            // Activer ou désactiver le bouton
             submitButton.disabled = !(
                 isValidLength &&
                 hasUpperCase &&
@@ -291,18 +285,16 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
-        // Ajouter des écouteurs d'événements
         passwordInput.addEventListener('input', validatePassword);
         passwordConfirm.addEventListener('input', validatePassword);
 
-        // Désactiver le bouton au chargement
         submitButton.disabled = true;
     });
 
 
     document.getElementById('creationPrestation').addEventListener('submit', function(event) {
         const fileInput = document.getElementById('image');
-        const maxSize = 2 * 1024 * 1024; // Taille maximale autorisée : 2 Mo
+        const maxSize = 2 * 1024 * 1024; // Taille max autorisée : 2 Mo
     
         if (fileInput.files.length > 0) {
             const fileSize = fileInput.files[0].size;

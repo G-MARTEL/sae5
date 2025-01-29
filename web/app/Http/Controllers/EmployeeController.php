@@ -22,10 +22,8 @@ class EmployeeController extends Controller
     {
         $employeeId = session('id');
         $employeeId = Employee::where('FK_account_id', $employeeId)->first();
-        // Récupérer les cl
         $clients = Client::where('FK_employee_id', $employeeId->employee_id)
             ->get();
-        // Passer les données à la vue
         return view('listeClientAttitres', [
             'clients' => $clients,
         ]);

@@ -3,7 +3,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des prestations</title>
-    <!-- Lien vers le fichier CSS -->
     <link rel="stylesheet" href="{{ asset('css/admin/pages.css') }}">
 
     <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
@@ -165,7 +164,6 @@
     button.addEventListener('click', function() {
         const popup = document.getElementById('modif-pop-up');
 
-        // Préremplir les champs du formulaire
         document.getElementById('modif-service-id').value = this.dataset.id || '';
         document.getElementById('modif-titre').value = this.dataset.title || '';
         document.getElementById('modif-description').value = this.dataset.description || '';
@@ -177,7 +175,7 @@
         preview.innerHTML = '';
         if (this.dataset.image) {
             const img = document.createElement('img');
-            img.src = `${this.dataset.image}`; // Assurez-vous que `this.dataset.image` contient un chemin complet
+            img.src = `${this.dataset.image}`; 
             img.style.maxWidth = '100px';
             img.style.maxHeight = '100px';
             preview.appendChild(img);
@@ -202,12 +200,11 @@ document.getElementById('modif-pop-up').addEventListener('click', function(event
 });
 
 document.querySelectorAll('.open-employee-popup').forEach(button => {
-    button.addEventListener('click', async function () {  // Ajoutez 'async' ici
+    button.addEventListener('click', async function () {  
         const serviceId = this.getAttribute('data-id');
         document.getElementById('service-id').value = serviceId;
 
         try {
-            // Charger la liste des employés avec await
             const response = await fetch(`/admin/getEmployeesForService/${serviceId}`);
             console.log("Réponse brute :", response);
 
@@ -215,13 +212,13 @@ document.querySelectorAll('.open-employee-popup').forEach(button => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            const data = await response.json();  // Attendez la réponse JSON
-            console.log('Réponse JSON :', data);  // Affiche la réponse JSON dans la console
+            const data = await response.json();  
+            console.log('Réponse JSON :', data); 
 
             // Vérifier si 'employees' et 'assignedEmployees' existent
             if (Array.isArray(data.employees) && Array.isArray(data.assignedEmployees)) {
                 const employeeListContainer = document.getElementById('employee-list');
-                employeeListContainer.innerHTML = ''; // Clear the list before adding new employees
+                employeeListContainer.innerHTML = ''; 
 
                 // Afficher les employés assignés (cases cochées)
                 data.employees.forEach(employee => {
@@ -231,28 +228,26 @@ document.querySelectorAll('.open-employee-popup').forEach(button => {
                     // Créer une case à cocher
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
-                    checkbox.name = 'employee_ids[]'; // Changez ici
-                    checkbox.value = employee.employee_id; // L'ID de l'employé
+                    checkbox.name = 'employee_ids[]'; 
+                    checkbox.value = employee.employee_id; 
 
-                    // Ajouter l'état de la case à cocher (cochez les employés assignés)
-                    checkbox.checked = data.assignedEmployees.includes(employee.employee_id); // Si l'employé est assigné
+                    // Ajouter l'état de la case à cocher 
+                    checkbox.checked = data.assignedEmployees.includes(employee.employee_id); 
 
                     // Créer une étiquette pour afficher le nom de l'employé
                     const label = document.createElement('label');
                     if (employee.account && employee.account.first_name && employee.account.last_name) {
                         label.textContent = `${employee.account.first_name} ${employee.account.last_name}`;
                     } else {
-                        label.textContent = 'Nom inconnu';  // Afficher un message par défaut si les infos sont manquantes
+                        label.textContent = 'Nom inconnu';  
                     }
 
-                    // Ajouter l'élément à la liste
                     employeeItem.appendChild(checkbox);
                     employeeItem.appendChild(label);
                     employeeListContainer.appendChild(employeeItem);
                 });
             }
 
-            // Afficher la popup
             document.getElementById('employee-pop-up').style.display = 'block';
 
         } catch (error) {

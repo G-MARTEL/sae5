@@ -33,11 +33,9 @@ class Autentification extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        // Vérification de l'existence de l'email dans la table des comptes
         $account = DB::table('accounts')->where('email', $email)->first();
 
         if ($account && Hash::check($password, $account->password)) {
-            // Vérification s'il s'agit d'un employé
             $employee = DB::table('employees')->where('FK_account_id', $account->account_id)->first();
             if ($employee) {
                 if ($employee->isActif)
