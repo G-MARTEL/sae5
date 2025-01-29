@@ -35,13 +35,9 @@ Route::fallback(function () {
 
 
 Route::get('/video-call/{room}', function ($room) {
-    // Vérifie si la salle est encore valide
-    if (!Session::has("room_$room")) {
-        return redirect('/')->with('error', 'Cette salle n\'existe plus.');
-    }
-
     return view('call', ['room' => $room]);
 })->name('video-call');
+
 
 Route::get('/start-call', function () {
     $room = uniqid();
