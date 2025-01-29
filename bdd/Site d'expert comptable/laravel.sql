@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mer. 29 jan. 2025 à 13:34
+-- Généré le : mer. 29 jan. 2025 à 14:14
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -171,15 +171,16 @@ CREATE TABLE `documents` (
 CREATE TABLE `employees` (
   `employee_id` int(11) NOT NULL,
   `FK_function_id` int(11) NOT NULL,
-  `FK_account_id` int(11) NOT NULL
+  `FK_account_id` int(11) NOT NULL,
+  `isactif` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `employees`
 --
 
-INSERT INTO `employees` (`employee_id`, `FK_function_id`, `FK_account_id`) VALUES
-(1, 1, 1);
+INSERT INTO `employees` (`employee_id`, `FK_function_id`, `FK_account_id`, `isactif`) VALUES
+(1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -308,7 +309,7 @@ CREATE TABLE `notifications` (
   `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `FK_account_id_recipient` int(11) NOT NULL,
   `FK_account_id_sender` int(11) NOT NULL,
-  `seen` tinyint(1) NOT NULL,
+  `seen` tinyint(1) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
