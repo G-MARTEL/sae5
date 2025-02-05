@@ -14,6 +14,7 @@ use App\Models\Documents;
 use App\Models\ContentDocuments;
 use App\Models\CreateDocuments;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -82,17 +83,40 @@ class EmployeeController extends Controller
     }
 
     
-    public function download($id)
-    {
-        // Récupérer le document depuis la base de données
-        $document = Documents::findOrFail($id);
+    // public function download($id)
+    // {
+    //     // Récupérer le document depuis la base de données
+    //     $document = Documents::findOrFail($id);
+    
+    //     // Récupérer le chemin du fichier
+    //     $filePath = $document->document; // Ex: "storage/documents/1738749910_download (1).pdf"
+    
+    //     // Vérifier si le fichier existe dans "storage/app/public/documents"
+    //     if (!Documents::exists(str_replace('storage/', 'private/', $filePath))) {
+    //         abort(404, 'Fichier introuvable.');
+    //     }
+    
+    //     // Retourner le fichier pour téléchargement
+    //     return response()->download(public_path($filePath));
+    // }
 
-        // Générer une réponse de téléchargement
-        return response($document->document)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="document_' . $document->document_id . '.pdf"');
+
+    public function download($id)
+{
+    // Récupérer le document depuis la base de données
+    $document = Documents::findOrFail($id);
+
+    // Récupérer le chemin correct du fichier
+    $filePath = storage_path('app/private/' . $document->document); // Ex: "storage/app/private/documents/1738749910_download (1).pdf"
+
+    // Vérifier si le fichier existe
+    if (!file_exists($filePath)) {
+        abort(404, 'Fichier introuvable.');
     }
 
+    // Télécharger le fichier
+    return response()->download($filePath);
+}
     public function store(Request $request)
     {
        
