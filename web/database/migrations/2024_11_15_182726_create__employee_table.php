@@ -16,7 +16,7 @@ return new class extends Migration
             $table->increments('employee_id')->primary();
             $table->unsignedInteger('FK_function_id')->nullable();
             $table->unsignedInteger('FK_account_id');
-            $table->boolean('isActif')->defaultTrue();
+            $table->boolean('isActif')->default(true);;
         });
 
         DB::statement('ALTER TABLE employees ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
