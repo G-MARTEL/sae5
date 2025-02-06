@@ -11,7 +11,8 @@ class Notification extends Model
 
     protected $table = 'notifications';
     protected $primaryKey = 'notification_id';
-
+    public $timestamps = false;
+    
     protected $fillable = ['notification_id', 'content', 'FK_account_id_recipient', 'FK_account_id_sender', 'date'];
 
     public function account()
