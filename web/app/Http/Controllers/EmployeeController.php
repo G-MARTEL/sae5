@@ -13,6 +13,7 @@ use App\Models\Contract;
 use App\Models\Documents;
 use App\Models\ContentDocuments;
 use App\Models\CreateDocuments;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -148,4 +149,27 @@ class EmployeeController extends Controller
         // Redirection avec message de succès
         return redirect()->back()->with('success', 'Document créé avec succès !');
     }
+    
+
+    public function getNotifications(Request $request)
+    {
+        if (!session()->has('id')) {
+            return response()->json(['error' => 'Non autorisé'], 403);
+        }
+    
+        $account_id = session('id');
+        $employee = Employee::where('FK_account_id', $account_id)->first();
+
+        if ($employee) {
+            $employee_id = $employee->employee_id;
+        }
+       
+        $notifications = Notification::where('FK_account_id_recipient', $employee_id)
+            ->orderBy('date', 'desc')
+            ->get();
+    
+        return response()->json($notifications);
+    }
+
+
 } 

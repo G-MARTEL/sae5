@@ -69,6 +69,8 @@ public function showClientDashboard()
 
 public function updateClientInfo(Request $request)
 {
+
+
     if (session('role') != 'client')
     {
         Session::flush(); 
@@ -103,6 +105,8 @@ public function updateClientInfo(Request $request)
 
     // Sauvegarder les nouvelles informations dans la session
     session(['clientData' => $clientData]);
+
+    $this->createNotification($client->client_id, $client->FK_employee_id, "a mis à jour ses informations personnelles.");
 
     $contrats = Contract::where('FK_client_id', $client->client_id)->get();
 

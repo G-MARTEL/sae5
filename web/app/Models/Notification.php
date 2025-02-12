@@ -15,10 +15,15 @@ class Notification extends Model
     
     protected $fillable = ['notification_id', 'content', 'FK_account_id_recipient', 'FK_account_id_sender', 'date'];
 
-    public function account()
-    {
-        return $this->belongsTo(Account::class, 'FK_account_id_recipient');
-        return $this->belongsTo(Account::class, 'FK_account_id_sender');
-    }
+    public function recipient()
+{
+    return $this->belongsTo(Account::class, 'FK_account_id_recipient');
+}
+
+public function sender()
+{
+    return $this->belongsTo(Account::class, 'FK_account_id_sender');
+}
+
 
 }
