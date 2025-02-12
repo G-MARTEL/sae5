@@ -31,7 +31,6 @@ class EmployeeController extends Controller
         ]);
     }
 
-
     public function showClient(Request $request)
     {
     $id = $request->id;
@@ -84,38 +83,16 @@ class EmployeeController extends Controller
     }
 
     
-    // public function download($id)
-    // {
-    //     // Récupérer le document depuis la base de données
-    //     $document = Documents::findOrFail($id);
-    
-    //     // Récupérer le chemin du fichier
-    //     $filePath = $document->document; // Ex: "storage/documents/1738749910_download (1).pdf"
-    
-    //     // Vérifier si le fichier existe dans "storage/app/public/documents"
-    //     if (!Documents::exists(str_replace('storage/', 'private/', $filePath))) {
-    //         abort(404, 'Fichier introuvable.');
-    //     }
-    
-    //     // Retourner le fichier pour téléchargement
-    //     return response()->download(public_path($filePath));
-    // }
-
 
     public function download($id)
 {
-    // Récupérer le document depuis la base de données
     $document = Documents::findOrFail($id);
 
-    // Récupérer le chemin correct du fichier
-    $filePath = storage_path('app/private/' . $document->document); // Ex: "storage/app/private/documents/1738749910_download (1).pdf"
-
-    // Vérifier si le fichier existe
+    $filePath = storage_path('app/private/' . $document->document); 
     if (!file_exists($filePath)) {
         abort(404, 'Fichier introuvable.');
     }
 
-    // Télécharger le fichier
     return response()->download($filePath);
 }
     public function store(Request $request)
@@ -149,8 +126,8 @@ class EmployeeController extends Controller
         // Redirection avec message de succès
         return redirect()->back()->with('success', 'Document créé avec succès !');
     }
-    
 
+    //FONCTIONNE
     public function getNotifications(Request $request)
     {
         if (!session()->has('id')) {
@@ -165,11 +142,25 @@ class EmployeeController extends Controller
         }
        
         $notifications = Notification::where('FK_account_id_recipient', $employee_id)
+            ->where('seen', false)
             ->orderBy('date', 'desc')
             ->get();
     
         return response()->json($notifications);
     }
 
+    public function markAsSeen($notificationId)
+    {
+        $notification = Notification::find($notificationId);
+    
+        if ($notification) {
+            $notification->seen = true;
+            $notification->save();
+    
+            return response()->json(['success' => 'Notification marquée comme vue']);
+        }
+    
+        return response()->json(['error' => 'Notification non trouvée'], 404);
+    }
 
 } 

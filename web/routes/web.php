@@ -109,7 +109,7 @@ Route::prefix('employees')->name('employees.')->group(function() {
     Route::get('getmessageEmployee/{id}', [MessageriControlleur::class, 'getmessageEmployee']);
 
     Route::get('/notifications', [EmployeeController::class, 'getNotifications'])->name('notifications.get');
-
+    Route::post('/notifications/{id}/markAsSeen', [EmployeeController::class, 'markAsSeen'])->name('notifications.markAsSeen');
 });
 
 
