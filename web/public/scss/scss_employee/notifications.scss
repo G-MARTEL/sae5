@@ -1,0 +1,61 @@
+@charset "utf-8";
+@use 'sass:color';
+@import "../scss_base/variables.scss";
+
+$hover-color: color.adjust($vert, $lightness: +10%); // Couleur au survol
+$font-family: 'Arial', sans-serif; // Police utilisée
+
+#notificationArea {
+    position: fixed; // Pour que l'élément reste en place lors du défilement
+    bottom: 20px; // Espacement depuis le bas de l'écran
+    right: 20px;
+    //background-color: $vert-clair;
+    //border: 1px solid $vert;
+    border-radius: 8px;
+    //box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin: 20px 0;
+    max-width: 400px;
+    
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: 12px;
+        color: $vert;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+            background-color: $vert-clair;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: color.adjust($vert-clair, $lightness: -10%);
+            }
+
+            button.mark-as-seen {
+                background-color: $vert;
+                color: $vert-clair;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: color.adjust($vert, $lightness: -10%);
+                }
+            }
+        }
+    }
+}

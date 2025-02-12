@@ -14,6 +14,8 @@ use App\Models\Documents;
 use App\Models\Client;
 use App\Models\CreateDocuments;
 use App\Models\ContentDocuments;
+use App\Models\Notification;
+
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -67,6 +69,8 @@ public function showClientDashboard()
 
 public function updateClientInfo(Request $request)
 {
+
+
     if (session('role') != 'client')
     {
         Session::flush(); 
@@ -101,6 +105,8 @@ public function updateClientInfo(Request $request)
 
     // Sauvegarder les nouvelles informations dans la session
     session(['clientData' => $clientData]);
+
+    $this->createNotification($client->client_id, $client->FK_employee_id, "a mis à jour ses informations personnelles.");
 
     $contrats = Contract::where('FK_client_id', $client->client_id)->get();
 
@@ -218,6 +224,13 @@ public function uploadDocument(Request $request)
         'date' => now(),
     ]);
 
+    $employee = DB::table('employees')->where('employee_id', $client->FK_employee_id)->first();
+
+    if ($employee) {
+        // Création de la notification pour l'employé
+        $this->createNotification($client->client_id, $client->FK_employee_id, "a déposé un nouveau document.");
+    }
+
     return redirect()->back()->with('success', 'Document déposé avec succès !');
 }
 
@@ -225,6 +238,29 @@ public function employee()
 {
     return $this->belongsTo(Employee::class, 'FK_employee_id', 'employee_id');
 
+}
+
+public function createNotification($client_id, $employee_id, $message)
+{
+    $client = DB::table('clients')
+        ->join('accounts', 'clients.FK_account_id', '=', 'accounts.account_id')
+        ->where('clients.client_id', $client_id)
+        ->select('accounts.first_name', 'accounts.last_name')
+        ->first();
+
+    if (!$client) {
+        return; 
+    }
+
+    $fullMessage = "{$client->first_name} {$client->last_name} : $message";
+
+    Notification::create([
+        'FK_account_id_recipient' => $employee_id,
+        'FK_account_id_sender' => $client_id,
+        'content' => $fullMessage,
+        'date' => now(),
+        'seen' => false
+    ]);
 }
 
 

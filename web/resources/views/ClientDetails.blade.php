@@ -1,3 +1,5 @@
+@extends('layouts.notification')
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil de {{ $client->account->first_name }} {{$client->account->last_name}} </title>
     <link rel="stylesheet" href="{{ asset('css\employee\clientDetails.css') }}">
+    <link rel="stylesheet" href="{{ asset('css\employee\notifications.css') }}">
     <link rel="icon" href="{{ asset("assets\communs\logo_avycompta.png") }}" type="image/png">
 
     

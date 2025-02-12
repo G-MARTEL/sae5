@@ -121,7 +121,7 @@
         </div>
         <div class="modal-body">
             <!-- Formulaire pour la mise à jour des informations -->
-            <form method="POST" action="{{ route('client.update') }}">
+            <form method="POST" action="{{ route('client.update') }}" >
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>

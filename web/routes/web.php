@@ -108,6 +108,8 @@ Route::prefix('employees')->name('employees.')->group(function() {
     Route::get('clients/{id}', [EmployeeController::class, 'showClient'])->name('clients.show');
     Route::get('getmessageEmployee/{id}', [MessageriControlleur::class, 'getmessageEmployee']);
 
+    Route::get('/notifications', [EmployeeController::class, 'getNotifications'])->name('notifications.get');
+    Route::post('/notifications/{id}/markAsSeen', [EmployeeController::class, 'markAsSeen'])->name('notifications.markAsSeen');
 });
 
 
@@ -125,6 +127,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/getEmployeesForService/{service_id}', [AdminController::class, 'getEmployeesForService']);
     Route::post('/updateEmployees', [AdminController::class, 'updateEmployees']);
     Route::post('/disableEmployees', [AdminController::class, 'disableEmployees']);
+
 
 });
 
@@ -149,3 +152,5 @@ Route::get('/documents/downloadDocument/{id}', [DocumentController::class, 'down
 
 
 Route::get('/client/download-document/{id}', [DocumentController::class, 'downloadDocumentClient'])->name('download.document.client');
+
+
