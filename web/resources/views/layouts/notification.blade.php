@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     fetchNotifications();
-    setInterval(fetchNotifications, 5000);
+    setInterval(fetchNotifications, 1000);
 });
 
 

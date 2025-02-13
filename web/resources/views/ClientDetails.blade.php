@@ -88,7 +88,7 @@
                 @else
                     @foreach($client->documents as $document)
                         <tr>
-                            <td>Document #{{ $document->document_id }}</td>
+                            <td>{{ $document->title }}</td>
                             <td>{{ $document->date }}</td>
                             <td>
                                 <a href="{{ route('download.document', $document->document_id) }}" class="download-link">Télécharger</a>

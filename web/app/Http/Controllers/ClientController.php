@@ -216,17 +216,18 @@ public function uploadDocument(Request $request)
     $file = $request->file('document');
     $fileName = time() . '_' . $file->getClientOriginalName(); // Générer un nom unique
     $filePath = $file->storeAs('documents', $fileName); // Stocker dans storage/app/public/documents
+    $fileNameClean = preg_replace('/^\d+_/', '', $fileName);
 
     // Enregistrer l'URL du fichier dans la base de données
     Documents::create([
         'FK_client_id' => $client->client_id,
+        'title' => $fileNameClean,
         'document' => 'documents/' . $fileName, // Enregistrer le chemin d'accès
         'date' => now(),
     ]);
 
     $employee = DB::table('employees')->where('employee_id', $client->FK_employee_id)->first();
 
-    $fileNameClean = preg_replace('/^\d+_/', '', $fileName);
 
     if ($employee) {
         // Création de la notification pour l'employé
