@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DocumentCreationMail;
+use App\Mail\ContractCreationMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client;
@@ -78,7 +81,13 @@ class EmployeeController extends Controller
             'creation_date' => now(),
             'is_active' => true,
         ]);
-    
+
+        $email = $request->input('client_email');
+        $client = $request->input('client_firstname') . ' ' . $request->input('client_lastname');
+        $titre_prestation = $request->input('service_title');
+
+        Mail::to($email)->send(new ContractCreationMail($client, $titre_prestation, $contractNumber));
+
         return redirect()->back();
     }
 
@@ -98,14 +107,16 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
        
-
         // Validation des données
         $validated = $request->validate([
             'client_id' => 'required|exists:clients,client_id',
             'employee_id' => 'required|exists:employees,employee_id',
+            'client_email' => 'required|',
             'title' => 'required|string|max:255',
             'contenu' => 'required|string',
             'facture' => 'required|boolean',
+            'client_firstname' => 'required|',
+            'client_lastname' => 'required|',
         ]);
 
         // Création du document dans la table create_documents
@@ -115,6 +126,9 @@ class EmployeeController extends Controller
             'facture' => $validated['facture'],
         ]);
 
+        $email = $validated['client_email'];
+        $client = $validated['client_firstname'] . ' ' . $validated['client_lastname'];
+
         // Création du contenu du document dans la table content_documents
         ContentDocuments::create([
             'title' => $validated['title'],
@@ -123,6 +137,7 @@ class EmployeeController extends Controller
             'date' => now(),
         ]);
 
+        Mail::to($email)->send(new DocumentCreationMail($client, $validated['title']));
         // Redirection avec message de succès
         return redirect()->back()->with('success', 'Document créé avec succès !');
     }

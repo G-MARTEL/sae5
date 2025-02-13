@@ -60,13 +60,17 @@
         <form action="{{ route('employees.creationContrat') }}" method="POST" class="create-contract-form">
             @csrf
             <input type="hidden" name="client_id" value="{{ $client->client_id }}">
-    
+            <input type="hidden" name="client_email" value="{{ $client->account->email }}">
+            <input type="hidden" name="client_firstname" value="{{ $client->account->first_name }}">
+            <input type="hidden" name="client_lastname" value="{{ $client->account->last_name}}">
+            
             <label for="prestation">Type de prestation :</label>
             <select name="prestation_id" id="prestation" required>
                 @foreach ($services as $service)
                     <option value="{{ $service->service_id }}">{{ $service->title }}</option>
                 @endforeach
             </select>
+            <input type="hidden" name="service_title" id="service_title">
     
             <button type="submit">Créer contrat</button>
         </form>
@@ -88,7 +92,7 @@
                 @else
                     @foreach($client->documents as $document)
                         <tr>
-                            <td>Document #{{ $document->document_id }}</td>
+                            <td>{{ $document->title }}</td>
                             <td>{{ $document->date }}</td>
                             <td>
                                 <a href="{{ route('download.document', $document->document_id) }}" class="download-link">Télécharger</a>
@@ -104,7 +108,10 @@
             @csrf
             <input type="hidden" name="client_id" value="{{ $client->client_id }}">
             <input type="hidden" name="employee_id" value="{{ $client->FK_employee_id }}">
-    
+            <input type="hidden" name="client_email" value="{{ $client->account->email }}">
+            <input type="hidden" name="client_firstname" value="{{ $client->account->first_name }}">
+            <input type="hidden" name="client_lastname" value="{{ $client->account->last_name}}">
+            
             <label for="title">Titre du document :</label>
             <input type="text" name="title" id="title" required>
     
@@ -156,3 +163,10 @@
     </div>
 
 </body>
+
+<script>
+    document.getElementById('prestation').addEventListener('change', function() {
+        var selectedOptionText = this.options[this.selectedIndex].text;
+        document.getElementById('service_title').value = selectedOptionText;
+    });
+</script>
