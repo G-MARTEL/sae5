@@ -104,7 +104,10 @@
             @csrf
             <input type="hidden" name="client_id" value="{{ $client->client_id }}">
             <input type="hidden" name="employee_id" value="{{ $client->FK_employee_id }}">
-    
+            <input type="hidden" name="client_email" value="{{ $client->account->email }}">
+            <input type="hidden" name="client_firstname" value="{{ $client->account->first_name }}">
+            <input type="hidden" name="client_lastname" value="{{ $client->account->last_name}}">
+            
             <label for="title">Titre du document :</label>
             <input type="text" name="title" id="title" required>
     

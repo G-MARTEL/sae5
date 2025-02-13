@@ -160,38 +160,6 @@ public function downloadContract($contractId)
 }
 
 
-// public function uploadDocument(Request $request)
-// {
-//     // Validation des données
-//     $validator = Validator::make($request->all(), [
-//         'document' => 'required|file|mimes:pdf|max:2048', // Limite à 2MB et uniquement les PDF
-//     ]);
-
-//     if ($validator->fails()) {
-//         return redirect()->back()->withErrors($validator)->withInput();
-//     }
-
-//     // Récupérer les données du client depuis la session
-//     $clientData = session('clientData');
-//     $client = DB::table('clients')->where('FK_account_id', $clientData['account']->account_id)->first();
-
-//     if (!$client) {
-//         return redirect()->route('login')->with('error', 'Client non trouvé !');
-//     }
-
-//     // Lire le contenu du fichier
-//     $file = $request->file('document');
-//     $fileContent = file_get_contents($file);
-
-//     // Sauvegarder dans la base de données
-//     Documents::create([
-//         'FK_client_id' => $client->client_id,
-//         'document' => $fileContent,
-//         'date' => now(),
-//     ]);
-
-//     return redirect()->back()->with('success', 'Document déposé avec succès !');
-// }
 
 public function uploadDocument(Request $request)
 {
