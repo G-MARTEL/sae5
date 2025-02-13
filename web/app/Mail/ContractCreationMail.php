@@ -13,12 +13,32 @@ class ContractCreationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+
+    public $client;
+    public $title;
+    public $contractNumber;
+
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($client, $title, $contractNumber)
     {
-        //
+        $this->client = $client;
+        $this->title = $title;
+        $this->contractNumber = $contractNumber;
+    }
+
+
+    public function build()
+    {
+        return $this->subject('Vous avez souscrit à un nouveau contrat')
+                    ->view('emails.contrat_created')
+                    ->with([
+                        'clientName' => $this->client,
+                        'contratTitle' => $this->title,
+                        'contractNumber' => $this->contractNumber,
+                    ]);
     }
 
     /**
@@ -27,7 +47,7 @@ class ContractCreationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contract Creation Mail',
+            subject: 'Nouveau contrat ajouté a votre profil',
         );
     }
 
@@ -37,7 +57,7 @@ class ContractCreationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.contrat_created',
         );
     }
 

@@ -41,7 +41,7 @@ class DocumentCreationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Document Creation Mail',
+            subject: 'Nouveau document a été déposé sur votre espace client',
         );
     }
 

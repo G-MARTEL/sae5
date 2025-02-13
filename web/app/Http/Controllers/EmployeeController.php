@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DocumentCreationMail;
-use App\Mail\ContratCreationMail;
+use App\Mail\ContractCreationMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -84,9 +84,9 @@ class EmployeeController extends Controller
 
         $email = $request->input('client_email');
         $client = $request->input('client_firstname') . ' ' . $request->input('client_lastname');
-        
+        $titre_prestation = $request->input('service_title');
 
-        Mail::to($email)->send(new ContratCreationMail($client, $validated['title']));
+        Mail::to($email)->send(new ContractCreationMail($client, $titre_prestation, $contractNumber));
 
         return redirect()->back();
     }

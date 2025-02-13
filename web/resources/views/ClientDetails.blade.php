@@ -70,6 +70,7 @@
                     <option value="{{ $service->service_id }}">{{ $service->title }}</option>
                 @endforeach
             </select>
+            <input type="hidden" name="service_title" id="service_title">
     
             <button type="submit">Créer contrat</button>
         </form>
@@ -162,3 +163,10 @@
     </div>
 
 </body>
+
+<script>
+    document.getElementById('prestation').addEventListener('change', function() {
+        var selectedOptionText = this.options[this.selectedIndex].text;
+        document.getElementById('service_title').value = selectedOptionText;
+    });
+</script>
