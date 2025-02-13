@@ -14,7 +14,7 @@ class Documents extends Model
 
     protected $primaryKey = 'document_id';
 
-    protected $fillable = ['document_id','FK_client_id','document','date'];
+    protected $fillable = ['document_id','FK_client_id','title','document','date'];
     
     public $timestamps = false;
 

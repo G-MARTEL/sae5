@@ -226,9 +226,11 @@ public function uploadDocument(Request $request)
 
     $employee = DB::table('employees')->where('employee_id', $client->FK_employee_id)->first();
 
+    $fileNameClean = preg_replace('/^\d+_/', '', $fileName);
+
     if ($employee) {
         // Création de la notification pour l'employé
-        $this->createNotification($client->client_id, $client->FK_employee_id, "a déposé un nouveau document.");
+        $this->createNotification($client->client_id, $client->FK_employee_id, "a déposé un nouveau document : " . $fileNameClean);
     }
 
     return redirect()->back()->with('success', 'Document déposé avec succès !');
@@ -252,7 +254,7 @@ public function createNotification($client_id, $employee_id, $message)
         return; 
     }
 
-    $fullMessage = "{$client->first_name} {$client->last_name} : $message";
+    $fullMessage = "{$client->first_name} {$client->last_name} $message";
 
     Notification::create([
         'FK_account_id_recipient' => $employee_id,

@@ -10,8 +10,9 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('document_id'); // Clé primaire
-            $table->unsignedInteger('FK_client_id'); // Colonne FK_client_id
-            $table->string('document'); // Colonne document (BLOB)
+            $table->unsignedInteger('FK_client_id'); 
+            $table->string('title');
+            $table->string('document'); 
             $table->date('date')->useCurrent(); // Colonne date avec valeur par défaut
 
         });
