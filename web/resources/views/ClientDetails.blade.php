@@ -60,7 +60,10 @@
         <form action="{{ route('employees.creationContrat') }}" method="POST" class="create-contract-form">
             @csrf
             <input type="hidden" name="client_id" value="{{ $client->client_id }}">
-    
+            <input type="hidden" name="client_email" value="{{ $client->account->email }}">
+            <input type="hidden" name="client_firstname" value="{{ $client->account->first_name }}">
+            <input type="hidden" name="client_lastname" value="{{ $client->account->last_name}}">
+            
             <label for="prestation">Type de prestation :</label>
             <select name="prestation_id" id="prestation" required>
                 @foreach ($services as $service)
