@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+.Cadre_title {
+    background-color: #d2e9e8;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+    padding: 0 5%;
+}
+
+/* Tableau des disponibilités */
+.planning_table {
+    border-collapse: collapse;
+    width: 60%;
+    background-color: white;
+    text-align: center;
+    border: 2px solid #248680;
+}
+
+.planning_table th, .planning_table td {
+    border: 2px solid #248680;
+    padding: 20px;
+    vertical-align: top;
+    width: 20%;
+}
+
+.planning_table th {
+    background-color: white;
+    color: #248680;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Créneaux horaires */
+.slot {
+    background-color: #748f8e;
+    color: white;
+    padding: 10px;
+    margin: 5px auto;
+    border-radius: 10px;
+    font-size: 14px;
+    width: 80%;
+    text-align: center;
+}
+
+/* Conteneur du formulaire */
+.appointment_form {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 15px;
+    width: 60%; /* 60% de la largeur du conteneur parent */
+    max-width: 500px; /* Pour limiter la largeur maximale à 500px */
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Titre du formulaire */
+.appointment_form h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Style du label */
+.appointment_form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+/* Style du sélecteur */
+.appointment_form select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #748f8e; /* Bordure initiale */
+    border-radius: 25px;
+    background-color: white;
+    color: #748f8e; /* Texte initial en gris */
+    font-size: 14px;
+    appearance: none;
+    text-align: center;
+    font-weight: bold; /* Texte en gras initialement */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+.appointment_form select:valid {
+    border-color: #248680;
+    color: #248680;
+    font-weight: normal;
+}
+
+.appointment_form select:focus {
+    border-color: #748f8e;
+    color: #748f8e;
+}
+
+/* Style de la zone de texte */
+.appointment_form textarea {
+    width: calc(100% - 20px); /* Évite de dépasser en prenant en compte le padding */
+    padding: 15px;
+    border: 2px solid #748f8e;
+    border-radius: 10px;
+    background-color: #d9f0f0;
+    font-size: 14px;
+    resize: none; /* Empêche le redimensionnement */
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+/* Style du bouton */
+.btn_appointment {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #748f8e;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.btn_appointment:hover {
+    background-color: #748f8e;
+}

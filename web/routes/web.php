@@ -50,6 +50,10 @@ Route::get('/accueil2', function () {
     return view('accueil');
 })->name('accueil2');
 
+Route::get('/planning', function () {
+    return view('planning');
+})->name('planning');
+
 Route::get('acceuil', function () {return view('accueil');});
 
 Route::get('qui-sommes-nous', function () {
