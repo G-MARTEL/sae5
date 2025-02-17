@@ -182,6 +182,11 @@ public function uploadDocument(Request $request)
 
     // Récupération du fichier et stockage dans Laravel
     $file = $request->file('document');
+
+    $key = random_bytes(32);
+
+    $file = $this->encryptFile($file, $key);
+
     $fileName = time() . '_' . $file->getClientOriginalName(); // Générer un nom unique
     $filePath = $file->storeAs('documents', $fileName); // Stocker dans storage/app/public/documents
     $fileNameClean = preg_replace('/^\d+_/', '', $fileName);
@@ -204,6 +209,36 @@ public function uploadDocument(Request $request)
 
     return redirect()->back()->with('success', 'Document déposé avec succès !');
 }
+
+
+
+
+public function encryptFile($filePath, $key) {
+    if (!file_exists($filePath)) {
+        throw new Exception("Le fichier spécifié n'existe pas.");
+    }
+
+    $iv = random_bytes(16); // Générer un IV aléatoire (16 bytes)
+    $data = file_get_contents($filePath); // Lire le contenu du fichier
+
+    if ($data === false) {
+        throw new Exception("Échec de la lecture du fichier.");
+    }
+
+    $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $key, 0, $iv);
+
+    if ($encryptedData === false) {
+        throw new Exception("Échec du chiffrement des données.");
+    }
+
+    $outputPath = $filePath. '.enc'; // Créer un nouveau fichier avec l'extension.enc
+    if (file_put_contents($outputPath, $iv . $encryptedData) === false) {
+        throw new Exception("Échec de l'écriture du fichier chiffré.");
+    }
+    $data = file_get_contents($outputPath);
+    dd ($data);
+}
+
 
 public function employee()
 {
