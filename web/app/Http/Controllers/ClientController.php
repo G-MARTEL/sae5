@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\UploadedFile;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,8 +16,7 @@ use App\Models\Client;
 use App\Models\CreateDocuments;
 use App\Models\ContentDocuments;
 use App\Models\Notification;
-
-
+use Exception;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -184,9 +184,9 @@ public function uploadDocument(Request $request)
     $file = $request->file('document');
 
     $key = random_bytes(32);
-
     $file = $this->encryptFile($file, $key);
 
+    $file = new UploadedFile($file, basename($file), mime_content_type($file), null, true);
     $fileName = time() . '_' . $file->getClientOriginalName(); // Générer un nom unique
     $filePath = $file->storeAs('documents', $fileName); // Stocker dans storage/app/public/documents
     $fileNameClean = preg_replace('/^\d+_/', '', $fileName);
@@ -196,6 +196,7 @@ public function uploadDocument(Request $request)
         'FK_client_id' => $client->client_id,
         'title' => $fileNameClean,
         'document' => 'documents/' . $fileName, // Enregistrer le chemin d'accès
+        'key' => $key,
         'date' => now(),
     ]);
 
@@ -209,17 +210,10 @@ public function uploadDocument(Request $request)
 
     return redirect()->back()->with('success', 'Document déposé avec succès !');
 }
-
-
-
-
-public function encryptFile($filePath, $key) {
-    if (!file_exists($filePath)) {
-        throw new Exception("Le fichier spécifié n'existe pas.");
-    }
-
+public function encryptFile($file, $key) {
     $iv = random_bytes(16); // Générer un IV aléatoire (16 bytes)
-    $data = file_get_contents($filePath); // Lire le contenu du fichier
+    
+    $data = file_get_contents($file->getRealPath()); // Lire le contenu du fichier uploadé
 
     if ($data === false) {
         throw new Exception("Échec de la lecture du fichier.");
@@ -231,12 +225,15 @@ public function encryptFile($filePath, $key) {
         throw new Exception("Échec du chiffrement des données.");
     }
 
-    $outputPath = $filePath. '.enc'; // Créer un nouveau fichier avec l'extension.enc
-    if (file_put_contents($outputPath, $iv . $encryptedData) === false) {
-        throw new Exception("Échec de l'écriture du fichier chiffré.");
-    }
-    $data = file_get_contents($outputPath);
-    dd ($data);
+    // Générer un nouveau nom pour le fichier chiffré
+    $encryptedFileName = time() . '_' . basename($file->getClientOriginalName()) . '.enc';
+    $outputPath = storage_path('app/documents/' . $encryptedFileName); 
+
+    // Stocker le fichier chiffré
+    file_put_contents($outputPath, $iv . $encryptedData);
+
+    // Retourner un chemin vers le fichier chiffré
+    return $outputPath; // Retourne le chemin complet du fichier
 }
 
 

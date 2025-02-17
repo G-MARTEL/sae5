@@ -12,7 +12,8 @@ return new class extends Migration
             $table->increments('document_id'); // Clé primaire
             $table->unsignedInteger('FK_client_id'); 
             $table->string('title');
-            $table->string('document'); 
+            $table->string('document');
+            $table->binary('key')->notNull();
             $table->date('date')->useCurrent(); // Colonne date avec valeur par défaut
 
         });

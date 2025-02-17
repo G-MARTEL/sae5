@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Documents;
-use App\Models\createDocuments;
+use App\Models\CreateDocuments;
 
 
 class Client extends Model
@@ -45,14 +45,14 @@ class Client extends Model
     }
 
     public function createDocuments()
-{
-    return $this->hasMany(CreateDocuments::class, 'FK_client_id');
-}
+    {
+        return $this->hasMany(CreateDocuments::class, 'FK_client_id');
+    }
 
-public function contentDocuments()
-{
-    return $this->hasMany(contentDocuments::class, 'FK_client_id');
-}
+    public function contentDocuments()
+    {
+        return $this->hasMany(contentDocuments::class, 'FK_client_id');
+    }
 
 
 }

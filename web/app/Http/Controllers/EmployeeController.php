@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;  // La bonne déclaration ici
 use App\Mail\DocumentCreationMail;
 use App\Mail\ContractCreationMail;
 use Illuminate\Support\Facades\Mail;
@@ -17,8 +18,9 @@ use App\Models\Documents;
 use App\Models\ContentDocuments;
 use App\Models\CreateDocuments;
 use App\Models\Notification;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class EmployeeController extends Controller
 {
@@ -46,7 +48,7 @@ class EmployeeController extends Controller
     $services = Services::all();
 
     // Passer les données à la vue
-    return view('clientDetails', [
+    return view('ClientDetails', [
         'client' => $client,
         'services' => $services,
     ]);
@@ -92,18 +94,87 @@ class EmployeeController extends Controller
     }
 
     
-
     public function download($id)
-{
-    $document = Documents::findOrFail($id);
+    {
 
-    $filePath = storage_path('app/private/' . $document->document); 
-    if (!file_exists($filePath)) {
-        abort(404, 'Fichier introuvable.');
+        // Spécifiez le disque et le répertoire
+        $directory = 'decrypted/';
+
+        // Récupérer tous les fichiers dans ce répertoire
+        $files = Storage::disk('local')->allFiles($directory);
+
+        // Supprimer tous les fichiers récupérés
+        Storage::disk('local')->delete($files);
+
+
+        // Récupérer le document
+        $document = Documents::findOrFail($id);
+        
+        // Récupérer le chemin du fichier à partir du disque local
+        $filePath = storage_path('app/private/' . $document->document);
+        
+        // Déchiffrer le fichier et obtenir son nouveau chemin
+        $filePath = $this->decryptFile($filePath, $document->key);
+        return response()->download($filePath);
     }
+    
+    public function decryptFile($fileUrl, $key)
+    {
+        // Extraire le nom du fichier à partir de l'URL
+        $fileName = basename($fileUrl);
+    
+        // Vérifier si le fichier existe dans le stockage local
+        if (!Storage::disk('local')->exists('documents/' . $fileName)) {
+            dd("Le fichier spécifié n'existe pas.");
+        }
+    
+        // Récupérer le contenu du fichier depuis le stockage local
+        $data = Storage::disk('local')->get('documents/' . $fileName);
+    
+        // Vérifier si le fichier est valide
+        if (!$data) {
+            throw new \Exception("Le fichier téléchargé est vide ou invalide.");
+        }
+    
+        // Extraire l'IV (16 premiers octets)
+        $iv = substr($data, 0, 16);
+        $encryptedData = substr($data, 16);
+    
+        // Vérifier la validité de l'IV
+        if (strlen($iv) !== 16) {
+            throw new \Exception("L'IV extrait n'est pas valide.");
+        }
+    
+        // Déchiffrer les données
+        $decryptedData = openssl_decrypt($encryptedData, 'AES-256-CBC', $key, 0, $iv);
+        if ($decryptedData === false) {
+            throw new \Exception("Échec du déchiffrement.");
+        }
+    
+        // Définir le répertoire de stockage temporaire pour le fichier décrypté
+        $directory = 'decrypted/';
+    
+        // Créer le répertoire s'il n'existe pas encore
+        if (!Storage::disk('local')->exists($directory)) {
+            Storage::disk('local')->makeDirectory($directory);
+        }
+    
+        // Générer un nom unique pour le fichier déchiffré
+        $decryptedFileName = 'decrypted_' . time() . '.pdf';
+    
+        // Créer un chemin pour le fichier décrypté dans le stockage local
+        $filePath = storage_path('app/private/' . $directory . $decryptedFileName);
+    
+        // Sauvegarder le fichier déchiffré
+        file_put_contents($filePath, $decryptedData);
+    
+        // Retourner le chemin du fichier décrypté
+        return $filePath;
+    }
+    
 
-    return response()->download($filePath);
-}
+
+
     public function store(Request $request)
     {
        
