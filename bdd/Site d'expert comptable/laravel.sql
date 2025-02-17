@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mer. 29 jan. 2025 à 14:14
+-- Généré le : lun. 17 fév. 2025 à 13:24
 -- Version du serveur : 5.7.22
 -- Version de PHP : 8.2.8
 
@@ -66,20 +66,6 @@ CREATE TABLE `actions_type` (
 INSERT INTO `actions_type` (`action_type_id`, `action_name`) VALUES
 (0, 'UPDATE'),
 (1, 'DELETE');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `calendars`
---
-
-CREATE TABLE `calendars` (
-  `calendar_id` int(11) NOT NULL,
-  `FK_employee_id` int(11) NOT NULL,
-  `start_time` time NOT NULL,
-  `end_time` time NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -323,9 +309,10 @@ CREATE TABLE `plannings` (
   `planning` int(11) NOT NULL,
   `start_time_event` time NOT NULL,
   `end_time_event` time NOT NULL,
+  `Date` date NOT NULL,
   `event_type` int(11) NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `FK_calendar_id` int(11) NOT NULL,
+  `FK_employees` int(11) DEFAULT NULL,
   `FK_client_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -426,13 +413,6 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `actions_type`
   ADD PRIMARY KEY (`action_type_id`);
-
---
--- Index pour la table `calendars`
---
-ALTER TABLE `calendars`
-  ADD PRIMARY KEY (`calendar_id`),
-  ADD KEY `FK_calendars_employees` (`FK_employee_id`);
 
 --
 -- Index pour la table `clients`
@@ -560,8 +540,8 @@ ALTER TABLE `notifications`
 --
 ALTER TABLE `plannings`
   ADD PRIMARY KEY (`planning`),
-  ADD KEY `FK_plannings_calendars` (`FK_calendar_id`),
-  ADD KEY `FK_plannings_clients` (`FK_client_id`);
+  ADD KEY `FK_plannings_clients` (`FK_client_id`),
+  ADD KEY `FK_planning_employees` (`FK_employees`);
 
 --
 -- Index pour la table `quotes_request`
@@ -611,12 +591,6 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `actions_type`
   MODIFY `action_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `calendars`
---
-ALTER TABLE `calendars`
-  MODIFY `calendar_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `clients`
@@ -749,12 +723,6 @@ ALTER TABLE `team_services`
 --
 
 --
--- Contraintes pour la table `calendars`
---
-ALTER TABLE `calendars`
-  ADD CONSTRAINT `FK_calendars_employees` FOREIGN KEY (`FK_employee_id`) REFERENCES `employees` (`employee_id`);
-
---
 -- Contraintes pour la table `clients`
 --
 ALTER TABLE `clients`
@@ -854,7 +822,7 @@ ALTER TABLE `notifications`
 -- Contraintes pour la table `plannings`
 --
 ALTER TABLE `plannings`
-  ADD CONSTRAINT `FK_plannings_calendars` FOREIGN KEY (`FK_calendar_id`) REFERENCES `calendars` (`calendar_id`),
+  ADD CONSTRAINT `FK_planning_employees` FOREIGN KEY (`FK_employees`) REFERENCES `employees` (`employee_id`),
   ADD CONSTRAINT `FK_plannings_clients` FOREIGN KEY (`FK_client_id`) REFERENCES `clients` (`client_id`);
 
 --
