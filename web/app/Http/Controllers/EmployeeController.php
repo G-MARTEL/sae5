@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Mail\DocumentCreationMail;
 use App\Mail\ContractCreationMail;
 use Illuminate\Support\Facades\Mail;
@@ -17,6 +18,7 @@ use App\Models\Documents;
 use App\Models\ContentDocuments;
 use App\Models\CreateDocuments;
 use App\Models\Notification;
+use App\Models\QuotesRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -177,5 +179,60 @@ class EmployeeController extends Controller
     
         return response()->json(['error' => 'Notification non trouvée'], 404);
     }
+
+
+    public function listeDemandesDevis()
+    {
+        $devisList = QuotesRequest::where('checked', false)->get();
+        return view('listeDemandesDevis', [
+            'devisList' => $devisList
+        ]);
+    }
+
+
+    public function showDevis(Request $request)
+    {
+    $id = $request->id;
+
+    $devis = QuotesRequest::where('quote_request_id' , $id)->first();
+    return view('DevisDetails', [
+        'devis' => $devis,
+    ]);
+    }
+    
+
+public function genererDevisPDF(Request $request, $id)
+{
+    $devis = QuotesRequest::findOrFail($id);
+
+    $lignes = $request->input('description', []);
+    $quantites = $request->input('quantite', []);
+    $prix = $request->input('prix', []);
+    $commentaires = $request->input('commentaires', '');
+
+    $totalHT = 0;
+    $detailsDevis = [];
+
+    foreach ($lignes as $index => $desc) {
+        $qte = $quantites[$index];
+        $prixUnitaire = $prix[$index];
+        $total = $qte * $prixUnitaire;
+        $totalHT += $total;
+
+        $detailsDevis[] = [
+            'description' => $desc,
+            'quantite' => $qte,
+            'prix' => $prixUnitaire,
+            'total' => $total
+        ];
+    }
+
+    $tva = $totalHT * 0.2;
+    $totalTTC = $totalHT + $tva;
+
+    $pdf = Pdf::loadView('pdf.devis', compact('devis', 'detailsDevis', 'totalHT', 'tva', 'totalTTC', 'commentaires'));
+
+    return $pdf->download("devis_{$devis->quote_request_id}.pdf");
+}
 
 } 

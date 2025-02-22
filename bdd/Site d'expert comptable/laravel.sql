@@ -330,6 +330,7 @@ CREATE TABLE `quotes_request` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type_of_service` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `message` text COLLATE utf8_unicode_ci NOT NULL,
+  `seen` tinyint(1) NOT NULL DEFAULT '0',
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type_of_service', 255)->collation('utf8_unicode_ci');
             $table->text('message')->collation('utf8_unicode_ci');
             $table->timestamp('creation_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->boolean('checked')->default(false);
         });
 
         DB::statement('ALTER TABLE quotes_request ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci');
