@@ -33,8 +33,16 @@
         </div>
 
         <div class="container-inner">
+            <h2>Appel vidéo</h2>
             <a href="{{ route('video-call', ['room' => uniqid()]) }}" class="btn btn-primary">
                 Démarrer un appel vidéo
+            </a>
+        </div>
+
+        <div class="container-inner">
+            <h2>Gestion des devis</h2>
+            <a href="listeDemandesDevis">
+                Accéder aux demandes de devis
             </a>
         </div>
 
