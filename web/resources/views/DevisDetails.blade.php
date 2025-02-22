@@ -28,10 +28,7 @@
         <!-- Formulaire de création du devis -->
         <div class="section">
             <h2>Établir le devis</h2>
-            {{-- <form action="{{ route('employees.enregistrerDevis', ['id' => $devis->quote_request_id]) }}" method="POST"> --}}
             <form action="{{ route('employees.devis.genererPDF', ['id' => $devis->quote_request_id]) }}" method="POST">
-
-                {{-- <form action="" method="POST"> --}}
 
                 @csrf
                 
@@ -46,7 +43,6 @@
                         </tr>
                     </thead>
                     <tbody id="devisBody">
-                        <!-- Lignes ajoutées dynamiquement ici -->
                     </tbody>
                 </table>
                 
@@ -61,7 +57,7 @@
                     <textarea name="commentaires" rows="4" placeholder="Ajouter des précisions ici..."></textarea>
                 </div>
 
-                <button type="submit" class="btn" style="background-color: #2c7d7b">Enregistrer le devis</button>
+                <button type="submit" class="btn" style="background-color: #2c7d7b">Envoyer le devis</button>
             </form>
         </div>
 
