@@ -11,6 +11,7 @@ use App\Models\Employee;
 use App\Models\Functions;
 use App\Models\Services;
 use App\Models\TeamServices;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -150,8 +151,36 @@ class AdminController extends Controller
         $employee->FK_function_id=$funtions_id;
         $employee->save();
 
-        return redirect()->back();
+        if ($employee) {
+            // Création de la notification pour l'employé
+            $this->createNotification(session('id'), $employee_id, "a modifié votre profil");
+        }
+            return redirect()->back();
 
+    }
+
+
+    public function createNotification($admin_id, $employee_id, $message)
+    {
+        // $client = DB::table('clients')
+        //     ->join('accounts', 'clients.FK_account_id', '=', 'accounts.account_id')
+        //     ->where('clients.client_id', $client_id)
+        //     ->select('accounts.first_name', 'accounts.last_name')
+        //     ->first();
+    
+        // if (!$client) {
+        //     return; 
+        // }
+    
+        $fullMessage = "Un administrateur $message";
+    
+        Notification::create([
+            'FK_account_id_recipient' => $employee_id,
+            'FK_account_id_sender' => $admin_id,
+            'content' => $fullMessage,
+            'date' => now(),
+            'seen' => false
+        ]);
     }
 
 
@@ -207,8 +236,7 @@ class AdminController extends Controller
     
         return redirect()->back()->with('success', 'Les employés ont été mis à jour.');
     }
-    
-    
+        
 
     public function creationPrestation(Request $request)  
     {
