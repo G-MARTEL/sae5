@@ -66,6 +66,18 @@ class AdminController extends Controller
         // Sauvegarder les changements dans la base de données
         $client->save();
 
+
+        $clientNoms = DB::table('clients')
+            ->join('accounts', 'clients.FK_account_id', '=', 'accounts.account_id')
+            ->where('clients.client_id', $clients_id)
+            ->select('accounts.first_name', 'accounts.last_name')
+            ->first();
+
+        if ($employee_id) {
+            // Création de la notification pour l'employé
+            $this->createNotification(session('id'), $employee_id, "vous a associé un nouveau client : {$clientNoms->first_name} {$clientNoms->last_name} ");
+        }
+
         return redirect()->back();
     }
 
