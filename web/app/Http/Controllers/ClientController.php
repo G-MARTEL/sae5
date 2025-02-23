@@ -227,7 +227,7 @@ public function encryptFile($file, $key) {
 
     // Générer un nouveau nom pour le fichier chiffré
     $encryptedFileName = time() . '_' . basename($file->getClientOriginalName()) . '.enc';
-    $outputPath = storage_path('app/documents/' . $encryptedFileName); 
+    $outputPath = storage_path('app/private/documents/' . $encryptedFileName); 
 
     // Stocker le fichier chiffré
     file_put_contents($outputPath, $iv . $encryptedData);
