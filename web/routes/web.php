@@ -108,6 +108,13 @@ Route::prefix('employees')->name('employees.')->group(function() {
     Route::get('clients/{id}', [EmployeeController::class, 'showClient'])->name('clients.show');
     Route::get('getmessageEmployee/{id}', [MessageriControlleur::class, 'getmessageEmployee']);
 
+    Route::get('listeDemandesDevis', [EmployeeController::class, 'listeDemandesDevis']);
+    Route::get('devis/{id}', [EmployeeController::class, 'showDevis'])->name('devis.show');
+
+    Route::post('devis/{id}/pdf', [EmployeeController::class, 'genererDevisPDF'])->name('devis.genererPDF');
+
+
+
     Route::get('/notifications', [EmployeeController::class, 'getNotifications'])->name('notifications.get');
     Route::post('/notifications/{id}/markAsSeen', [EmployeeController::class, 'markAsSeen'])->name('notifications.markAsSeen');
 });
