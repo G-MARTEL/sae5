@@ -1,165 +1,389 @@
-@use 'sass:color';
-@import "../scss_base/variables.scss";
+// @use 'sass:color';
+// @import "../scss_base/variables.scss";
 
 
-// .container#client-1 {
-//     padding-top: 74px;
-//     .container-inner{
-//         .colonnes {
-//             display: flex;
-//             flex-direction: row;
-//             gap: 150px;
-//             .colonne{
-//                 background-color: $gris;
-//                 border-radius: 20px;
-//                 box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-                
-//                 .container-inner{
-//                     padding: 40px;
-                  
-//                 }
-//                 &:first-child{
-//                     flex: 2;
-//                     a{
-//                       color : $vert;
-//                     }
-//                 }
-//                 &:nth-child(2){
-//                     img{
-//                         width: 125px;
-//                         height: 125px;
-//                         border-radius: 50%;
-//                     }
-//                     flex: 1;
-//                     text-align: center;
-//                     ul{
-//                         padding: 0;
-//                     }
-//                 }
-//                 ul{
-//                     li{
-//                         list-style-type: none;
-//                     }
-//                 }
-//                 button {
-//                     background-color: $vert; 
-//                     color: $blanc; 
-//                     padding: 10px 20px;
-//                     border: none;
-//                     border-radius: 15px;
-//                     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-//                     &:nth-child(2){
-//                         margin-left: 15px;
-//                     }
-//                     cursor: pointer;
-//                     &:hover {
-//                         background-color: color.adjust($vert, $lightness: -10%);&:hover {
-//                         transform: scale(1.05); 
-//                         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
-//                       }
-//                     }
-//                   }
-//             }
-//         }
-//     }
+// .container  {
+//   padding-top: 100px;
+//   padding-bottom: 20px;
+//   padding-left: 20px;
+//   padding-right: 20px;
 // }
 
+// .client-dashboard {
+//   display: flex;
+//   gap: 20px;
 
-/* Style de la modale */
-// .modal {
-//     display: none; // Initialement cachée
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     background: rgba(0, 0, 0, 0.5); // Fond semi-transparent
-//     justify-content: center;
-//     align-items: center;
-    
-//     &.active {
-//       display: flex; 
+//   .main-content {
+//     flex: 3; // Prend une grande partie de l'écran
+//     background: #f9f9f9;
+//     padding: 20px;
+//     border-radius: 10px;
+//     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+//     h2 {
+//       font-size: 1.8rem;
+//       margin-bottom: 15px;
 //     }
-  
-//     .modal-content {
-//       background-color: white;
-//       padding: 20px;
-//       border-radius: 10px;
-//       width: 400px;
-  
-//       .modal-header {
-//         display: flex;
-//         justify-content: space-between;
-//         align-items: center;
-        
-//         .btn-close {
-//           font-size: 1.5rem;
-//           cursor: pointer;
-//           background: none;
-//           border: none;
-//           color: #000;
-//           font-weight: bold;
+
+//     ul {
+//       list-style: none;
+//       padding: 0;
+
+//       li {
+//         margin-bottom: 10px;
+//       }
+//     }
+
+//     .contracts-section {
+//       margin-top: 20px;
+
+//       p {
+//         font-weight: bold;
+//       }
+
+//       ul {
+//         margin-top: 10px;
+
+//         li {
+//           margin-bottom: 10px;
+
+//           .link-download {
+//             color: $vert;
+//             text-decoration: none;
+//             font-weight: bold;
+
+//             &:hover {
+//               text-decoration: underline;
+//             }
+//           }
 //         }
 //       }
-  
-//       .modal-body {
+//     }
+
+//     .documents-section {
+//       margin-top: 30px;
+
+//       table {
+//         width: 100%;
+//         border-collapse: collapse;
 //         margin-top: 10px;
+
+//         thead {
+//           background: $vert;
+//           color: white;
+
+//           th {
+//             padding: 10px;
+//             text-align: left;
+//           }
+//         }
+
+//         tbody {
+//           tr {
+//             border-bottom: 1px solid #ddd;
+
+//             td {
+//               padding: 10px;
+
+//               a {
+//                 color: white;
+//                 background: $vert;
+//                 padding: 5px 10px;
+//                 border-radius: 5px;
+//                 text-decoration: none;
+
+//                 &:hover {
+//                   background: $vert-fonce;
+//                 }
+//               }
+//             }
+//           }
+//         }
 //       }
+
+//       // Rendre la table scrollable
+//       overflow-x: auto;
+//       max-height: 300px;
+//       overflow-y: auto;
 //     }
 //   }
 
-.container  {
-  padding-top: 100px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
+//   .btn .btn-primary {
+//     color: white;
+//     background: $vert;
+//     padding: 5px 10px;
+//     border-radius: 5px;
+//     text-decoration: none;
+//   }
+
+  
+//   button {
+//     color: white;
+//     background: $vert;
+//     padding: 5px 10px;
+//     border-radius: 5px;
+//     border: $vert;
+//     text-decoration: none;
+//     cursor: pointer;
+
+//     &:hover {
+//       background: $vert-fonce;
+//       border: $vert-fonce;
+//     }
+//   }
+
+
+//   .advisor-info {
+//     flex: 1; 
+//     background: #fff;
+//     padding: 20px;
+//     border-radius: 10px;
+//     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+//     position: sticky; 
+//     top: 100px; 
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center; 
+//     //justify-content: center;
+//     height: fit-content;
+
+//     img{
+//       width: 125px;
+//       height: 125px;
+//       border-radius: 50%;
+//       //margin-bottom: 20px;
+//     }
+//     h3 {
+//       font-size: 1.5rem;
+//       margin: 0;
+//       margin-bottom: 10px;
+//     }
+
+//     p {
+//       margin: 10px 0 0 0;
+//       //margin-bottom: 10px;
+      
+//       a {
+//         color : $vert;
+//         text-decoration: none;
+//       }
+//       strong {
+//         font-weight: bold;
+//       }
+//     }
+//   }
+// }
+
+
+
+
+// .modal {
+//   display: none; 
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: rgba(0, 0, 0, 0.6); 
+//   justify-content: center;
+//   align-items: center;
+//   z-index: 1000; 
+//   &.active {
+//     display: flex;
+//     animation: fadeIn 0.3s ease-in-out; 
+//   }
+
+//   .modal-content {
+//     background: #fff;
+//     padding: 20px 25px;
+//     border-radius: 12px;
+//     width: 300px;
+//     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+//     animation: slideIn 0.3s ease-out;
+
+//     .modal-header {
+//       display: flex;
+//       justify-content: space-between;
+//       align-items: center;
+//       border-bottom: 1px solid #eaeaea; 
+//       //padding-bottom: 10px;
+
+//       .modal-title {
+//         font-size: 1.25rem;
+//         font-weight: 600;
+//         color: #333; 
+//       }
+
+//       .btn-close {
+//         font-size: 1.5rem;
+//         cursor: pointer;
+//         background: none;
+//         border: none;
+//         color: #999;
+//         font-weight: bold;
+//         transition: color 0.2s;
+
+//         &:hover {
+//           color: #ff6b6b; 
+//         }
+//       }
+//     }
+
+//     .modal-body {
+//       margin-top: 15px;
+//       font-size: 0.95rem;
+//       color: #555;
+
+//       .form-label {
+//         font-weight: 500;
+//         margin-bottom: 5px;
+//         display: block;
+//       }
+
+//       .form-control {
+//         border: 1px solid #ddd;
+//         border-radius: 8px;
+//         padding: 10px;
+//         font-size: 0.95rem;
+//         transition: border-color 0.2s;
+
+//         &:focus {
+//           border-color: $vert;
+//           box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+//           outline: none;
+//         }
+//       }
+//     }
+
+//     button[type="submit"] {
+//       margin-top: 15px;
+//       background-color: $vert;
+//       border: none;
+//       color: white;
+//       padding: 10px 15px;
+//       font-size: 1rem;
+//       border-radius: 8px;
+//       cursor: pointer;
+//       transition: background-color 0.2s;
+
+//       &:hover {
+//         background-color: $vert-fonce;
+//       }
+//     }
+//   }
+// }
+
+// // Animations
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//   }
+//   to {
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes slideIn {
+//   from {
+//     transform: translateY(-20px);
+//   }
+//   to {
+//     transform: translateY(0);
+//   }
+// }
+
+
+@use 'sass:color';
+@import "../scss_base/variables.scss";
+
+.container {
+  padding: 80px 5%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-top: 110px;
 }
 
 .client-dashboard {
   display: flex;
-  gap: 20px;
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
 
   .main-content {
-    flex: 3; // Prend une grande partie de l'écran
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex: 3;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
 
     h2 {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
+      font-size: 2rem;
+      color: $vert;
+      margin-bottom: 20px;
     }
 
     ul {
       list-style: none;
       padding: 0;
+      margin-bottom: 20px;
 
       li {
+        padding: 10px;
+        border-radius: 8px;
+        background: #f8f8f8;
         margin-bottom: 10px;
       }
     }
 
+    #openModalBtn {
+      background: $vert;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background: $vert-fonce;
+      }
+    }
+    
     .contracts-section {
-      margin-top: 20px;
+      margin-top: 25px;
 
       p {
         font-weight: bold;
       }
 
       ul {
-        margin-top: 10px;
+        margin-top: 15px;
 
         li {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 15px;
+          background: #eef7ee;
+          border-radius: 8px;
           margin-bottom: 10px;
 
           .link-download {
             color: $vert;
-            text-decoration: none;
             font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s;
 
             &:hover {
               text-decoration: underline;
+              color: $vert-fonce;
             }
           }
         }
@@ -172,14 +396,19 @@
       table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
+        margin-top: 15px;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 
         thead {
           background: $vert;
           color: white;
+          text-transform: uppercase;
 
           th {
-            padding: 10px;
+            padding: 12px;
             text-align: left;
           }
         }
@@ -188,15 +417,20 @@
           tr {
             border-bottom: 1px solid #ddd;
 
-            td {
-              padding: 10px;
+            &:hover {
+              background: #f5f5f5;
+            }
 
-              a {
+            td {
+              padding: 12px;
+
+              .btn {
                 color: white;
                 background: $vert;
-                padding: 5px 10px;
+                padding: 6px 12px;
                 border-radius: 5px;
                 text-decoration: none;
+                transition: 0.2s;
 
                 &:hover {
                   background: $vert-fonce;
@@ -206,81 +440,87 @@
           }
         }
       }
+    }
 
-      // Rendre la table scrollable
-      overflow-x: auto;
-      max-height: 300px;
-      overflow-y: auto;
+    .upload-section {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f8f8f8;
+      border-radius: 10px;
+      text-align: center;
+
+      input {
+        margin-top: 10px;
+      }
     }
   }
-
-  .btn .btn-primary {
-    color: white;
-    background: $vert;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-decoration: none;
-  }
-
-  
-  button {
-    color: white;
-    background: $vert;
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: $vert;
-    text-decoration: none;
-    cursor: pointer;
-
-    &:hover {
-      background: $vert-fonce;
-      border: $vert-fonce;
-    }
-  }
-
 
   .advisor-info {
-    flex: 1; 
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
+    flex: 1;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: sticky; 
-    top: 100px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    //justify-content: center;
-    height: fit-content;
+    text-align: center;
+    position: sticky;
+    top: 100px;
+    //height: 280px ;
 
-    img{
-      width: 125px;
-      height: 125px;
+    img {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      //margin-bottom: 20px;
+      margin-bottom: 15px;
     }
+
     h3 {
       font-size: 1.5rem;
-      margin: 0;
       margin-bottom: 10px;
+      color: $vert;
+      margin-top: 0px;
     }
 
     p {
-      margin: 10px 0 0 0;
-      //margin-bottom: 10px;
-      
+      margin-bottom: 10px;
+
       a {
-        color : $vert;
+        color: $vert;
         text-decoration: none;
-      }
-      strong {
         font-weight: bold;
+      }
+    }
+
+    button {
+      background: $vert;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        background: $vert-fonce;
       }
     }
   }
 }
 
+/* Ajout d'un effet d'affichage progressif */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+.main-content,
+.advisor-info {
+  animation: fadeInUp 0.6s ease-out;
+}
 
 
 .modal {
@@ -379,21 +619,80 @@
   }
 }
 
-// Animations
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
-@keyframes slideIn {
-  from {
-    transform: translateY(-20px);
+.upload-box {
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #f8f8f8;
+  text-align: center;
+  border: 2px dashed #ccc;
+  transition: 0.3s;
+  height: 260px;
+
+  p {
+    font-weight: bold;
+    margin-bottom: 10px;
   }
-  to {
-    transform: translateY(0);
+
+  .drop-zone {
+    padding: 20px;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 2px dashed #ccc;
+    position: relative;
+    
+    span {
+      display: block;
+      font-size: 14px;
+      color: #777;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: $vert;
+      color: white;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      
+      &:hover {
+        background: $vert-fonce;
+      }
+    }
+
+    p {
+      font-size: 12px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    &:hover {
+      border-color: $vert;
+    }
+  }
+
+  &.dragging {
+    background: #eef7ee;
+    border-color: $vert;
+  }
+
+  #uploadBtn {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background: $vert;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: $vert-fonce;
+    }
   }
 }
