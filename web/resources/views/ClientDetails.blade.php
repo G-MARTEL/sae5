@@ -95,7 +95,9 @@
                             <td>{{ $document->title }}</td>
                             <td>{{ $document->date }}</td>
                             <td>
-                                <a href="{{ route('download.document', $document->document_id) }}" class="download-link">Télécharger</a>
+                                <a href="{{ route('download.document', $document->document_id) }}" class="download-link">Télécharger </a>
+                                /
+                                <a href="{{ route('Show.document', $document->document_id) }}" class="download-link">Ouvrir</a>
                             </td>
                         </tr>
                     @endforeach

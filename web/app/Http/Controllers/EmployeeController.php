@@ -120,6 +120,31 @@ class EmployeeController extends Controller
         $filePath = $this->decryptFile($filePath, $document->key);
         return response()->download($filePath);
     }
+
+
+    public function show($id)
+    {
+
+        // Spécifiez le disque et le répertoire
+        $directory = 'decrypted/';
+
+        // Récupérer tous les fichiers dans ce répertoire
+        $files = Storage::disk('local')->allFiles($directory);
+
+        // Supprimer tous les fichiers récupérés
+        Storage::disk('local')->delete($files);
+
+
+        // Récupérer le document
+        $document = Documents::findOrFail($id);
+        
+        // Récupérer le chemin du fichier à partir du disque local
+        $filePath = storage_path('app/private/' . $document->document);
+        
+        // Déchiffrer le fichier et obtenir son nouveau chemin
+        $filePath = $this->decryptFile($filePath, $document->key);
+        return response()->file($filePath);
+    }
     
     public function decryptFile($fileUrl, $key)
     {

@@ -152,6 +152,7 @@ Route::post('/simulateur-pret', [PretImmobilierController::class, 'simulateImmo'
 
 Route::post('/client/upload-document', [ClientController::class, 'uploadDocument'])->name('client.upload.document');
 Route::get('/documents/download/{id}', [EmployeeController::class, 'download'])->name('download.document');
+Route::get('/documents/Show/{id}', [EmployeeController::class, 'show'])->name('Show.document');
 Route::post('/documents/store', [EmployeeController::class, 'store'])->name('documents.store');
 
 Route::get('/documents/downloadDocument/{id}', [DocumentController::class, 'downloadDocument'])->name('documents.downloadDocument');
