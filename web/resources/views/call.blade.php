@@ -33,7 +33,7 @@
         </div>
     </main>
 
-    <a href="{{ route('accueil') }}" class="back-link mt-6">Retour à l'accueil</a>
+    <a href="{{ route('accueil') }}" class="back-link mt-6" style="background-color: #2c7d7b;">Retour à l'accueil</a>
 
     <footer class="mt-6 text-center text-gray-600 text-sm">
         &copy; 2025 Cabinet AVYCOMPTA - Tous droits réservés.

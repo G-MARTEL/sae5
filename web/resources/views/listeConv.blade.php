@@ -15,7 +15,7 @@
 
 <div class="container">
     <header>
-        <h1>Vos conversations</h1>
+        <h1>Vos conversations clients </h1>
     </header>
 
     <section class="list-section">
@@ -40,6 +40,72 @@
                 </div>
             @endforeach
         </div>
+    </section>
+
+    <header>
+        <h1>Vos conversations employer  </h1>
+    </header>
+
+    <section class="list-section">
+        <input type="text" id="search-input" placeholder="Rechercher une conversation..." class="search-bar">
+            <div class="grid-container">
+                <div class="grid-item" data-title="Quentin-Massoulle">
+                    <div class="content">
+                        <div class="details">
+                            <p>
+                                <strong>Prénom: </strong> Quentin<br/>
+                                <strong>Nom : </strong> Massoulle<br/>
+                                <strong>Etat : </strong> ouver<br/>
+                                <a href="" class="button-link">Accéder à la conversation</a>
+
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item" data-title="Quentin-Massoulle">
+                    <div class="content">
+                        <div class="details">
+                            <p>
+                                <strong>Prénom: </strong> Hugo<br/>
+                                <strong>Nom : </strong> Duboisset <br/>
+                                <strong>Etat : </strong> ouver<br/>
+                                <a href="" class="button-link">Accéder à la conversation</a>
+
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item" data-title="Quentin-Massoulle">
+                    <div class="content">
+                        <div class="details">
+                            <p>
+                                <strong>Prénom: </strong> Maximiliant<br/>
+                                <strong>Nom : </strong> Fedeliche<br/>
+                                <strong>Etat : </strong> ouver<br/>
+                                <a href="" class="button-link">Accéder à la conversation</a>
+
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-item" data-title="Quentin-Massoulle">
+                    <div class="content">
+                        <div class="details">
+                            <p>
+                                <strong>Prénom: </strong> Timeo<br/>
+                                <strong>Nom : </strong> Nabaut<br/>
+                                <strong>Etat : </strong> ouver<br/>
+                                <a href="" class="button-link">Accéder à la conversation</a>
+
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
     </section>
 
 </div>
