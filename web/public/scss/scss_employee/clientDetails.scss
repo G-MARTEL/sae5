@@ -1,3 +1,150 @@
+// @use 'sass:color';
+// @import "../scss_base/variables.scss";
+
+// body {
+//     font-family: Arial, sans-serif;
+//     margin: 0;
+//     padding: 20px;
+//     background-color: #f4f6f8;
+//     color: #333;
+// }
+
+// h1, h2 {
+//     color: #2c3e50;
+//     margin-bottom: 20px;
+//     font-weight: bold;
+// }
+
+// table {
+//     width: 100%;
+//     border-collapse: collapse;
+//     margin-bottom: 20px;
+//     background-color: #fff;
+//     border-radius: 8px;
+//     overflow: hidden;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+//     thead {
+//         background-color: $vert;
+//         color: #fff;
+
+//         th {
+//             padding: 15px;
+//             text-align: left;
+//         }
+//     }
+
+//     tbody {
+//         tr {
+//             border-bottom: 1px solid #ddd;
+
+//             &:nth-child(even) {
+//                 background-color: #f9f9f9;
+//             }
+
+//             &:hover {
+//                 background-color: #f1f1f1;
+//             }
+
+//             td {
+//                 padding: 15px;
+//                 text-align: left;
+//             }
+//         }
+//     }
+
+//     td[colspan] {
+//         text-align: center;
+//         color: #888;
+//         font-style: italic;
+//     }
+// }
+
+// form {
+//     background-color: #fff;
+//     padding: 20px;
+//     border-radius: 8px;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//     margin-bottom: 20px;
+
+//     label {
+//         display: block;
+//         margin-bottom: 10px;
+//         font-weight: bold;
+//     }
+
+//     input, select, textarea {
+//         width: 100%;
+//         padding: 10px;
+//         margin-bottom: 20px;
+//         border: 1px solid #ddd;
+//         border-radius: 4px;
+
+//         &:focus {
+//             border-color: $vert;
+//             outline: none;
+//             box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+//         }
+//     }
+
+//     button {
+//         background-color: $vert;
+//         color: #fff;
+//         border: none;
+//         padding: 10px 20px;
+//         border-radius: 4px;
+//         cursor: pointer;
+//         font-size: 16px;
+
+//         &:hover {
+//             background-color: #2980b9;
+//         }
+//     }
+// }
+
+// a {
+//     color: $vert;
+//     text-decoration: none;
+
+//     &:hover {
+//         text-decoration: underline;
+//     }
+// }
+
+// .btn {
+//     background-color: #2ecc71;
+//     color: #fff;
+//     border: none;
+//     padding: 10px 15px;
+//     border-radius: 4px;
+//     cursor: pointer;
+//     text-align: center;
+
+//     &:hover {
+//         background-color: #27ae60;
+//     }
+// }
+
+// .return-link {
+//     display: inline-block;
+//     margin-top: 20px;
+//     color: #e74c3c;
+//     font-weight: bold;
+
+//     &:hover {
+//         color: #c0392b;
+//     }
+// }
+
+
+// .container-info {
+//     background-color: #fff;
+//     padding: 20px;
+//     border-radius: 8px;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//     margin-bottom: 20px;
+// }
+
 @use 'sass:color';
 @import "../scss_base/variables.scss";
 
@@ -136,11 +283,147 @@ a {
     }
 }
 
-
 .container-info {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+}
+
+// Media Queries pour les écrans de petite taille
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    h1, h2 {
+        font-size: 1.5em;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        thead, tbody, tr, th, td {
+            display: block;
+        }
+
+        thead {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            border: 1px solid #ccc;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 50%;
+
+            &:before {
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                content: attr(data-label);
+            }
+        }
+    }
+
+    form {
+        padding: 15px;
+
+        input, select, textarea {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+    }
+
+    .container-info {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .collapsible-section {
+        margin-bottom: 20px;
+
+        h2 {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: $vert;
+            color: #fff;
+            border-radius: 4px;
+
+            &::after {
+                content: "▼";
+                font-size: 0.8em;
+                transition: transform 0.3s ease;
+            }
+
+            &.open::after {
+                transform: rotate(180deg);
+            }
+        }
+
+        table {
+            display: none; // Masquer le tableau par défaut
+            margin-top: 10px;
+
+            &.visible {
+                display: table; // Afficher le tableau lorsque la section est ouverte
+            }
+        }
+    }
+}
+
+
+@media (max-width: 480px) {
+    h1, h2 {
+        font-size: 1.2em;
+    }
+
+    table {
+        td {
+            padding-left: 40%;
+
+            &:before {
+                width: 40%;
+            }
+        }
+    }
+
+    form {
+        padding: 10px;
+
+        input, select, textarea {
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+    }
+
+    .container-info {
+        padding: 10px;
+    }
 }

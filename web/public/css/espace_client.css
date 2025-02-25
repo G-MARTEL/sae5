@@ -1,3 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 .container {
   padding: 80px 5%;
   display: flex;
@@ -338,6 +346,79 @@
 }
 .upload-box #uploadBtn:hover {
   background: rgb(40.0165680473, 113.6834319527, 111.8644970414);
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding: 0;
+  }
+  .client-dashboard {
+    flex-direction: column;
+  }
+  .main-content,
+  .advisor-info {
+    flex: 1;
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 992px) {
+  .client-dashboard {
+    gap: 15px;
+  }
+  .main-content {
+    padding: 20px;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+  .advisor-info {
+    padding: 20px;
+  }
+  .upload-box {
+    height: auto;
+  }
+}
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 30px;
+  }
+  .main-content h2 {
+    line-height: 1;
+  }
+  .client-dashboard {
+    padding: 10px;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .main-content,
+  .advisor-info {
+    padding: 15px;
+  }
+  table {
+    font-size: 0.9rem;
+  }
+  .upload-box {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 576px) {
+  .client-dashboard {
+    padding: 0;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  .btn {
+    width: 100%;
+    padding: 10px;
+  }
+  table {
+    font-size: 0.8rem;
+  }
+  .upload-box {
+    padding: 15px;
+  }
 }
 
 /*# sourceMappingURL=espace_client.css.map */

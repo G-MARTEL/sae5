@@ -1,301 +1,12 @@
-// @use 'sass:color';
-// @import "../scss_base/variables.scss";
-
-
-// .container  {
-//   padding-top: 100px;
-//   padding-bottom: 20px;
-//   padding-left: 20px;
-//   padding-right: 20px;
-// }
-
-// .client-dashboard {
-//   display: flex;
-//   gap: 20px;
-
-//   .main-content {
-//     flex: 3; // Prend une grande partie de l'écran
-//     background: #f9f9f9;
-//     padding: 20px;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-
-//     h2 {
-//       font-size: 1.8rem;
-//       margin-bottom: 15px;
-//     }
-
-//     ul {
-//       list-style: none;
-//       padding: 0;
-
-//       li {
-//         margin-bottom: 10px;
-//       }
-//     }
-
-//     .contracts-section {
-//       margin-top: 20px;
-
-//       p {
-//         font-weight: bold;
-//       }
-
-//       ul {
-//         margin-top: 10px;
-
-//         li {
-//           margin-bottom: 10px;
-
-//           .link-download {
-//             color: $vert;
-//             text-decoration: none;
-//             font-weight: bold;
-
-//             &:hover {
-//               text-decoration: underline;
-//             }
-//           }
-//         }
-//       }
-//     }
-
-//     .documents-section {
-//       margin-top: 30px;
-
-//       table {
-//         width: 100%;
-//         border-collapse: collapse;
-//         margin-top: 10px;
-
-//         thead {
-//           background: $vert;
-//           color: white;
-
-//           th {
-//             padding: 10px;
-//             text-align: left;
-//           }
-//         }
-
-//         tbody {
-//           tr {
-//             border-bottom: 1px solid #ddd;
-
-//             td {
-//               padding: 10px;
-
-//               a {
-//                 color: white;
-//                 background: $vert;
-//                 padding: 5px 10px;
-//                 border-radius: 5px;
-//                 text-decoration: none;
-
-//                 &:hover {
-//                   background: $vert-fonce;
-//                 }
-//               }
-//             }
-//           }
-//         }
-//       }
-
-//       // Rendre la table scrollable
-//       overflow-x: auto;
-//       max-height: 300px;
-//       overflow-y: auto;
-//     }
-//   }
-
-//   .btn .btn-primary {
-//     color: white;
-//     background: $vert;
-//     padding: 5px 10px;
-//     border-radius: 5px;
-//     text-decoration: none;
-//   }
-
-  
-//   button {
-//     color: white;
-//     background: $vert;
-//     padding: 5px 10px;
-//     border-radius: 5px;
-//     border: $vert;
-//     text-decoration: none;
-//     cursor: pointer;
-
-//     &:hover {
-//       background: $vert-fonce;
-//       border: $vert-fonce;
-//     }
-//   }
-
-
-//   .advisor-info {
-//     flex: 1; 
-//     background: #fff;
-//     padding: 20px;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-//     position: sticky; 
-//     top: 100px; 
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center; 
-//     //justify-content: center;
-//     height: fit-content;
-
-//     img{
-//       width: 125px;
-//       height: 125px;
-//       border-radius: 50%;
-//       //margin-bottom: 20px;
-//     }
-//     h3 {
-//       font-size: 1.5rem;
-//       margin: 0;
-//       margin-bottom: 10px;
-//     }
-
-//     p {
-//       margin: 10px 0 0 0;
-//       //margin-bottom: 10px;
-      
-//       a {
-//         color : $vert;
-//         text-decoration: none;
-//       }
-//       strong {
-//         font-weight: bold;
-//       }
-//     }
-//   }
-// }
-
-
-
-
-// .modal {
-//   display: none; 
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: rgba(0, 0, 0, 0.6); 
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 1000; 
-//   &.active {
-//     display: flex;
-//     animation: fadeIn 0.3s ease-in-out; 
-//   }
-
-//   .modal-content {
-//     background: #fff;
-//     padding: 20px 25px;
-//     border-radius: 12px;
-//     width: 300px;
-//     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
-//     animation: slideIn 0.3s ease-out;
-
-//     .modal-header {
-//       display: flex;
-//       justify-content: space-between;
-//       align-items: center;
-//       border-bottom: 1px solid #eaeaea; 
-//       //padding-bottom: 10px;
-
-//       .modal-title {
-//         font-size: 1.25rem;
-//         font-weight: 600;
-//         color: #333; 
-//       }
-
-//       .btn-close {
-//         font-size: 1.5rem;
-//         cursor: pointer;
-//         background: none;
-//         border: none;
-//         color: #999;
-//         font-weight: bold;
-//         transition: color 0.2s;
-
-//         &:hover {
-//           color: #ff6b6b; 
-//         }
-//       }
-//     }
-
-//     .modal-body {
-//       margin-top: 15px;
-//       font-size: 0.95rem;
-//       color: #555;
-
-//       .form-label {
-//         font-weight: 500;
-//         margin-bottom: 5px;
-//         display: block;
-//       }
-
-//       .form-control {
-//         border: 1px solid #ddd;
-//         border-radius: 8px;
-//         padding: 10px;
-//         font-size: 0.95rem;
-//         transition: border-color 0.2s;
-
-//         &:focus {
-//           border-color: $vert;
-//           box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
-//           outline: none;
-//         }
-//       }
-//     }
-
-//     button[type="submit"] {
-//       margin-top: 15px;
-//       background-color: $vert;
-//       border: none;
-//       color: white;
-//       padding: 10px 15px;
-//       font-size: 1rem;
-//       border-radius: 8px;
-//       cursor: pointer;
-//       transition: background-color 0.2s;
-
-//       &:hover {
-//         background-color: $vert-fonce;
-//       }
-//     }
-//   }
-// }
-
-// // Animations
-// @keyframes fadeIn {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// }
-
-// @keyframes slideIn {
-//   from {
-//     transform: translateY(-20px);
-//   }
-//   to {
-//     transform: translateY(0);
-//   }
-// }
-
-
 @use 'sass:color';
 @import "../scss_base/variables.scss";
+* {
+  box-sizing: border-box;
+}
 
+body {
+  overflow-x: hidden;
+}
 .container {
   padding: 80px 5%;
   display: flex;
@@ -694,5 +405,97 @@
     &:hover {
       background: $vert-fonce;
     }
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .container {
+    padding: 0;
+  }
+  .client-dashboard {
+    flex-direction: column;
+  }
+
+  .main-content,
+  .advisor-info {
+    flex: 1; // Permettre à chaque section de prendre toute la largeur
+    margin-bottom: 20px; // Ajoute un espace entre les colonnes
+  }
+}
+
+@media (max-width: 992px) {
+  .client-dashboard {
+    gap: 15px;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.8rem; // Réduit la taille des titres
+  }
+
+  .advisor-info {
+    padding: 20px;
+  }
+
+  .upload-box {
+    height: auto; // Permettre à la zone de dépôt de s'ajuster
+  }
+}
+
+@media (max-width: 768px) {
+
+  .main-content {
+    padding-top: 30px;
+    h2 {
+      line-height: 1;
+    }
+  }
+
+  .client-dashboard {
+    padding: 10px; // Réduit le padding de la conteneur
+  }
+
+  h2 {
+    font-size: 1.5rem; // Réduit encore la taille des titres
+  }
+
+  .main-content,
+  .advisor-info {
+    padding: 15px;
+  }
+
+  table {
+    font-size: 0.9rem; // Réduit la taille de la police du tableau
+  }
+
+  .upload-box {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .client-dashboard {
+    padding: 0; // Supprime le padding sur les petits écrans
+  }
+
+  h2 {
+    font-size: 1.3rem; // Taille de titre encore réduite
+  }
+
+  .btn {
+    width: 100%; // Les boutons prennent toute la largeur
+    padding: 10px; // Ajustement de padding
+  }
+
+  table {
+    font-size: 0.8rem; // Réduit la taille de la police pour le tableau
+  }
+
+  .upload-box {
+    padding: 15px; // Réduit le padding
   }
 }
