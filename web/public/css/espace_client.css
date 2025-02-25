@@ -1,140 +1,200 @@
-/* Style de la modale */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 .container {
-  padding-top: 100px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 80px 5%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-top: 110px;
 }
 
 .client-dashboard {
   display: flex;
-  gap: 20px;
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
 }
 .client-dashboard .main-content {
   flex: 3;
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+.client-dashboard .main-content:hover {
+  transform: translateY(-2px);
 }
 .client-dashboard .main-content h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
+  font-size: 2rem;
+  color: #2c7d7b;
+  margin-bottom: 20px;
 }
 .client-dashboard .main-content ul {
   list-style: none;
   padding: 0;
+  margin-bottom: 20px;
 }
 .client-dashboard .main-content ul li {
+  padding: 10px;
+  border-radius: 8px;
+  background: #f8f8f8;
   margin-bottom: 10px;
 }
+.client-dashboard .main-content #openModalBtn {
+  background: #2c7d7b;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.client-dashboard .main-content #openModalBtn:hover {
+  background: rgb(40.0165680473, 113.6834319527, 111.8644970414);
+}
 .client-dashboard .main-content .contracts-section {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 .client-dashboard .main-content .contracts-section p {
   font-weight: bold;
 }
 .client-dashboard .main-content .contracts-section ul {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .client-dashboard .main-content .contracts-section ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: #eef7ee;
+  border-radius: 8px;
   margin-bottom: 10px;
 }
 .client-dashboard .main-content .contracts-section ul li .link-download {
   color: #2c7d7b;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
+  transition: 0.2s;
 }
 .client-dashboard .main-content .contracts-section ul li .link-download:hover {
   text-decoration: underline;
+  color: rgb(40.0165680473, 113.6834319527, 111.8644970414);
 }
 .client-dashboard .main-content .documents-section {
   margin-top: 30px;
-  overflow-x: auto;
-  max-height: 300px;
-  overflow-y: auto;
 }
 .client-dashboard .main-content .documents-section table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 15px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 .client-dashboard .main-content .documents-section table thead {
   background: #2c7d7b;
   color: white;
+  text-transform: uppercase;
 }
 .client-dashboard .main-content .documents-section table thead th {
-  padding: 10px;
+  padding: 12px;
   text-align: left;
 }
 .client-dashboard .main-content .documents-section table tbody tr {
   border-bottom: 1px solid #ddd;
 }
+.client-dashboard .main-content .documents-section table tbody tr:hover {
+  background: #f5f5f5;
+}
 .client-dashboard .main-content .documents-section table tbody tr td {
-  padding: 10px;
+  padding: 12px;
 }
-.client-dashboard .main-content .documents-section table tbody tr td a {
+.client-dashboard .main-content .documents-section table tbody tr td .btn {
   color: white;
   background: #2c7d7b;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 5px;
   text-decoration: none;
+  transition: 0.2s;
 }
-.client-dashboard .main-content .documents-section table tbody tr td a:hover {
+.client-dashboard .main-content .documents-section table tbody tr td .btn:hover {
   background: rgb(40.0165680473, 113.6834319527, 111.8644970414);
 }
-.client-dashboard .btn .btn-primary {
-  color: white;
-  background: #2c7d7b;
-  padding: 5px 10px;
-  border-radius: 5px;
-  text-decoration: none;
+.client-dashboard .main-content .upload-section {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f8f8;
+  border-radius: 10px;
+  text-align: center;
 }
-.client-dashboard button {
-  color: white;
-  background: #2c7d7b;
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: #2c7d7b;
-  text-decoration: none;
-  cursor: pointer;
-}
-.client-dashboard button:hover {
-  background: rgb(40.0165680473, 113.6834319527, 111.8644970414);
-  border: rgb(40.0165680473, 113.6834319527, 111.8644970414);
+.client-dashboard .main-content .upload-section input {
+  margin-top: 10px;
 }
 .client-dashboard .advisor-info {
   flex: 1;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
   position: sticky;
   top: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: fit-content;
 }
 .client-dashboard .advisor-info img {
-  width: 125px;
-  height: 125px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+  margin-bottom: 15px;
 }
 .client-dashboard .advisor-info h3 {
   font-size: 1.5rem;
-  margin: 0;
   margin-bottom: 10px;
+  color: #2c7d7b;
+  margin-top: 0px;
 }
 .client-dashboard .advisor-info p {
-  margin: 10px 0 0 0;
+  margin-bottom: 10px;
 }
 .client-dashboard .advisor-info p a {
   color: #2c7d7b;
   text-decoration: none;
-}
-.client-dashboard .advisor-info p strong {
   font-weight: bold;
+}
+.client-dashboard .advisor-info button {
+  background: #2c7d7b;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.client-dashboard .advisor-info button:hover {
+  background: rgb(40.0165680473, 113.6834319527, 111.8644970414);
+}
+
+/* Ajout d'un effet d'affichage progressif */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.main-content,
+.advisor-info {
+  animation: fadeInUp 0.6s ease-out;
 }
 
 .modal {
@@ -221,20 +281,143 @@
   background-color: rgb(40.0165680473, 113.6834319527, 111.8644970414);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+.upload-box {
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #f8f8f8;
+  text-align: center;
+  border: 2px dashed #ccc;
+  transition: 0.3s;
+  height: 260px;
+}
+.upload-box p {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.upload-box .drop-zone {
+  padding: 20px;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: 0.3s;
+  border: 2px dashed #ccc;
+  position: relative;
+}
+.upload-box .drop-zone span {
+  display: block;
+  font-size: 14px;
+  color: #777;
+}
+.upload-box .drop-zone button {
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #2c7d7b;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.upload-box .drop-zone button:hover {
+  background: rgb(40.0165680473, 113.6834319527, 111.8644970414);
+}
+.upload-box .drop-zone p {
+  font-size: 12px;
+  color: #555;
+  margin-top: 10px;
+}
+.upload-box .drop-zone:hover {
+  border-color: #2c7d7b;
+}
+.upload-box.dragging {
+  background: #eef7ee;
+  border-color: #2c7d7b;
+}
+.upload-box #uploadBtn {
+  margin-top: 15px;
+  padding: 8px 15px;
+  background: #2c7d7b;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.upload-box #uploadBtn:hover {
+  background: rgb(40.0165680473, 113.6834319527, 111.8644970414);
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding: 0;
   }
-  to {
-    opacity: 1;
+  .client-dashboard {
+    flex-direction: column;
+  }
+  .main-content,
+  .advisor-info {
+    flex: 1;
+    margin-bottom: 20px;
   }
 }
-@keyframes slideIn {
-  from {
-    transform: translateY(-20px);
+@media (max-width: 992px) {
+  .client-dashboard {
+    gap: 15px;
   }
-  to {
-    transform: translateY(0);
+  .main-content {
+    padding: 20px;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+  .advisor-info {
+    padding: 20px;
+  }
+  .upload-box {
+    height: auto;
+  }
+}
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 30px;
+  }
+  .main-content h2 {
+    line-height: 1;
+  }
+  .client-dashboard {
+    padding: 10px;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .main-content,
+  .advisor-info {
+    padding: 15px;
+  }
+  table {
+    font-size: 0.9rem;
+  }
+  .upload-box {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 576px) {
+  .client-dashboard {
+    padding: 0;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  .btn {
+    width: 100%;
+    padding: 10px;
+  }
+  table {
+    font-size: 0.8rem;
+  }
+  .upload-box {
+    padding: 15px;
   }
 }
 

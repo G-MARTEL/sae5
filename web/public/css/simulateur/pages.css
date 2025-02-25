@@ -120,4 +120,24 @@ body {
   color: #212529;
 }
 
+@media only screen and (max-width: 781px) {
+  h2 {
+    line-height: 1;
+  }
+  .tab-container .tab-content .tab-pane .simulator-container {
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    justify-content: automatically;
+  }
+  .tab-container .tab-content .tab-pane .simulator-container .simulator-form {
+    max-width: 100%;
+    width: 100%;
+  }
+  .tab-container .tab-content .tab-pane .simulator-container .result-container {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
 /*# sourceMappingURL=pages.css.map */

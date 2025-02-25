@@ -1,4 +1,63 @@
-// SCSS pour la Navbar
+// // SCSS pour la Navbar
+// .navbar {
+//     position: fixed;
+//     width: 100%;
+//     z-index: 1000;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     padding: 20px 15px;
+//     background-color: $blanc-casse;  
+//     box-shadow: $ombre;
+
+//     .logo {
+//         margin-left: 20px;
+//         img {
+//             width: 50px;  
+//         }
+//     }
+
+//     .nav-links {
+//         display: flex;
+//         list-style: none;
+//         margin: 0;
+//         padding: 0;
+
+//         li {
+//             margin-left: 20px;
+
+//             a {
+//                 text-decoration: none;
+//                 font-size: 24px;
+//                 color: $vert;  
+//                 font-weight: bold;
+
+//                 &:hover {
+//                     color: $orange;  // Couleur de survol en rouge a voir ?
+//                 }
+//             }
+//         }
+//     }
+
+//     .nav-btn {
+//         button {
+//             background-color: $vert;  // Couleur du bouton de connexion (vert)
+//             color: $blanc;
+//             padding: 8px 15px;
+//             border: none;
+//             border-radius: 20px;  // Arrondi
+//             font-size: 16px;
+//             margin-right: 20px;
+//             cursor: pointer;
+
+//             &:hover {
+//                 background-color: color.adjust($vert, $lightness: -10%); 
+//             }
+//         }
+//     }
+// }
+
+// // SCSS pour la Navbar
 .navbar {
     position: fixed;
     width: 100%;
@@ -6,14 +65,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 15px;
+    padding: 15px 30px; // Ajustement de l'espace pour un look plus moderne
     background-color: $blanc-casse;  
     box-shadow: $ombre;
+    transition: background-color 0.3s ease; // Ajout d'une transition pour l'effet de changement de couleur
+
+    &:hover {
+        background-color: lighten($blanc-casse, 5%); // Effet de survol pour la navbar
+    }
 
     .logo {
         margin-left: 20px;
+
         img {
             width: 50px;  
+            transition: transform 0.3s ease; // Transition pour l'effet de zoom
+        }
+
+        &:hover img {
+            transform: scale(1.1); // Effet de zoom sur le logo au survol
         }
     }
 
@@ -24,57 +94,63 @@
         padding: 0;
 
         li {
-            margin-left: 20px;
+            margin-left: 30px; // Espace plus important entre les liens
 
             a {
                 text-decoration: none;
-                font-size: 24px;
+                font-size: 20px; // Réduction de la taille pour un look plus épuré
                 color: $vert;  
                 font-weight: bold;
+                position: relative; // Pour positionner le pseudo-élément
 
                 &:hover {
-                    color: $orange;  // Couleur de survol en rouge a voir ?
+                    color: $orange; 
+                }
+
+                // Sous-ligne au survol
+                &:hover::after {
+                    content: '';
+                    display: block;
+                    height: 2px;
+                    background: $orange;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: -5px; // Position de la sous-ligne
+                    transition: all 0.3s ease; // Transition pour la sous-ligne
                 }
             }
         }
     }
 
     .nav-btn {
+        display: flex; // Changement de display pour aligner les boutons
+        gap: 10px; // Espacement entre les boutons
+
         button {
-            background-color: $vert;  // Couleur du bouton de connexion (vert)
+            background-color: $vert;  
             color: $blanc;
-            padding: 8px 15px;
+            padding: 10px 20px; // Plus de padding pour un look plus attrayant
             border: none;
-            border-radius: 20px;  // Arrondi
+            border-radius: 25px; // Arrondi plus prononcé
             font-size: 16px;
-            margin-right: 20px;
             cursor: pointer;
+            transition: background-color 0.3s ease; // Transition pour le bouton
 
             &:hover {
-                background-color: color.adjust($vert, $lightness: -10%); 
+                background-color: darken($vert, 10%); // Changement de couleur au survol
+            }
+        }
+
+        // Bouton de déconnexion
+        .logout-button {
+            background-color: #da4837; // Couleur du bouton de déconnexion
+            &:hover {
+                background-color: darken(#da4837, 10%); // Changement de couleur au survol
             }
         }
     }
+    
 }
 
-// responsive
-@media only screen and (max-width:1700px) {
-}
 
-@media only screen and (max-width:1600px) {
-}
-
-@media only screen and (max-width:1440px) {
-}
-
-@media only screen and (max-width:1230px) {
-}
-
-@media only screen and (max-width:1024px) {
-}
-
-@media only screen and (max-width:781px) {
-}
-
-@media only screen and (max-width:580px) {
-}

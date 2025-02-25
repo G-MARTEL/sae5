@@ -1,11 +1,241 @@
+// #accueil-1.container {
+//   position: relative; 
+//   figure:first-child {
+//       margin: 0px;
+//     img {
+//       width: 100%;  
+//       object-fit: cover;
+//       position: relative;
+//       height: 350px;
+//     }
+//   }
+//   figure:nth-child(2) {
+//     opacity: 1;
+//     position: absolute; 
+//     top:  55%; 
+//     left: 47.5%; 
+//     transform: translate(-50%, -50%);
+//     button {
+//       background-color: $vert; 
+//       color: $blanc; 
+//       padding: 10px 20px;
+//       border: none;
+//       border-radius: 15px;
+//       font-size: 2.2em;
+//       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+//       cursor: pointer;
+//       &:hover {
+//           background-color: color.adjust($vert, $lightness: -10%);&:hover {
+//           transform: scale(1.05); 
+//           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
+//         }
+//       }
+//     }
+//   }
+// }
+
+// #accueil-2.container {
+//   text-align: center;
+
+//   .container-inner {
+//     max-width: 1200px;
+//     margin: 0 auto;
+
+//     h2 {
+//       color: $vert;
+//       margin-bottom: 40px;
+//     }
+
+//     .container-columns {
+//       display: flex;
+//       justify-content: space-between;
+//       gap: 20px; 
+
+//       .column {
+//         background-color: color.adjust($blanc-casse, $lightness: -3%);
+//         padding: 20px;
+//         border-radius: 10px;
+//         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+//         flex: 1;
+//         text-align: center;
+//         &:hover {
+//           transform: scale(1.05); 
+//           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
+//       }
+
+//         h3 {
+//           color: $vert;
+//           font-size: 1.5em;
+//           margin-bottom: 15px;
+//         }
+
+//         p {
+//           font-size: 1em;
+//           color: #555;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// #accueil-3.container {
+//   border-radius: 15px; 
+//   padding-bottom: 80px; 
+//   text-align: center; 
+//   padding-top : 0;
+//   .container-inner {
+//     max-width: 800px; 
+//     margin: 0 auto; 
+//     border: 2px solid $vert;
+//     border-radius: 15px; 
+//     padding: 30px; 
+//     background-color: color.adjust($vert, $lightness: 60%);
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+
+//     h2 {
+//       color: black; 
+//       margin-top: 40px;
+//       margin-bottom: 20px; 
+//     }
+
+//     p {
+//       font-size: 1.2em; 
+//       color: #333;
+//       line-height: 1.5; 
+//     }
+//   }
+// }
+
+// #accueil-4.container {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   background-color: color.adjust($blanc-casse, $lightness: -3%);
+//   position: relative;
+
+//   .container-inner {
+//     width: 80%;
+//     max-width: 600px;
+//     position: relative;
+
+//     h2 {
+//       text-align: center;
+//       line-height: 1;
+//       margin-bottom: 40px;
+//     }
+
+//     button.prev, button.next {
+//       position: absolute;
+//       top: 58%;
+//       transform: translateY(-50%);
+//       background-color: transparent;
+//       border: none;
+//       font-size: 24px;
+//       cursor: pointer;
+//       color: #333;
+
+//       &:hover {
+//         color: #000;
+//       }
+//     }
+
+//     button.prev {
+//       left: -10px;
+//       img{
+//         height: 50px;
+//       }
+//     }
+
+//     button.next {
+//       right: -10px;
+//       img{
+//         height: 50px;
+//       }
+//     }
+
+//     .carousel {
+//       background-color: $blanc;
+//       padding: 20px;
+//       overflow: hidden;
+//       border-radius: 15px;
+//       position: relative;
+//       min-height: 15px; 
+//       display: flex;
+//       justify-content: center; 
+//       align-items: center; 
+//       text-align: center; 
+//       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+
+//     }
+
+//     .carousel-item {
+//       display: none;
+//       flex: 1;
+//       padding: 10px;
+
+//       &.active {
+//         display: block; 
+//       }
+//     }
+
+//     .carousel-indicators {
+//       display: flex;
+//       justify-content: center;
+//       margin-top: 10px;
+
+//       .dot {
+//         display: inline-block;
+//         width: 10px;
+//         height: 10px;
+//         margin: 0 5px;
+//         background-color: #bbb;
+//         border-radius: 50%;
+//         cursor: pointer;
+
+//         &.active {
+//           background-color: $vert;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// #accueil-5.container {
+//   background-color: color.adjust($blanc-casse, $lightness: -3%);
+//   .container-inner{
+//   padding-top: 2px;
+//   text-align: center;
+//   button {
+//     background-color: $vert; 
+//     color: $blanc; 
+//     padding: 10px 20px;
+//     border: none;
+//     border-radius: 15px;
+//     font-size: 2.2em;
+//     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+//     cursor: pointer;
+//     &:hover {
+//         background-color: color.adjust($vert, $lightness: -10%);
+//         transform: scale(1.05); 
+//         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
+      
+//     }
+//   }
+//   }
+// }
+
+
+// Styles généraux pour l'accueil
+
+// Accueil 1
 #accueil-1.container {
   position: relative; 
   figure:first-child {
-      margin: 0px;
+    margin: 0;
     img {
       width: 100%;  
       object-fit: cover;
-      position: relative;
       height: 350px;
     }
   }
@@ -13,7 +243,7 @@
     opacity: 1;
     position: absolute; 
     top:  55%; 
-    left: 47.5%; 
+    left: 50%; 
     transform: translate(-50%, -50%);
     button {
       background-color: $vert; 
@@ -25,43 +255,42 @@
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
       cursor: pointer;
       &:hover {
-          background-color: color.adjust($vert, $lightness: -10%);&:hover {
-          transform: scale(1.05); 
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
-        }
+        background-color: color.adjust($vert, $lightness: -10%);
+        transform: scale(1.05); 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
       }
     }
   }
 }
 
+// Accueil 2
 #accueil-2.container {
   text-align: center;
-
   .container-inner {
     max-width: 1200px;
     margin: 0 auto;
-
     h2 {
       color: $vert;
       margin-bottom: 40px;
     }
-
     .container-columns {
       display: flex;
       justify-content: space-between;
       gap: 20px; 
+      flex-wrap: wrap; // Ajout pour permettre le retour à la ligne sur petits écrans
 
       .column {
         background-color: color.adjust($blanc-casse, $lightness: -3%);
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        flex: 1;
+        flex: 1 1 calc(30% - 20px); // Ajout de flex-basis pour un bon comportement responsive
         text-align: center;
+
         &:hover {
           transform: scale(1.05); 
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
-      }
+        }
 
         h3 {
           color: $vert;
@@ -78,11 +307,13 @@
   }
 }
 
+// Accueil 3
 #accueil-3.container {
   border-radius: 15px; 
   padding-bottom: 80px; 
   text-align: center; 
-  padding-top : 0;
+  padding-top: 0;
+
   .container-inner {
     max-width: 800px; 
     margin: 0 auto; 
@@ -106,6 +337,7 @@
   }
 }
 
+// Accueil 4
 #accueil-4.container {
   display: flex;
   flex-direction: column;
@@ -127,7 +359,7 @@
 
     button.prev, button.next {
       position: absolute;
-      top: 58%;
+      top: 50%; 
       transform: translateY(-50%);
       background-color: transparent;
       border: none;
@@ -142,14 +374,14 @@
 
     button.prev {
       left: -10px;
-      img{
+      img {
         height: 50px;
       }
     }
 
     button.next {
       right: -10px;
-      img{
+      img {
         height: 50px;
       }
     }
@@ -166,7 +398,6 @@
       align-items: center; 
       text-align: center; 
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-
     }
 
     .carousel-item {
@@ -201,29 +432,86 @@
   }
 }
 
+// Accueil 5
 #accueil-5.container {
   background-color: color.adjust($blanc-casse, $lightness: -3%);
-  .container-inner{
-  padding-top: 2px;
-  text-align: center;
-  button {
-    background-color: $vert; 
-    color: $blanc; 
-    padding: 10px 20px;
-    border: none;
-    border-radius: 15px;
-    font-size: 2.2em;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    &:hover {
+  
+  .container-inner {
+    padding-top: 2px;
+    text-align: center;
+
+    button {
+      background-color: $vert; 
+      color: $blanc; 
+      padding: 10px 20px;
+      border: none;
+      border-radius: 15px;
+      font-size: 2.2em;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+
+      &:hover {
         background-color: color.adjust($vert, $lightness: -10%);
         transform: scale(1.05); 
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
-      
+      }
     }
   }
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+  #accueil-1.container figure:nth-child(2) {
+    top: 50%; 
+    button {
+      font-size: 1.5em; // Réduction de la taille du bouton
+      padding: 8px 16px; // Réduction de l'espacement
+    }
+  }
+
+  #accueil-2.container {
+    .container-columns {
+      flex-direction: column; // Empiler les colonnes sur petits écrans
+      gap: 10px; // Réduction de l'espacement
+      .column {
+        flex: 1 1 auto; // Permettre une largeur automatique
+        margin: 10px 0; // Ajouter un espacement vertical
+      }
+    }
+  }
+
+  #accueil-3.container {
+    .container-inner {
+      padding: 20px; // Réduction du rembourrage
+    }
+
+    p {
+      font-size: 1em; // Réduction de la taille du texte
+    }
+  }
+
+  #accueil-4.container {
+    .container-inner {
+      width: 90%; // Prendre plus de place
+      h2 {
+        font-size: 1.5em; // Réduction de la taille du titre
+      }
+
+      button.prev, button.next {
+        font-size: 20px; // Réduction de la taille des flèches
+      }
+    }
+  }
+
+  #accueil-5.container {
+    .container-inner {
+      button {
+        font-size: 1.5em; // Réduction de la taille du bouton
+      }
+    }
   }
 }
+
 
 
 #contact.container{

@@ -33,45 +33,7 @@
   
     <!-- Contenus des simulateurs -->
     <div class="tab-content">
-      {{-- <div class="tab-pane active" id="simulator1">
-        <h2>Simulateur d'emprunt immobilier</h2>
-        <p>Obtenez toutes les informations souhaitées sur les montants de votre prêt : mensualités, coût d'assurance, somme totale...</p>
-        <div class="simulator-container">
-            <form id="simulateurForm" class="simulator-form">
-                <div class="form-group">
-                    <label for="capital">Capital souhaité (€)</label>
-                    <input type="number" id="capital" name="capital" required>
-                </div>
-                <div class="form-group">
-                    <label for="taux">Taux d'intérêt annuel (%)</label>
-                    <input type="number" step="0.01" id="taux" name="taux" required>
-                </div>
-                <div class="form-group">
-                    <label for="duree">Durée du prêt (années)</label>
-                    <input type="number" id="duree" name="duree" required>
-                </div>
-                <div class="form-group">
-                    <label for="apport">Apport personnel (€)</label>
-                    <input type="number" id="apport" name="apport" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="assurance">Assurance (%)</label>
-                    <input type="number" step="0.01" id="assurance" name="assurance" value="0">
-                </div>
-                <button type="button" id="simulateImmoBtn" class="submit-btn">Calculer</button>
-            </form>
-        
-            <div id="resultContainer" class="result-container" style="display: none;">
-                <h2>Résultat de la simulation</h2>
-                <ul class="result-list">
-                    <li>Capital emprunté : <strong id="capitalEmprunte"></strong> €</li>
-                    <li>Mensualité : <strong id="mensualite"></strong> €</li>
-                    <li>Total des intérêts : <strong id="totalInterets"></strong> €</li>
-                    <li>Mensualité totale (avec assurance) : <strong id="mensualiteTotale"></strong> €</li>
-                </ul>
-            </div>
-        </div>
-      </div> --}}
+
       <div class="tab-pane active" id="simulator1">
         <h2>Simulateur d'impôt sur le revenu</h2>
         <p>Estimez le montant de votre impôt sur le revenu en fonction de votre situation personnelle.</p>
@@ -385,28 +347,6 @@ document.getElementById('simulateTvaBtn').addEventListener('click', function() {
         document.getElementById('resultContainer4').style.display = 'block';
     });
 
-
-    // document.getElementById('simulateImmoBtn').addEventListener('click', function () {
-    //     const capital = parseFloat(document.getElementById('capital').value);
-    //     const taux = parseFloat(document.getElementById('taux').value) / 100 / 12;
-    //     const duree = parseInt(document.getElementById('duree').value) * 12;
-    //     const apport = parseFloat(document.getElementById('apport').value) || 0;
-    //     const assurance = parseFloat(document.getElementById('assurance').value) / 100 || 0;
-
-    //     const capitalEmprunte = capital - apport;
-    //     const mensualite = (capitalEmprunte * taux * Math.pow(1 + taux, duree)) / 
-    //                       (Math.pow(1 + taux, duree) - 1);
-    //     const totalInterets = (mensualite * duree) - capitalEmprunte;
-    //     const assuranceMensuelle = (capitalEmprunte * assurance) / 12;
-    //     const mensualiteTotale = mensualite + assuranceMensuelle;
-
-    //     document.getElementById('capitalEmprunte').textContent = Math.round(capitalEmprunte);
-    //     document.getElementById('mensualite').textContent = Math.round(mensualite);
-    //     document.getElementById('totalInterets').textContent = Math.round(totalInterets);
-    //     document.getElementById('mensualiteTotale').textContent = Math.round(mensualiteTotale);
-
-    //     document.getElementById('resultContainer').style.display = 'block';
-    // });
 
     document.getElementById("calculateSavingsBtn").addEventListener("click", function () {
     const initialCapital = parseFloat(document.getElementById("initialCapital").value);

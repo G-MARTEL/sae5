@@ -28,8 +28,9 @@
                 <p><strong>Date d'inscription' :</strong> {{ $client->account->creation_date }}</p>
             </div>
         </div>
-        <h2>Contrats souscrits</h2>
-        <table class="contracts-table">
+        <div class="collapsible-section">
+            <h2 onclick="toggleSection(this)">Contrats souscrits</h2>
+            <table class="contracts-table">
             <thead>
                 <tr>
                     <th>Numéro de contrat</th>
@@ -55,8 +56,9 @@
                 @endif
             </tbody>
         </table>
+        </div>
 
-        <h2>Créer un document</h2>
+        <h2>Ajouter un contrat</h2>
         <form action="{{ route('employees.creationContrat') }}" method="POST" class="create-contract-form">
             @csrf
             <input type="hidden" name="client_id" value="{{ $client->client_id }}">
@@ -74,8 +76,8 @@
     
             <button type="submit">Créer contrat</button>
         </form>
-    
-        <h2>Documents déposés par le client</h2>
+        <div class="collapsible-section">
+        <h2 onclick="toggleSection(this)">Documents déposés par le client</h2>
         <table class="documents-table">
             <thead>
                 <tr>
@@ -104,6 +106,7 @@
                 @endif
             </tbody>
         </table>
+        </div>
     
         <h2>Créer un document</h2>
         <form action="{{ route('documents.store') }}" method="POST" class="create-document-form">
@@ -128,8 +131,9 @@
     
             <button type="submit">Créer le document</button>
         </form>
-    
-        <h2>Documents créés</h2>
+
+        <div class="collapsible-section">
+        <h2 onclick="toggleSection(this)">Documents créés</h2>
         <table class="documents-table">
             <thead>
                 <tr>
@@ -160,15 +164,30 @@
                 @endif
             </tbody>
         </table>
-    
+        </div>
         <a href="{{ route('employees.listeClientAttitres') }}" class="back-link">Retour à la liste des clients</a>
     </div>
 
 </body>
+
+
+
 
 <script>
     document.getElementById('prestation').addEventListener('change', function() {
         var selectedOptionText = this.options[this.selectedIndex].text;
         document.getElementById('service_title').value = selectedOptionText;
     });
-</script>
+
+
+    function toggleSection(header) {
+        // Trouver la section parente
+        const section = header.parentElement;
+        // Trouver le tableau dans la section
+        const table = section.querySelector('table');
+        // Basculer la classe "open" sur le header
+        header.classList.toggle('open');
+        // Basculer la visibilité du tableau
+        table.classList.toggle('visible');
+    }
+</script> 
