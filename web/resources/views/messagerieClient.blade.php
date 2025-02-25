@@ -15,7 +15,7 @@
     
     <div class="messaging-container">
         <a href="{{ route('client.accueil') }}">Retourner sur mon profil</a>
-        {{-- <h1 class="messaging-title">Votre conversation</h1> --}}
+        <a href="{{ route('client.accueil') }}">Acceder a l'appel vidéo </a>
         
         <!-- Fenêtre défilante pour les messages -->
         <div class="messages-scrollable">

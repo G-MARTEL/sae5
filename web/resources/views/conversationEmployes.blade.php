@@ -9,8 +9,10 @@
     <title>Conversation Employés</title>
 </head>
 <body>
+    </a>
     <div class="messaging-container">
     <a href="{{ route('employees.accueil') }}">Retourner à votre espace employé</a>
+    <a href="{{ route('employees.accueil') }}">Activer l'appel vidéo</a>
     <!-- Liste des messages -->
         <div class="messages-scrollable">
             @foreach ($messages as $message)
