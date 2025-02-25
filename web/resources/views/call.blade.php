@@ -3,34 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appel Vidéo</title>
+    <title>Vidéo Conférence - Cabinet d'Expertise Comptable</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}"/>
+    <style>
+        .back-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .back-link:hover {
+            background-color: #135abc;
+        }
+    </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-    <H1 class="text-2xl font-bold text-gray-700 mb-2">Bienvenue dans notre espace de vidéo conférence <img src="{{ asset("assets\communs\logo_avycompta.png") }}" alt="Logo" style="width: 100px; height :100px;"> </H1>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+    <header class="w-full max-w-5xl bg-white shadow-md rounded-lg p-6 flex items-center justify-between">
+        <img src="{{ asset('assets/communs/logo_avycompta.png') }}" alt="Logo" class="h-16">
+        <h1 class="text-3xl font-bold text-gray-800">Espace de Vidéo Conférence</h1>
+    </header>
 
-    <p class="text-lg text-gray-600 mb-4">
-        Salle : <span id="room-name" class="font-semibold text-blue-600"></span>
-    </p>
+    <main class="w-full max-w-5xl mt-6 bg-white shadow-lg rounded-lg p-6">
+        <div id="jitsi-container" class="w-full h-[500px] bg-gray-300 rounded-md overflow-hidden flex items-center justify-center">
+        </div>
+    </main>
 
-    <div id="jitsi-container" class="w-full max-w-4xl h-[500px] bg-white shadow-lg rounded-lg overflow-hidden"></div>
+    <a href="{{ route('accueil') }}" class="back-link mt-6">Retour à l'accueil</a>
 
+    <footer class="mt-6 text-center text-gray-600 text-sm">
+        &copy; 2025 Cabinet AVYCOMPTA - Tous droits réservés.
+    </footer>
 
     <script src="https://meet.jit.si/external_api.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Récupérer le paramètre "room" depuis l'URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const roomName = urlParams.get("room") || "SalleParDefaut";
-
-            // Afficher le nom de la salle sur la page
-            document.getElementById("room-name").textContent = roomName;
-
-            // Initialiser Jitsi Meet avec le bon nom de salle
             const domain = "meet.jit.si";
             const options = {
-                roomName: roomName,
+                roomName: "ConferenceRoom",
                 width: "100%",
                 height: "100%",
                 parentNode: document.getElementById("jitsi-container"),
@@ -38,6 +52,5 @@
             new JitsiMeetExternalAPI(domain, options);
         });
     </script>
-
 </body>
 </html>
