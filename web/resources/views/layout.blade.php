@@ -36,8 +36,8 @@
                 <a href="{{ route('login') }}"><button>Connexion</button></a>
             @endif
         </div>
-        
     </nav>
+
         
         @yield('content')
         <footer class="footer">
@@ -67,3 +67,4 @@
     
     </body>
 </html>
+
